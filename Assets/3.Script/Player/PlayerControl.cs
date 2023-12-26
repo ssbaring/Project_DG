@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float rayLength;
     public LayerMask groundlayer;
 
+    private float attackComboTime = 0;
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
     private Animator anim;
@@ -33,17 +34,12 @@ public class PlayerControl : MonoBehaviour
             JumpCharacter();
         }
 
-        if (rigid.velocity.y > 0)
+        if (rigid.velocity.y < 0)
         {
-            anim.SetTrigger("JumpStart");
             anim.SetBool("IsJumping", true);
             anim.SetBool("IsIdle", false);
         }
-        else if (rigid.velocity.y < 0)
-        {
-            anim.SetBool("IsIdle", false);
-        }
-        else
+        else if(rigid.velocity.y == 0)
         {
             anim.ResetTrigger("JumpStart");
             anim.SetBool("IsJumping", false);
@@ -55,6 +51,8 @@ public class PlayerControl : MonoBehaviour
         {
             anim.SetBool("IsIdle", true);
         }
+
+        Debug.Log(rigid.velocity.y);
     }
 
     private void MoveCharacter()
@@ -103,6 +101,18 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
+        anim.SetTrigger("JumpStart");
+        anim.SetBool("IsJumping", true);
+        anim.SetBool("IsIdle", false);
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+    }
+
+    private void Attack()
+    {
+        attackComboTime += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+
+        }
     }
 }
