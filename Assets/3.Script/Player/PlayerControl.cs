@@ -7,11 +7,13 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float posX;
-    [SerializeField] private bool isJump;
+    [SerializeField] private bool isCanJump;
+    [SerializeField] private bool isAttack;
     [SerializeField] private float rayLength;
     public LayerMask groundlayer;
 
     private float attackComboTime = 0;
+    private int attackCount = 0;
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
     private Animator anim;
@@ -26,33 +28,49 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         MoveCharacter();
+        isCanJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundlayer);
 
-        isJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundlayer);
-
-        if (isJump && Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            JumpCharacter();
+            StopCoroutine(Attack());
+            StartCoroutine(Attack());
         }
 
-        if (rigid.velocity.y < 0)
+        if (isCanJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetTrigger("JumpStart");
+            JumpCharacter();
+        }
+        else if (isCanJump)
+        {
+            anim.ResetTrigger("JumpStart");
+            anim.ResetTrigger("JumpTop");
+        }
+
+
+
+        if (rigid.velocity.y < 0.198f && rigid.velocity.y > 0)
+        {
+            anim.SetTrigger("JumpTop");
+        }
+        else if (rigid.velocity.y < 0)
         {
             anim.SetBool("IsJumping", true);
             anim.SetBool("IsIdle", false);
         }
-        else if(rigid.velocity.y == 0)
+        else if (rigid.velocity.y == 0)
         {
-            anim.ResetTrigger("JumpStart");
             anim.SetBool("IsJumping", false);
         }
 
 
 
-        if(posX == 0 && rigid.velocity.y == 0)
+        if (posX == 0 && rigid.velocity.y == 0)
         {
             anim.SetBool("IsIdle", true);
         }
 
-        Debug.Log(rigid.velocity.y);
+        //Debug.Log(rigid.velocity.y);
     }
 
     private void MoveCharacter()
@@ -101,18 +119,53 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        anim.SetTrigger("JumpStart");
         anim.SetBool("IsJumping", true);
         anim.SetBool("IsIdle", false);
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
-        attackComboTime += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Z))
+        Debug.Log("АјАн");
+        anim.SetTrigger("Attack");
+        anim.SetBool("IsAttack", true);
+        anim.SetBool("IsIdle", false);
+        anim.SetInteger("AttackCount", attackCount);
+        while (attackComboTime < 1.0f)
         {
-
+            yield return null;
+            attackComboTime += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                Debug.Log("break");
+                break;
+            }
         }
+
+
+        if (attackComboTime >= 1.0f)
+        {
+            anim.ResetTrigger("Attack");
+            anim.SetBool("IsAttack", false);
+            anim.SetBool("IsIdle", true);
+            attackCount = 0;
+            attackComboTime = 0;
+        }
+        else if (attackComboTime < 1.0f)
+        {
+            if (attackCount != 2)
+            {
+                attackCount++;
+            }
+            else if (attackCount == 2)
+            {
+                attackCount = 0;
+                anim.ResetTrigger("Attack");
+                anim.SetBool("IsAttack", false);
+                anim.SetBool("IsIdle", true);
+            }
+            attackComboTime = 0;
+        }
+
     }
 }
