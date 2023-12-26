@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float jumpPower = 5f;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpPower;
     [SerializeField] private float posX;
+    [SerializeField] private bool isJump;
+    [SerializeField] private float rayLength;
+    public LayerMask groundlayer;
 
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
@@ -23,18 +26,42 @@ public class PlayerControl : MonoBehaviour
     {
         MoveCharacter();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        isJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundlayer);
+
+        if (isJump && Input.GetButtonDown("Jump"))
         {
             JumpCharacter();
         }
 
+        if (rigid.velocity.y > 0)
+        {
+            anim.SetTrigger("JumpStart");
+            anim.SetBool("IsJumping", true);
+            anim.SetBool("IsIdle", false);
+        }
+        else if (rigid.velocity.y < 0)
+        {
+            anim.SetBool("IsIdle", false);
+        }
+        else
+        {
+            anim.ResetTrigger("JumpStart");
+            anim.SetBool("IsJumping", false);
+        }
+
+
+
+        if(posX == 0 && rigid.velocity.y == 0)
+        {
+            anim.SetBool("IsIdle", true);
+        }
     }
 
     private void MoveCharacter()
     {
         posX = Input.GetAxis("Horizontal");
 
-        Vector2 position = new Vector2(posX, 0) * speed;
+        Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
 
         rigid.velocity = position;
 
@@ -60,6 +87,7 @@ public class PlayerControl : MonoBehaviour
         {
             anim.SetBool("IsRunning", false);
             anim.SetBool("IsIdle", true);
+            anim.ResetTrigger("RunStart");
         }
 
         /* if(posX > -0.2f && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -75,6 +103,6 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        rigid.AddForce(Vector2.up * jumpPower);
+        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 }
