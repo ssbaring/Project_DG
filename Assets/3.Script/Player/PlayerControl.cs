@@ -29,6 +29,7 @@ public class PlayerControl : MonoBehaviour
 
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
+    [SerializeField] private SpriteRenderer wpRender;
     private Animator anim;
 
     private void Start()
@@ -67,6 +68,7 @@ public class PlayerControl : MonoBehaviour
         {
             anim.ResetTrigger("JumpStart");
             anim.ResetTrigger("JumpTop");
+
         }
 
 
@@ -109,24 +111,28 @@ public class PlayerControl : MonoBehaviour
             if (posX < 0)
             {
                 isRunning = true;
-                spRender.flipX = true;
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
                 isRight = -1;
-                meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
-                wallCheck.rotation = Quaternion.Euler(0, -180, 0);
+                transform.rotation = Quaternion.Euler(0, -180, 0);
+                //spRender.flipX = true;
+                //wpRender.flipX = true;
+                //meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
+                //wallCheck.rotation = Quaternion.Euler(0, -180, 0);
             }
             else if (posX > 0)
             {
                 isRunning = true;
-                spRender.flipX = false;
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
                 isRight = 1;
-                meleeAttack.rotation = Quaternion.identity;
-                wallCheck.rotation = Quaternion.identity;
+                transform.rotation = Quaternion.identity;
+                //spRender.flipX = false;
+                //wpRender.flipX = false;
+                //meleeAttack.rotation = Quaternion.identity;
+                //wallCheck.rotation = Quaternion.identity;
             }
             else if (posX == 0)
             {
@@ -164,29 +170,23 @@ public class PlayerControl : MonoBehaviour
     private void Attack()
     {
         //Debug.Log("АјАн");
-        if (!isRunning)
+        anim.SetTrigger("Attack");
+        if (isRunning)
         {
-            anim.SetTrigger("Attack");
-        }
-        else if (isRunning && !isCanJump)
-        {
-            anim.SetTrigger("Attack");
-        }
-        else
-        {
-            return;
+            anim.SetBool("IsRunning", false);
+            anim.SetBool("IsIdle", true);
         }
     }
 
     private void Wall()
     {
-        if(isWall && anim.GetBool("IsJumping"))
+        if (isWall && anim.GetBool("IsJumping"))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             isWallJump = false;
             anim.SetBool("IsWall", true);
             anim.SetBool("IsIdle", false);
-            
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //isWallJump = true;
@@ -195,17 +195,19 @@ public class PlayerControl : MonoBehaviour
                 if (Input.GetAxis("Horizontal") < 0)
                 {
                     isRight = -1;
-                    meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
-                    wallCheck.rotation = Quaternion.Euler(0, -180, 0);
+                    transform.rotation = Quaternion.Euler(0, -180, 0);
+                    //meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
+                    //wallCheck.rotation = Quaternion.Euler(0, -180, 0);
                 }
                 else if (Input.GetAxis("Horizontal") > 0)
                 {
                     isRight = 1;
-                    meleeAttack.rotation = Quaternion.identity;
-                    wallCheck.rotation = Quaternion.identity;
+                    transform.rotation = Quaternion.identity;
+                    //meleeAttack.rotation = Quaternion.identity;
+                    //wallCheck.rotation = Quaternion.identity;
                 }
                 rigid.velocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
-                spRender.flipX = !spRender.flipX;
+                
             }
         }
         else if (!isWall)
@@ -229,5 +231,9 @@ public class PlayerControl : MonoBehaviour
     {
         isAttack = false;
     }
-
+    public void IsRun()
+    {
+        anim.SetBool("IsRunning", false);
+        anim.SetBool("IsIdle", true);
+    }
 }
