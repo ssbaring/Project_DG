@@ -6,15 +6,27 @@ public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private float wallJumpPower;
     [SerializeField] private float posX;
     [SerializeField] private bool isCanJump;
     [SerializeField] private bool isCeiling;
+    [SerializeField] private bool isRunning;
     [SerializeField] private bool isAttack;
-    [SerializeField] private float rayLength;
-    public LayerMask groundlayer;
+    [SerializeField] private bool isWall;
+    [SerializeField] private bool isWallJump;
 
-    private float attackComboTime = 0;
-    private int attackCount = 0;
+
+    [SerializeField] private float rayLength;
+    [SerializeField] private float wallRayLength;
+    [SerializeField] private float isRight = 1;
+
+    public Transform meleeAttack;
+    public Transform wallCheck;
+
+
+    public LayerMask groundLayer;
+    public LayerMask wallLayer;
+
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
     private Animator anim;
@@ -28,20 +40,28 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        isCanJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundLayer);
+        isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayLength, groundLayer);
+        isWall = Physics2D.Raycast(wallCheck.GetChild(0).position, Vector2.right * isRight, wallRayLength, wallLayer);
+
+        //===============================================================================================================
         MoveCharacter();
-        isCanJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundlayer);
-        isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayLength, groundlayer);
+        Wall();
+        Debug.DrawRay(wallCheck.GetChild(0).position, (Vector2.right * isRight) * wallRayLength, Color.red);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            StopCoroutine(Attack());
-            StartCoroutine(Attack());
+            Attack();
         }
 
-        if (isCanJump && Input.GetKeyDown(KeyCode.Space))
+        if (isCanJump && Input.GetKeyDown(KeyCode.Space) && !isAttack)
         {
             anim.SetTrigger("JumpStart");
             JumpCharacter();
+        }
+        else if (!isCanJump && Input.GetKeyDown(KeyCode.Z))
+        {
+            Attack();
         }
         else if (isCanJump)
         {
@@ -61,7 +81,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
         }
-        else if (rigid.velocity.y == 0)
+        else if (rigid.velocity.y == 0 && !isWall)
         {
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsFalling", false);
@@ -79,36 +99,49 @@ public class PlayerControl : MonoBehaviour
 
     private void MoveCharacter()
     {
-        posX = Input.GetAxis("Horizontal");
-
-        Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
-
-        rigid.velocity = position;
-
-
-        if (posX < 0)
+        if (!isAttack && !isWallJump && !isWall)
         {
-            spRender.flipX = true;
-            anim.SetTrigger("RunStart");
-            anim.SetBool("IsIdle", false);
-            anim.SetBool("IsRunning", true);
+            posX = Input.GetAxis("Horizontal");
+            Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
+
+            rigid.velocity = position;
+
+            if (posX < 0)
+            {
+                isRunning = true;
+                spRender.flipX = true;
+                anim.SetTrigger("RunStart");
+                anim.SetBool("IsIdle", false);
+                anim.SetBool("IsRunning", true);
+                isRight = -1;
+                meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
+                wallCheck.rotation = Quaternion.Euler(0, -180, 0);
+            }
+            else if (posX > 0)
+            {
+                isRunning = true;
+                spRender.flipX = false;
+                anim.SetTrigger("RunStart");
+                anim.SetBool("IsIdle", false);
+                anim.SetBool("IsRunning", true);
+                isRight = 1;
+                meleeAttack.rotation = Quaternion.identity;
+                wallCheck.rotation = Quaternion.identity;
+            }
+            else if (posX == 0)
+            {
+                isRunning = false;
+                anim.SetBool("IsRunning", false);
+                anim.SetBool("IsIdle", true);
+                anim.ResetTrigger("RunStart");
+            }
+        }
+        else
+        {
+            return;
         }
 
-        if (posX > 0)
-        {
-            spRender.flipX = false;
-            anim.SetTrigger("RunStart");
-            anim.SetBool("IsIdle", false);
-            anim.SetBool("IsRunning", true);
-        }
 
-
-        if (posX == 0)
-        {
-            anim.SetBool("IsRunning", false);
-            anim.SetBool("IsIdle", true);
-            anim.ResetTrigger("RunStart");
-        }
 
         /* if(posX > -0.2f && Input.GetKeyDown(KeyCode.LeftArrow))
          {
@@ -128,48 +161,73 @@ public class PlayerControl : MonoBehaviour
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
     }
 
-    private IEnumerator Attack()
+    private void Attack()
     {
-        Debug.Log("공격");
-        anim.SetTrigger("Attack");
-        anim.SetBool("IsAttack", true);
-        anim.SetBool("IsIdle", false);
-        anim.SetInteger("AttackCount", attackCount);
-        while (attackComboTime < 1.0f)
+        //Debug.Log("공격");
+        if (!isRunning)
         {
-            yield return null;
-            attackComboTime += Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                Debug.Log("break");
-                break;
-            }
+            anim.SetTrigger("Attack");
         }
-
-
-        if (attackComboTime >= 1.0f)
+        else if (isRunning && !isCanJump)
         {
-            anim.ResetTrigger("Attack");
-            anim.SetBool("IsAttack", false);
-            anim.SetBool("IsIdle", true);
-            attackCount = 0;
-            attackComboTime = 0;
+            anim.SetTrigger("Attack");
         }
-        else if (attackComboTime < 1.0f)
+        else
         {
-            if (attackCount != 2)
-            {
-                attackCount++;
-            }
-            else if (attackCount == 2)
-            {
-                attackCount = 0;
-                anim.ResetTrigger("Attack");
-                anim.SetBool("IsAttack", false);
-                anim.SetBool("IsIdle", true);
-            }
-            attackComboTime = 0;
+            return;
         }
-
     }
+
+    private void Wall()
+    {
+        if(isWall && anim.GetBool("IsJumping"))
+        {
+            rigid.velocity = new Vector2(rigid.velocity.x, 0);
+            isWallJump = false;
+            anim.SetBool("IsWall", true);
+            anim.SetBool("IsIdle", false);
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //isWallJump = true;
+                //Invoke("NotTurn", 0.3f);
+                anim.SetTrigger("JumpStart");
+                if (Input.GetAxis("Horizontal") < 0)
+                {
+                    isRight = -1;
+                    meleeAttack.rotation = Quaternion.Euler(0, -180, 0);
+                    wallCheck.rotation = Quaternion.Euler(0, -180, 0);
+                }
+                else if (Input.GetAxis("Horizontal") > 0)
+                {
+                    isRight = 1;
+                    meleeAttack.rotation = Quaternion.identity;
+                    wallCheck.rotation = Quaternion.identity;
+                }
+                rigid.velocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
+                spRender.flipX = !spRender.flipX;
+            }
+        }
+        else if (!isWall)
+        {
+
+            anim.SetBool("IsWall", false);
+        }
+    }
+
+    private void NotTurn()
+    {
+        isWallJump = false;
+    }
+
+    public void IsAttack()
+    {
+        isAttack = true;
+    }
+
+    public void IsNotAttack()
+    {
+        isAttack = false;
+    }
+
 }
