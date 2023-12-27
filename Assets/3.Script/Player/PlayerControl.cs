@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float jumpPower;
     [SerializeField] private float posX;
     [SerializeField] private bool isCanJump;
+    [SerializeField] private bool isCeiling;
     [SerializeField] private bool isAttack;
     [SerializeField] private float rayLength;
     public LayerMask groundlayer;
@@ -29,6 +30,7 @@ public class PlayerControl : MonoBehaviour
     {
         MoveCharacter();
         isCanJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundlayer);
+        isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayLength, groundlayer);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -49,18 +51,20 @@ public class PlayerControl : MonoBehaviour
 
 
 
-        if (rigid.velocity.y < 0.198f && rigid.velocity.y > 0)
+        if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
         {
             anim.SetTrigger("JumpTop");
         }
         else if (rigid.velocity.y < 0)
         {
             anim.SetBool("IsJumping", true);
+            anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
         }
         else if (rigid.velocity.y == 0)
         {
             anim.SetBool("IsJumping", false);
+            anim.SetBool("IsFalling", false);
         }
 
 
