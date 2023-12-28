@@ -7,7 +7,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float wallJumpPower;
+    [SerializeField] private float wallFallSpeed;
     [SerializeField] private float posX;
+    [SerializeField] private float posY;
     [SerializeField] private bool isCanJump;
     [SerializeField] private bool isCeiling;
     [SerializeField] private bool isRunning;
@@ -23,7 +25,7 @@ public class PlayerControl : MonoBehaviour
     public Transform meleeAttack;
     public Transform wallCheck;
 
-
+    public float gravity = 2.0f;
     public LayerMask groundLayer;
     public LayerMask wallLayer;
 
@@ -68,7 +70,7 @@ public class PlayerControl : MonoBehaviour
         {
             anim.ResetTrigger("JumpStart");
             anim.ResetTrigger("JumpTop");
-
+            isWallJump = true;
         }
 
 
@@ -101,7 +103,7 @@ public class PlayerControl : MonoBehaviour
 
     private void MoveCharacter()
     {
-        if (!isAttack && !isWallJump && !isWall)
+        if (!isAttack && isWallJump)
         {
             posX = Input.GetAxis("Horizontal");
             Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
@@ -183,6 +185,7 @@ public class PlayerControl : MonoBehaviour
         if (isWall && anim.GetBool("IsJumping"))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
+            rigid.gravityScale = 0;
             isWallJump = false;
             anim.SetBool("IsWall", true);
             anim.SetBool("IsIdle", false);
@@ -207,12 +210,19 @@ public class PlayerControl : MonoBehaviour
                     //wallCheck.rotation = Quaternion.identity;
                 }
                 rigid.velocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
-                
+                rigid.gravityScale = gravity;
+                isWallJump = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                posY = Input.GetAxis("Vertical");
+                rigid.gravityScale = gravity;
+                rigid.velocity = new Vector2(0, posY * wallFallSpeed);
             }
         }
         else if (!isWall)
         {
-
+            rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
         }
     }
@@ -220,6 +230,11 @@ public class PlayerControl : MonoBehaviour
     private void NotTurn()
     {
         isWallJump = false;
+    }
+
+    public void Attacking()
+    {
+
     }
 
     public void IsAttack()
