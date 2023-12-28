@@ -6,7 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     public float damage = 5.0f;
     public bool isEnemyDamaged = false;
-
+/*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy"))
@@ -23,4 +23,5 @@ public class PlayerAttack : MonoBehaviour
             isEnemyDamaged = false;
         }
     }
+*/
 }
