@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
-    [SerializeField] private PlayerControl playerControl;
+    [SerializeField] private PlayerStatus playerStat;
     [SerializeField] private EnemyList enemyList;
     [SerializeField] private float enemyHealth;
+    [SerializeField] private float enemyStun;
     private SpriteRenderer sprender;
 
     public bool isDamaged = false;
 
     private void Awake()
     {
-        playerControl = FindObjectOfType<PlayerControl>();
+        playerStat = FindObjectOfType<PlayerStatus>();
         sprender = GetComponent<SpriteRenderer>();
         enemyHealth = enemyList.enemyHP;
+        enemyStun = enemyList.enemySP;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Weapon"))
         {
-            enemyHealth -= playerControl.damage;
+            enemyHealth -= playerStat.playerDamage;
+            enemyStun -= playerStat.playerStunDamage;
             sprender.color = Color.red;
             Invoke("Hit", 0.3f);
             isDamaged = true;
             Debug.Log(enemyHealth);
+            Debug.Log(enemyStun);
         }
     }
 
@@ -49,6 +53,11 @@ public class EnemyControl : MonoBehaviour
         if(enemyHealth <= 0)
         {
             gameObject.SetActive(false);
+        }
+        else if(enemyStun <= 0)
+        {
+            sprender.color = new Color(1, 1, 1, 0.2f);
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 

@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyID: 0
   enemyName: 
-  enemyMaxHP: 100
-  enemyCurrentHP: 100
-  enemyMaxSP: 0
-  enemyCurrentSP: 0
+  enemyHP: 100
+  enemySP: 100
   enemySpeed: 3
   enemyAnim: {fileID: 0}
   enemySprite: {fileID: 0}

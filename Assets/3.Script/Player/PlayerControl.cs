@@ -4,72 +4,67 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [Header("PlayerStat")]
+    [SerializeField] protected float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float wallJumpPower;
     [SerializeField] private float wallFallSpeed;
     [SerializeField] private float posX;
     [SerializeField] private float wallPosX;
     [SerializeField] private float posY;
-    [SerializeField] private bool isCanJump;
-    [SerializeField] private bool isCeiling;
+
+
+    [Header("Check")]
+    public float isRightInt = 1;
     [SerializeField] private bool isRunning;
     [SerializeField] private bool isAttack;
-    [SerializeField] private bool isWall;
     [SerializeField] private bool isWallJump;
 
 
-    [SerializeField] private float rayLength;
-    [SerializeField] private float wallRayLength;
-    [SerializeField] private float isRight = 1;
 
-    public Transform meleeAttack;
-    public Transform wallCheck;
+    [Header("Damage")]
+    [SerializeField] protected float damage;
+    [SerializeField] protected float stunDamage;
 
-    public float damage = 5.0f;
 
     public float gravity = 2.0f;
-    public LayerMask groundLayer;
-    public LayerMask wallLayer;
 
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
-    [SerializeField] private SpriteRenderer wpRender;
     private Animator anim;
+    [SerializeField] private SpriteRenderer wpRender;
+    [SerializeField] private PlayerRayCheck playerRay;
 
-    private void Start()
+    protected virtual void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         spRender = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        isCanJump = Physics2D.Raycast(transform.position, Vector2.down, rayLength, groundLayer);
-        isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayLength, groundLayer);
-        isWall = Physics2D.Raycast(wallCheck.GetChild(0).position, Vector2.right * isRight, wallRayLength, wallLayer);
+        
 
         //===============================================================================================================
         MoveCharacter();
         Wall();
-        Debug.DrawRay(wallCheck.GetChild(0).position, (Vector2.right * isRight) * wallRayLength, Color.red);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Attack();
         }
 
-        if (isCanJump && Input.GetKeyDown(KeyCode.Space) && !isAttack)
+        if (playerRay.isCanJump && Input.GetKeyDown(KeyCode.Space) && !isAttack)
         {
             anim.SetTrigger("JumpStart");
             JumpCharacter();
         }
-        else if (!isCanJump && Input.GetKeyDown(KeyCode.Z))
+        else if (!playerRay.isCanJump && Input.GetKeyDown(KeyCode.Z))
         {
             Attack();
         }
-        else if (isCanJump)
+        else if (playerRay.isCanJump)
         {
             anim.ResetTrigger("JumpStart");
             anim.ResetTrigger("JumpTop");
@@ -78,7 +73,7 @@ public class PlayerControl : MonoBehaviour
 
 
 
-        if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
+        if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
         {
             anim.SetTrigger("JumpTop");
         }
@@ -88,7 +83,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
         }
-        else if (rigid.velocity.y == 0 && !isWall)
+        else if (rigid.velocity.y == 0 && !playerRay.isWall)
         {
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsFalling", false);
@@ -109,6 +104,7 @@ public class PlayerControl : MonoBehaviour
         if (!isAttack && isWallJump)
         {
             posX = Input.GetAxis("Horizontal");
+            wallPosX = 0;
             Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
 
             rigid.velocity = position;
@@ -119,12 +115,8 @@ public class PlayerControl : MonoBehaviour
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
-                isRight = -1;
+                isRightInt = -1;
                 transform.rotation = Quaternion.Euler(0, 180, 0);
-                //spRender.flipX = true;
-                //wpRender.flipX = true;
-                //meleeAttack.rotation = Quaternion.Euler(0, 180, 0);
-                //wallCheck.rotation = Quaternion.Euler(0, 180, 0);
             }
             else if (posX > 0)
             {
@@ -132,12 +124,8 @@ public class PlayerControl : MonoBehaviour
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
-                isRight = 1;
+                isRightInt = 1;
                 transform.rotation = Quaternion.identity;
-                //spRender.flipX = false;
-                //wpRender.flipX = false;
-                //meleeAttack.rotation = Quaternion.identity;
-                //wallCheck.rotation = Quaternion.identity;
             }
             else if (posX == 0)
             {
@@ -175,7 +163,7 @@ public class PlayerControl : MonoBehaviour
     private void Attack()
     {
         //Debug.Log("АјАн");
-        if (isWallJump)
+        if (!playerRay.isWall)
         {
             anim.SetTrigger("Attack");
             if (isRunning)
@@ -188,39 +176,60 @@ public class PlayerControl : MonoBehaviour
 
     private void Wall()
     {
-        if (isWall && anim.GetBool("IsJumping"))
+        if (playerRay.isWall && anim.GetBool("IsJumping"))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.gravityScale = 0;
             isWallJump = false;
             anim.SetBool("IsWall", true);
             anim.SetBool("IsIdle", false);
-
+            
             wallPosX = Input.GetAxis("Horizontal");
             posX = 0;
-            if (transform.eulerAngles.y == -180)
+            if (isRightInt == -1)
             {
-                wallPosX = -wallPosX;
+                if (wallPosX < 0)
+                {
+                    wallPosX = 0;
+                }
+                else
+                {
+                    wallPosX = Mathf.Abs(wallPosX);
+                }
+            }
+            else if (isRightInt == 1)
+            {
+                if (wallPosX > 0)
+                {
+                    wallPosX = 0;
+                }
+                else
+                {
+                    wallPosX = Mathf.Abs(wallPosX) * -1;
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                //isWallJump = true;
+                isWallJump = true;
                 //Invoke("NotTurn", 0.3f);
                 if (wallPosX < 0)
                 {
-                    isRight = -1;
+                    anim.SetTrigger("JumpStart");
+                    isRightInt = -1;
                     transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
                 else if (wallPosX > 0)
                 {
-                    isRight = 1;
+                    anim.SetTrigger("JumpStart");
+                    isRightInt = 1;
                     transform.rotation = Quaternion.identity;
                 }
+                else return;
 
-                rigid.velocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
+                rigid.velocity = new Vector2(-isRightInt * wallJumpPower, 0.9f * wallJumpPower);
                 rigid.gravityScale = gravity;
-                isWallJump = true;
+                //isWallJump = true;
             }
             else if (Input.GetAxis("Vertical") < 0)
             {
@@ -229,7 +238,7 @@ public class PlayerControl : MonoBehaviour
                 rigid.velocity = new Vector2(0, posY * wallFallSpeed);
             }
         }
-        else if (!isWall)
+        else if (!playerRay.isWall)
         {
             rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
@@ -237,6 +246,10 @@ public class PlayerControl : MonoBehaviour
     }
 
 
+    private void NotTurn()
+    {
+        isWallJump = false;
+    }
 
 
     public void IsAttack()
