@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float wallJumpPower;
+    [SerializeField] private float fallSpeed;
     [SerializeField] private float wallFallSpeed;
     [SerializeField] private float posX;
     [SerializeField] private float wallPosX;
@@ -27,13 +28,17 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected float stunDamage;
 
 
-    public float gravity = 2.0f;
+    public float gravity;
+
 
     private Rigidbody2D rigid;
     private SpriteRenderer spRender;
     private Animator anim;
     [SerializeField] private SpriteRenderer wpRender;
     [SerializeField] private PlayerRayCheck playerRay;
+    [SerializeField] private Transform respawn;
+
+    public KeyCode respawnKey;
 
     protected virtual void Start()
     {
@@ -44,7 +49,6 @@ public class PlayerControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        
 
         //===============================================================================================================
         MoveCharacter();
@@ -72,7 +76,7 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-
+        //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
         {
             anim.SetTrigger("JumpTop");
@@ -90,13 +94,18 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-
+        //애니메이션
         if (posX == 0 && rigid.velocity.y == 0)
         {
             anim.SetBool("IsIdle", true);
         }
 
-        //Debug.Log(rigid.velocity.y);
+        //리스폰
+        if (Input.GetKeyDown(respawnKey))
+        {
+            transform.position = respawn.position;
+        }
+
     }
 
     private void MoveCharacter()
@@ -141,16 +150,6 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-
-        /* if(posX > -0.2f && Input.GetKeyDown(KeyCode.LeftArrow))
-         {
-             spRender.flipX = true;
-         }
-         else if (posX < 0.2f && Input.GetKeyDown(KeyCode.RightArrow))
-         {
-             spRender.flipX = false;
-         }*/
-
     }
 
     private void JumpCharacter()
@@ -183,7 +182,7 @@ public class PlayerControl : MonoBehaviour
             isWallJump = false;
             anim.SetBool("IsWall", true);
             anim.SetBool("IsIdle", false);
-            
+
             wallPosX = Input.GetAxis("Horizontal");
             posX = 0;
             if (isRightInt == -1)
