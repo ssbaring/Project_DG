@@ -6,31 +6,43 @@ public class EnemyControl : MonoBehaviour
 {
     [SerializeField] private PlayerStatus playerStat;
     [SerializeField] private EnemyList enemyList;
-    [SerializeField] private float enemyHealth;
-    [SerializeField] private float enemyStun;
+    [SerializeField] protected float enemyHealth;
+    [SerializeField] protected float enemyStun;
+
+    
+
+    private Rigidbody2D enemyRigid;
     private SpriteRenderer sprender;
+    protected Animator enemyAnim;
 
     public bool isDamaged = false;
 
-    private void Awake()
+    public int isRightIntEnemy = 1;
+    public float backCoefficent = 1.0f;
+
+
+    protected virtual void Awake()
     {
         playerStat = FindObjectOfType<PlayerStatus>();
         sprender = GetComponent<SpriteRenderer>();
+        enemyRigid = GetComponent<Rigidbody2D>();
+        enemyAnim = GetComponent<Animator>();
         enemyHealth = enemyList.enemyHP;
         enemyStun = enemyList.enemySP;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Weapon"))
+        if (collision.CompareTag("Weapon") && !isDamaged)
         {
-            enemyHealth -= playerStat.playerDamage;
-            enemyStun -= playerStat.playerStunDamage;
+            enemyHealth -= playerStat.Damage();
+            enemyStun -= playerStat.StunDamage();
             sprender.color = Color.red;
+            HitAnimation();
             Invoke("Hit", 0.3f);
             isDamaged = true;
-            Debug.Log(enemyHealth);
-            Debug.Log(enemyStun);
+            Debug.Log("HP : " + enemyHealth);
+            Debug.Log("Stun : " + enemyStun);
         }
     }
 
@@ -39,6 +51,7 @@ public class EnemyControl : MonoBehaviour
         if (collision.CompareTag("Weapon"))
         {
             sprender.color = Color.white;
+            ResetAnimationTrigger();
             isDamaged = false;
         }
     }
@@ -57,36 +70,31 @@ public class EnemyControl : MonoBehaviour
         else if(enemyStun <= 0)
         {
             sprender.color = new Color(1, 1, 1, 0.2f);
+            enemyRigid.bodyType = RigidbodyType2D.Static;
             GetComponent<Collider2D>().enabled = false;
+            StunAnimation();
         }
+
+
     }
 
-    /*public class Node
+
+    private void HitAnimation()
     {
-        public bool walkable;
-        public Vector2 worldPosition;
-        public int gridX;
-        public int gridY;
+        enemyAnim.SetTrigger("Hit");
+        enemyAnim.SetBool("IsIdle", false);
+    }
 
-        public int gCost;
-        public int hCost;
+    private void StunAnimation()
+    {
+        enemyAnim.SetBool("IsStun", true);
+        enemyAnim.SetBool("IsIdle", false);
+    }
 
-        public Node parent;
+    private void ResetAnimationTrigger()
+    {
+        enemyAnim.ResetTrigger("Hit");
+        enemyAnim.SetBool("IsIdle", true);
+    }
 
-        public Node(bool walk, Vector2 worldPos, int _gridX, int _gridY)
-        {
-            walkable = walk;
-            worldPosition = worldPos;
-            gridX = _gridX;
-            gridY = _gridY;
-        }
-
-        public int fCost
-        {
-            get
-            {
-                return gCost + hCost;
-            }
-        }
-    }*/
 }

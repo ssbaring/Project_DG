@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [Header("PlayerStat")]
-    [SerializeField] protected float speed;
-    [SerializeField] private float jumpPower;
-    [SerializeField] private float wallJumpPower;
-    [SerializeField] private float fallSpeed;
-    [SerializeField] private float wallFallSpeed;
+    public float defalutSpeed = 5.0f;
+
+    private float jumpPower = 5.0f;
+    private float wallJumpPower = 10.0f;
+    private float wallFallSpeed = 5.0f;
+    
     [SerializeField] private float posX;
     [SerializeField] private float wallPosX;
     [SerializeField] private float posY;
@@ -22,13 +23,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private bool isWallJump;
 
 
-
     [Header("Damage")]
-    [SerializeField] protected float damage;
-    [SerializeField] protected float stunDamage;
-
+    public float defalutDamage = 5.0f;
+    public float defaultStunDamage = 10.0f;
 
     public float gravity;
+
 
 
     private Rigidbody2D rigid;
@@ -38,19 +38,34 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private PlayerRayCheck playerRay;
     [SerializeField] private Transform respawn;
 
+
+    [Header("Key")]
     public KeyCode respawnKey;
 
-    protected virtual void Start()
+    public virtual float Damage()
+    {
+        return defalutDamage;
+    }
+
+    public virtual float StunDamage()
+    {
+        return defaultStunDamage;
+    }
+
+    public virtual float Speed()
+    {
+        return defalutSpeed;
+    }
+
+    private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         spRender = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
-    protected virtual void Update()
+    private void Update()
     {
-
-        //===============================================================================================================
         MoveCharacter();
         Wall();
 
@@ -106,15 +121,19 @@ public class PlayerControl : MonoBehaviour
             transform.position = respawn.position;
         }
 
+        
     }
 
     private void MoveCharacter()
     {
+        //PlayerStatus calc = new PlayerStatus();
+        //float calculatedSpeed = calc.Speed();
+
         if (!isAttack && isWallJump)
         {
             posX = Input.GetAxis("Horizontal");
             wallPosX = 0;
-            Vector2 position = new Vector2(posX * speed, rigid.velocity.y);
+            Vector2 position = new Vector2(posX * defalutSpeed, rigid.velocity.y);
 
             rigid.velocity = position;
 
@@ -160,7 +179,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     private void Attack()
-    {
+    { 
         //Debug.Log("АјАн");
         if (!playerRay.isWall)
         {

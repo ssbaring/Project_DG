@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyID: 0
   enemyName: 
-  enemyHP: 100
-  enemySP: 100
+  enemyHP: 10000
+  enemySP: 10000
   enemySpeed: 3
   enemyAnim: {fileID: 0}
   enemySprite: {fileID: 0}
