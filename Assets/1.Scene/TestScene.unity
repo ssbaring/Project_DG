@@ -2171,7 +2171,6 @@ GameObject:
   - component: {fileID: 311393534}
   - component: {fileID: 311393533}
   - component: {fileID: 311393536}
-  - component: {fileID: 311393538}
   - component: {fileID: 311393535}
   - component: {fileID: 311393537}
   - component: {fileID: 311393540}
@@ -2301,12 +2300,12 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 311393531}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 211fdb69f9b173e4eb7291b423ac087d, type: 2}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.38, y: 1}
+  m_Offset: {x: 0, y: -0.033317387}
+  m_Size: {x: 0.38, y: 0.91920125}
   m_Direction: 0
 --- !u!114 &311393537
 MonoBehaviour:
@@ -2336,25 +2335,6 @@ MonoBehaviour:
   playerRay: {fileID: 311393539}
   respawn: {fileID: 1566244015}
   respawnKey: 114
---- !u!251 &311393538
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311393531}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 0
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 0
 --- !u!114 &311393539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2413,6 +2393,8 @@ MonoBehaviour:
   agilityLevel: 0
   speedLevel: 0
   criticalLevel: 0
+  trueDamage: 0
+  trueStunDamage: 0
   isBackAttack: 0
   isCriticalAttack: 0
 --- !u!1 &324186042

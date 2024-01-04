@@ -71,7 +71,7 @@ public class PlayerControl : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         MoveCharacter();
         Wall();
