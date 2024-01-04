@@ -52,6 +52,7 @@ public class EnemyControl : MonoBehaviour
         if (collision.CompareTag("Weapon"))
         {
             sprender.color = Color.white;
+            playerStat.isCriticalAttack = false;
             ResetAnimationTrigger();
             isDamaged = false;
         }

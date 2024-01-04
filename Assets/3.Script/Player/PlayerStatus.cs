@@ -5,24 +5,41 @@ using UnityEngine;
 
 public class PlayerStatus : PlayerControl
 {
-    [SerializeField] private int strengthLevel = 0;
-    [SerializeField] private int agilityLevel = 0;
-    [SerializeField] private int speedLevel = 0;
-    [SerializeField] private int criticalLevel = 0;
+    [Header("Status Level")]
+    public int strengthLevel = 0;
+    public int agilityLevel = 0;
+    public int speedLevel = 0;
+    public int criticalLevel = 0;
+
+    public float trueDamage;
+    public float trueStunDamage;
 
     public bool isBackAttack = false;
     public bool isCriticalAttack = false;
+
+    public float TrueDamage(float defaultDmg)
+    {
+        trueDamage = (((1 + strengthLevel) * 1.8f) * defaultDmg);
+        return trueDamage;
+    }
+
+    public float TrueStunDamage(float defaultSDmg)
+    {
+        trueStunDamage = (((1 + strengthLevel) * 1.8f) * defaultSDmg);
+        return trueStunDamage;
+    }
+
     public override float Damage()
     {
         float defalutDamage = base.Damage();
-        float finalDamage = (((1 + strengthLevel) * 1.8f) * defalutDamage) * (isBackAttack ? 1.5f : 1.0f) * (isCriticalAttack ? 2.0f : 1.0f);
+        float finalDamage = TrueDamage(defalutDamage) * (isBackAttack ? 1.5f : 1.0f) * (isCriticalAttack ? 2.0f : 1.0f);
         return finalDamage;
     }
 
     public override float StunDamage()
     {
         float defaultStunDamage = base.StunDamage();
-        float finalStunDamage = (((1 + strengthLevel) * 1.8f) * defaultStunDamage) * (isBackAttack ? 2.5f : 1.0f) * (isCriticalAttack ? 1.5f : 1.0f);
+        float finalStunDamage = TrueStunDamage(defaultStunDamage) * (isBackAttack ? 2.5f : 1.0f) * (isCriticalAttack ? 1.5f : 1.0f);
         return finalStunDamage;
     }
 
