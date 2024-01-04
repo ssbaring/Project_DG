@@ -35,6 +35,7 @@ public class EnemyControl : MonoBehaviour
     {
         if (collision.CompareTag("Weapon") && !isDamaged)
         {
+            playerStat.CriticalHit();
             enemyHealth -= playerStat.Damage();
             enemyStun -= playerStat.StunDamage();
             sprender.color = Color.red;

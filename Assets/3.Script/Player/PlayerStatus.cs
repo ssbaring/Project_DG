@@ -33,5 +33,21 @@ public class PlayerStatus : PlayerControl
         return finalSpeed;
     }
 
+    public override float CriticalProbability()
+    {
+        float defaultCriticalProbability = base.CriticalProbability();
+        float finalCritical = (criticalLevel * 0.5f) + defaultCriticalProbability;
+        return finalCritical;
+    }
+
+    public void CriticalHit()
+    {
+        isCriticalAttack = Random.Range(0, 100.0f) < CriticalProbability();
+        if(isCriticalAttack)
+        {
+            Debug.LogWarning("Critical");
+        }
+    }
+
 
 }

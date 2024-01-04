@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [Header("PlayerStat")]
-    public float defalutSpeed = 5.0f;
 
     private float jumpPower = 5.0f;
     private float wallJumpPower = 10.0f;
@@ -22,18 +20,22 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private bool isAttack;
     [SerializeField] private bool isWallJump;
 
+    [Header("PlayerStat")]
+    public float defalutSpeed = 5.0f;
 
     [Header("Damage")]
     public float defalutDamage = 5.0f;
     public float defaultStunDamage = 10.0f;
+    public float criticalProbability = 10.0f;
 
     public float gravity;
 
 
 
     private Rigidbody2D rigid;
-    private SpriteRenderer spRender;
     private Animator anim;
+    private PlayerStatus stat;
+
     [SerializeField] private SpriteRenderer wpRender;
     [SerializeField] private PlayerRayCheck playerRay;
     [SerializeField] private Transform respawn;
@@ -57,14 +59,19 @@ public class PlayerControl : MonoBehaviour
         return defalutSpeed;
     }
 
+    public virtual float CriticalProbability()
+    {
+        return criticalProbability;
+    }
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spRender = GetComponent<SpriteRenderer>();
+        stat = GetComponent<PlayerStatus>();
         anim = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         MoveCharacter();
         Wall();
@@ -133,7 +140,7 @@ public class PlayerControl : MonoBehaviour
         {
             posX = Input.GetAxis("Horizontal");
             wallPosX = 0;
-            Vector2 position = new Vector2(posX * defalutSpeed, rigid.velocity.y);
+            Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
 
             rigid.velocity = position;
 
