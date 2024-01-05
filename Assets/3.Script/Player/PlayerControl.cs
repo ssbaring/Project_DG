@@ -30,8 +30,6 @@ public class PlayerControl : MonoBehaviour
 
     public float gravity;
 
-
-
     private Rigidbody2D rigid;
     private Animator anim;
     private PlayerStatus stat;
@@ -64,7 +62,7 @@ public class PlayerControl : MonoBehaviour
         return criticalProbability;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         stat = GetComponent<PlayerStatus>();
@@ -92,7 +90,7 @@ public class PlayerControl : MonoBehaviour
         }
         else if (playerRay.isCanJump)
         {
-            anim.ResetTrigger("JumpStart");
+            //anim.ResetTrigger("JumpStart");
             anim.ResetTrigger("JumpTop");
             isWallJump = true;
         }
@@ -109,7 +107,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
         }
-        else if (rigid.velocity.y == 0 && !playerRay.isWall)
+        else if (playerRay.isCanJump)
         {
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsFalling", false);
@@ -128,7 +126,11 @@ public class PlayerControl : MonoBehaviour
             transform.position = respawn.position;
         }
 
-        
+        if(rigid.velocity.y < -15.0f)
+        {
+            rigid.velocity = new Vector2(rigid.velocity.x, -15.0f);
+        }
+
     }
 
     private void MoveCharacter()
@@ -206,6 +208,8 @@ public class PlayerControl : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.gravityScale = 0;
             isWallJump = false;
+            anim.SetBool("IsFalling", false);
+            anim.SetBool("IsRunning", false);
             anim.SetBool("IsWall", true);
             anim.SetBool("IsIdle", false);
 
@@ -240,12 +244,14 @@ public class PlayerControl : MonoBehaviour
                 //Invoke("NotTurn", 0.3f);
                 if (wallPosX < 0)
                 {
+                    Debug.Log("벽점프");
                     anim.SetTrigger("JumpStart");
                     isRightInt = -1;
                     transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
                 else if (wallPosX > 0)
                 {
+                    Debug.Log("벽점프");
                     anim.SetTrigger("JumpStart");
                     isRightInt = 1;
                     transform.rotation = Quaternion.identity;
@@ -256,9 +262,9 @@ public class PlayerControl : MonoBehaviour
                 rigid.gravityScale = gravity;
                 //isWallJump = true;
             }
-            else if (Input.GetAxis("Vertical") < 0)
+            else if (Input.GetAxisRaw("Vertical") < 0)
             {
-                posY = Input.GetAxis("Vertical");
+                posY = Input.GetAxisRaw("Vertical");
                 rigid.gravityScale = gravity;
                 rigid.velocity = new Vector2(0, posY * wallFallSpeed);
             }

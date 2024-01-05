@@ -46,7 +46,7 @@ public class PlayerStatus : PlayerControl
     public override float Speed()
     {
         float defaultSpeed = base.Speed();
-        float finalSpeed = (1 + speedLevel) * 0.5f + defaultSpeed;
+        float finalSpeed = speedLevel * 0.15f + defaultSpeed;
         return finalSpeed;
     }
 
