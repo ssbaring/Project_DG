@@ -2325,8 +2325,9 @@ MonoBehaviour:
   isRightInt: 1
   isRunning: 0
   isAttack: 0
-  isWallJump: 1
+  isWallJump: 0
   defalutSpeed: 5
+  jumpStartTime: 0.25
   defalutDamage: 0
   defaultStunDamage: 0
   criticalProbability: 10
@@ -2335,6 +2336,8 @@ MonoBehaviour:
   playerRay: {fileID: 311393539}
   respawn: {fileID: 1566244015}
   respawnKey: 114
+  AttackKey: 120
+  JumpKey: 99
 --- !u!114 &311393539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2381,6 +2384,7 @@ MonoBehaviour:
   isAttack: 0
   isWallJump: 0
   defalutSpeed: 5
+  jumpStartTime: 0.25
   defalutDamage: 5
   defaultStunDamage: 10
   criticalProbability: 10
@@ -2388,7 +2392,9 @@ MonoBehaviour:
   wpRender: {fileID: 351539045}
   playerRay: {fileID: 311393539}
   respawn: {fileID: 1566244015}
-  respawnKey: 0
+  respawnKey: 114
+  AttackKey: 120
+  JumpKey: 99
   strengthLevel: 0
   agilityLevel: 0
   speedLevel: 0

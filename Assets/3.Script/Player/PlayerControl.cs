@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
 
-    private float jumpPower = 5.0f;
+    private float jumpPower = 8.0f;
     private float wallJumpPower = 10.0f;
     private float wallFallSpeed = 5.0f;
-    
+
+
     [SerializeField] private float posX;
     [SerializeField] private float wallPosX;
     [SerializeField] private float posY;
@@ -19,9 +20,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private bool isRunning;
     [SerializeField] private bool isAttack;
     [SerializeField] private bool isWallJump;
+    [SerializeField] private bool isJumping;
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
+    public float jumpStartTime;
+    public float jumpTime;
 
     [Header("Damage")]
     public float defalutDamage = 5.0f;
@@ -41,7 +45,10 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Key")]
     public KeyCode respawnKey;
+    public KeyCode AttackKey;
+    public KeyCode JumpKey;
 
+    #region PlayerStatus
     public virtual float Damage()
     {
         return defalutDamage;
@@ -61,6 +68,7 @@ public class PlayerControl : MonoBehaviour
     {
         return criticalProbability;
     }
+    #endregion
 
     protected virtual void Start()
     {
@@ -71,30 +79,36 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        //이동
         MoveCharacter();
+        //벽점프
         Wall();
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        //공격
+        if (Input.GetKeyDown(AttackKey))
         {
             Attack();
         }
 
-        if (playerRay.isCanJump && Input.GetKeyDown(KeyCode.Space) && !isAttack)
+        //점프
+        JumpCharacter();
+
+
+        //땅에 닿음
+        if (playerRay.isCanJump)
         {
-            anim.SetTrigger("JumpStart");
-            JumpCharacter();
-        }
-        else if (!playerRay.isCanJump && Input.GetKeyDown(KeyCode.Z))
-        {
-            Attack();
-        }
-        else if (playerRay.isCanJump)
-        {
-            //anim.ResetTrigger("JumpStart");
-            anim.ResetTrigger("JumpTop");
             isWallJump = true;
+            anim.ResetTrigger("JumpTop");
         }
 
+
+
+
+        //점프공격
+        if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
+        {
+            Attack();
+        }
 
         //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
@@ -126,12 +140,15 @@ public class PlayerControl : MonoBehaviour
             transform.position = respawn.position;
         }
 
-        if(rigid.velocity.y < -15.0f)
+        //낙하속도 조절
+        if (rigid.velocity.y < -15.0f)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, -15.0f);
         }
 
     }
+
+
 
     private void MoveCharacter()
     {
@@ -172,6 +189,10 @@ public class PlayerControl : MonoBehaviour
                 anim.ResetTrigger("RunStart");
             }
         }
+        else if(isAttack)
+        {
+            posX = 0;
+        }
         else
         {
             return;
@@ -182,23 +203,58 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        anim.SetBool("IsJumping", true);
-        anim.SetBool("IsIdle", false);
-        rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-    }
-
-    private void Attack()
-    { 
-        //Debug.Log("공격");
-        if (!playerRay.isWall)
+        if (playerRay.isCanJump == true && Input.GetKeyDown(JumpKey) && !isAttack)
         {
-            anim.SetTrigger("Attack");
-            if (isRunning)
+            JumpAnimation();
+            isJumping = true;
+            jumpTime = jumpStartTime;
+            rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
+        }
+
+        if (Input.GetKey(JumpKey) && isJumping == true)
+        {
+            if (jumpTime > 0)
             {
-                anim.SetBool("IsRunning", false);
-                anim.SetBool("IsIdle", true);
+                JumpAnimation();
+                rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
+                jumpTime -= Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("JumpTimeCounter = 0");
+                isJumping = false;
+                anim.ResetTrigger("JumpStart");
             }
         }
+
+        if (Input.GetKeyUp(JumpKey))
+        {
+            Debug.Log("점프키 뗌");
+            isJumping = false;
+            anim.ResetTrigger("JumpStart");
+        }
+    }
+
+    private void JumpAnimation()
+    {
+        anim.SetTrigger("JumpStart");
+        anim.SetBool("IsJumping", true);
+        anim.SetBool("IsIdle", false);
+    }
+
+
+    private void Attack()
+    {
+        Debug.Log("공격");
+        if (playerRay.isWall) return;
+
+        anim.SetTrigger("Attack");
+        if (isRunning)
+        {
+            anim.SetBool("IsRunning", false);
+            anim.SetBool("IsIdle", true);
+        }
+
     }
 
     private void Wall()
@@ -238,7 +294,7 @@ public class PlayerControl : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(JumpKey))
             {
                 isWallJump = true;
                 //Invoke("NotTurn", 0.3f);
