@@ -90,6 +90,12 @@ public class PlayerControl : MonoBehaviour
             Attack();
         }
 
+        //점프공격
+        if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
+        {
+            Attack();
+        }
+
         //점프
         JumpCharacter();
 
@@ -104,11 +110,6 @@ public class PlayerControl : MonoBehaviour
 
 
 
-        //점프공격
-        if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
-        {
-            Attack();
-        }
 
         //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
@@ -152,16 +153,13 @@ public class PlayerControl : MonoBehaviour
 
     private void MoveCharacter()
     {
-        //PlayerStatus calc = new PlayerStatus();
-        //float calculatedSpeed = calc.Speed();
-
+        posX = Input.GetAxis("Horizontal");
+        Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
         if (!isAttack && isWallJump)
         {
-            posX = Input.GetAxis("Horizontal");
             wallPosX = 0;
-            Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
-
             rigid.velocity = position;
+
 
             if (posX < 0)
             {
@@ -189,7 +187,7 @@ public class PlayerControl : MonoBehaviour
                 anim.ResetTrigger("RunStart");
             }
         }
-        else if(isAttack)
+        else if (isAttack)
         {
             posX = 0;
         }
@@ -338,6 +336,7 @@ public class PlayerControl : MonoBehaviour
         isWallJump = false;
     }
 
+    #region Animation Event
 
     public void IsAttack()
     {
@@ -348,9 +347,12 @@ public class PlayerControl : MonoBehaviour
     {
         isAttack = false;
     }
+
     public void IsRun()
     {
         anim.SetBool("IsRunning", false);
         anim.SetBool("IsIdle", true);
     }
+
+    #endregion
 }
