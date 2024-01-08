@@ -9,13 +9,15 @@ public class EnemyControl : MonoBehaviour
     [SerializeField] protected float enemyHealth;
     [SerializeField] protected float enemyStun;
 
-    
 
+
+    private float restorationStartTime = 0;
     private Rigidbody2D enemyRigid;
     private SpriteRenderer sprender;
     protected Animator enemyAnim;
 
     public bool isDamaged = false;
+    public bool isStun = false;
 
     public int isRightIntEnemy = 1;
     public float backCoefficent = 1.0f;
@@ -65,18 +67,43 @@ public class EnemyControl : MonoBehaviour
 
     private void Update()
     {
-        if(enemyHealth <= 0)
+        if (enemyHealth <= 0)
         {
             gameObject.SetActive(false);
         }
-        else if(enemyStun <= 0)
+        else if (enemyStun <= 0)
         {
-            sprender.color = new Color(1, 1, 1, 0.2f);
-            enemyRigid.bodyType = RigidbodyType2D.Static;
-            GetComponent<Collider2D>().enabled = false;
-            StunAnimation();
+            isStun = true;
+            playerStat.GetPlayerEXP(enemyList.enemyEXP);
+            enemyStun = 0;
+        }
+        else if (enemyStun >= enemyList.enemySP - 0.1f)
+        {
+            enemyStun = enemyList.enemySP;
+            isStun = false;
         }
 
+        if (isStun)
+        {
+            if (restorationStartTime < enemyList.enemyRestoration)
+            {
+                restorationStartTime += Time.deltaTime;
+                enemyStun = Mathf.Lerp(0, enemyList.enemySP, restorationStartTime / enemyList.enemyRestoration);
+                enemyHealth += Mathf.CeilToInt(enemyList.enemyHPRestoration * Time.deltaTime);
+                sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
+                enemyRigid.bodyType = RigidbodyType2D.Static;
+                GetComponent<Collider2D>().enabled = false;
+                StunAnimation();
+            }
+        }
+        else
+        {
+            sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
+            enemyRigid.bodyType = RigidbodyType2D.Dynamic;
+            GetComponent<Collider2D>().enabled = true;
+            restorationStartTime = 0;
+            IdleAnimation();
+        }
 
     }
 
@@ -84,19 +111,21 @@ public class EnemyControl : MonoBehaviour
     private void HitAnimation()
     {
         enemyAnim.SetTrigger("Hit");
-        enemyAnim.SetBool("IsIdle", false);
     }
 
     private void StunAnimation()
     {
         enemyAnim.SetBool("IsStun", true);
-        enemyAnim.SetBool("IsIdle", false);
+    }
+
+    private void IdleAnimation()
+    {
+        enemyAnim.SetBool("IsStun", false);
     }
 
     private void ResetAnimationTrigger()
     {
         enemyAnim.ResetTrigger("Hit");
-        enemyAnim.SetBool("IsIdle", true);
     }
 
 }

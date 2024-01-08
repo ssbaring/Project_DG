@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
+    public float defalutAttackSpeed = 1.0f;
     public float jumpStartTime;
     public float jumpTime;
 
@@ -64,6 +65,11 @@ public class PlayerControl : MonoBehaviour
         return defalutSpeed;
     }
 
+    public virtual float AttackSpeed()
+    {
+        return defalutAttackSpeed;
+    }
+
     public virtual float CriticalProbability()
     {
         return criticalProbability;
@@ -77,7 +83,7 @@ public class PlayerControl : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         //이동
         MoveCharacter();
@@ -154,6 +160,7 @@ public class PlayerControl : MonoBehaviour
     private void MoveCharacter()
     {
         posX = Input.GetAxis("Horizontal");
+        anim.SetFloat("RunSpeed", stat.TrueSpeedAnimation());
         Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
         if (!isAttack && isWallJump)
         {
@@ -245,7 +252,7 @@ public class PlayerControl : MonoBehaviour
     {
         Debug.Log("공격");
         if (playerRay.isWall) return;
-
+        anim.SetFloat("AttackSpeed", stat.AttackSpeed());
         anim.SetTrigger("Attack");
         if (isRunning)
         {

@@ -17,5 +17,7 @@ MonoBehaviour:
   enemyHP: 10000
   enemySP: 10000
   enemySpeed: 3
+  enemyEXP: 50
+  enemyRestoration: 10
   enemyAnim: {fileID: 0}
   enemySprite: {fileID: 0}

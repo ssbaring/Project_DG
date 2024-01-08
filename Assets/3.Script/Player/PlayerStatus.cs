@@ -10,9 +10,14 @@ public class PlayerStatus : PlayerControl
     public int agilityLevel = 0;
     public int speedLevel = 0;
     public int criticalLevel = 0;
+    public int playerLevel = 1;
+    public float playerMaxEXP = 100;
+    public float playerCurrentEXP = 0;
+    public int skillPoint = 1;
 
     public float trueDamage;
     public float trueStunDamage;
+
 
     public bool isBackAttack = false;
     public bool isCriticalAttack = false;
@@ -28,6 +33,40 @@ public class PlayerStatus : PlayerControl
         trueStunDamage = (((1 + strengthLevel) * 1.8f) * defaultSDmg);
         return trueStunDamage;
     }
+
+    public float TrueSpeedAnimation()
+    {
+        float trueSpeed = (speedLevel * 0.1f) + 1;
+        return trueSpeed;
+    }
+
+    public void GetPlayerEXP(int enemyEXP)
+    {
+        playerCurrentEXP += enemyEXP;
+    }
+
+    private void PlayerLevelUP()
+    {
+        if(playerCurrentEXP >= playerMaxEXP)
+        {
+            playerLevel++;
+            skillPoint++;
+            playerCurrentEXP -= playerMaxEXP;
+            playerMaxEXP = Mathf.CeilToInt((playerMaxEXP + ((playerLevel - 1) * 20)) * 1.3f);
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        PlayerLevelUP();
+    }
+
+    #region Overriding
 
     public override float Damage()
     {
@@ -50,12 +89,21 @@ public class PlayerStatus : PlayerControl
         return finalSpeed;
     }
 
+    public override float AttackSpeed()
+    {
+        float defaultAttackSpeed = base.AttackSpeed();
+        float finalAttackSpeed = speedLevel * 0.1f + defaultAttackSpeed;
+        return finalAttackSpeed;
+    }
+
     public override float CriticalProbability()
     {
         float defaultCriticalProbability = base.CriticalProbability();
         float finalCritical = (criticalLevel * 0.5f) + defaultCriticalProbability;
         return finalCritical;
     }
+
+    #endregion
 
     public void CriticalHit()
     {
@@ -65,6 +113,8 @@ public class PlayerStatus : PlayerControl
             Debug.LogWarning("Critical");
         }
     }
+
+
 
 
 }

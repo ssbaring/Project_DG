@@ -17,6 +17,8 @@ public class PlayerSkillStatus : MonoBehaviour
     public TextMeshProUGUI SpeedValueText;
     public TextMeshProUGUI CriticalValueText;
 
+    public TextMeshProUGUI SkillPointCount;
+
     [SerializeField] private int maxLevel = 20;
 
     private PlayerStatus level;
@@ -36,54 +38,157 @@ public class PlayerSkillStatus : MonoBehaviour
         StrengthValueText.text = string.Format("{0}", level.TrueDamage(level.defalutDamage));
         StunValueText.text = string.Format("{0}", level.TrueStunDamage(level.defaultStunDamage));
         SpeedValueText.text = string.Format("{0}", level.Speed());
-        CriticalValueText.text = string.Format("{0}", level.CriticalProbability());
+        CriticalValueText.text = string.Format("{0}%", level.CriticalProbability());
+
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
     }
 
     public void StrengthLevelUp()
     {
-        if (level.strengthLevel < maxLevel)
+        if (level.strengthLevel < maxLevel && level.skillPoint >= 1)
         {
-            level.strengthLevel = level.strengthLevel + 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (level.strengthLevel >= maxLevel) return;
+                else if(level.strengthLevel < maxLevel)
+                {
+                    if(level.strengthLevel + level.skillPoint <= maxLevel)
+                    {
+                        level.strengthLevel += level.skillPoint;
+                        level.skillPoint -= level.skillPoint;
+                    }
+                    else if (level.strengthLevel + level.skillPoint > maxLevel)
+                    {
+                        level.skillPoint -= maxLevel - level.strengthLevel;
+                        level.strengthLevel += maxLevel - level.strengthLevel;
+                    }
+                }
+            }
+            else
+            {
+                level.strengthLevel++;
+                level.skillPoint--;
+            }
+        }
+        else if (level.strengthLevel >= maxLevel)
+        {
+            level.strengthLevel = maxLevel;
         }
         else
         {
-            level.strengthLevel = maxLevel;
+            return;
         }
 
     }
     public void AgilityLevelUp()
     {
-        if (level.agilityLevel < maxLevel)
+        if (level.agilityLevel < maxLevel && level.skillPoint >= 1)
         {
-            level.agilityLevel = level.agilityLevel + 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (level.agilityLevel >= maxLevel) return;
+                else if (level.agilityLevel < maxLevel)
+                {
+                    if (level.agilityLevel + level.skillPoint <= maxLevel)
+                    {
+                        level.agilityLevel += level.skillPoint;
+                        level.skillPoint -= level.skillPoint;
+                    }
+                    else if (level.agilityLevel + level.skillPoint > maxLevel)
+                    {
+                        level.skillPoint -= maxLevel - level.agilityLevel;
+                        level.agilityLevel += maxLevel - level.agilityLevel;
+                    }
+                }
+            }
+            else
+            {
+                level.agilityLevel++;
+                level.skillPoint--;
+            }
+        }
+        else if (level.agilityLevel >= maxLevel)
+        {
+            level.agilityLevel = maxLevel;
         }
         else
         {
-            level.agilityLevel = maxLevel;
+            return;
         }
     }
     public void SpeedLevelUp()
     {
-        if (level.speedLevel < maxLevel)
+        if (level.speedLevel < maxLevel && level.skillPoint >= 1)
         {
-            level.speedLevel = level.speedLevel + 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (level.speedLevel >= maxLevel) return;
+                else if (level.speedLevel < maxLevel)
+                {
+                    if (level.speedLevel + level.skillPoint <= maxLevel)
+                    {
+                        level.speedLevel += level.skillPoint;
+                        level.skillPoint -= level.skillPoint;
+                    }
+                    else if (level.speedLevel + level.skillPoint > maxLevel)
+                    {
+                        level.skillPoint -= maxLevel - level.speedLevel;
+                        level.speedLevel += maxLevel - level.speedLevel;
+                    }
+                }
+            }
+            else
+            {
+                level.speedLevel++;
+                level.skillPoint--;
+            }
+        }
+        else if (level.speedLevel >= maxLevel)
+        {
+            level.speedLevel = maxLevel;
         }
         else
         {
-            level.speedLevel = maxLevel;
+            return;
         }
     }
     public void CriticalLevelUp()
     {
-        if (level.criticalLevel < maxLevel)
+        if (level.criticalLevel < maxLevel && level.skillPoint >= 1)
         {
-            level.criticalLevel = level.criticalLevel + 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (level.criticalLevel >= maxLevel) return;
+                else if (level.criticalLevel < maxLevel)
+                {
+                    if (level.criticalLevel + level.skillPoint <= maxLevel)
+                    {
+                        level.criticalLevel += level.skillPoint;
+                        level.skillPoint -= level.skillPoint;
+                    }
+                    else if (level.criticalLevel + level.skillPoint > maxLevel)
+                    {
+                        level.skillPoint -= maxLevel - level.criticalLevel;
+                        level.criticalLevel += maxLevel - level.criticalLevel;
+                    }
+                }
+            }
+            else
+            {
+                level.criticalLevel++;
+                level.skillPoint--;
+            }
         }
-        else
+        else if (level.criticalLevel >= maxLevel)
         {
             level.criticalLevel = maxLevel;
         }
+        else
+        {
+            return;
+        }
     }
+
     //UP
     //==================================================================
     //DOWN
@@ -91,7 +196,16 @@ public class PlayerSkillStatus : MonoBehaviour
     {
         if (level.strengthLevel > 0)
         {
-            level.strengthLevel = level.strengthLevel - 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                level.skillPoint += level.strengthLevel;
+                level.strengthLevel -= level.strengthLevel;
+            }
+            else
+            {
+                level.strengthLevel--;
+                level.skillPoint++;
+            }
         }
         else
         {
@@ -103,7 +217,16 @@ public class PlayerSkillStatus : MonoBehaviour
     {
         if (level.agilityLevel > 0)
         {
-            level.agilityLevel = level.agilityLevel - 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                level.skillPoint += level.agilityLevel;
+                level.agilityLevel -= level.agilityLevel;
+            }
+            else
+            {
+                level.agilityLevel--;
+                level.skillPoint++;
+            }
         }
         else
         {
@@ -116,7 +239,16 @@ public class PlayerSkillStatus : MonoBehaviour
     {
         if (level.speedLevel > 0)
         {
-            level.speedLevel = level.speedLevel - 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                level.skillPoint += level.speedLevel;
+                level.speedLevel -= level.speedLevel;
+            }
+            else
+            {
+                level.speedLevel--;
+                level.skillPoint++;
+            }
         }
         else
         {
@@ -128,7 +260,16 @@ public class PlayerSkillStatus : MonoBehaviour
     {
         if (level.criticalLevel > 0)
         {
-            level.criticalLevel = level.criticalLevel - 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                level.skillPoint += level.criticalLevel;
+                level.criticalLevel -= level.criticalLevel;
+            }
+            else
+            {
+                level.criticalLevel--;
+                level.skillPoint++;
+            }
         }
         else
         {

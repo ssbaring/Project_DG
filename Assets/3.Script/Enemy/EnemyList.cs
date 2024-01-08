@@ -10,7 +10,9 @@ public class EnemyList : ScriptableObject
     public float enemyHP = 100;
     public float enemySP;
     public float enemySpeed = 3.0f;
-    public float enemyEXP;
+    public int enemyEXP;
+    public int enemyRestoration;
+    public float enemyHPRestoration = 20.0f;
     public Animator enemyAnim;
     public SpriteRenderer enemySprite;
 
