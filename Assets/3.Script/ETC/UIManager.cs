@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,9 +15,24 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        Inventory_Active();
-        Menu_Active();
-        Skill_Active();
+        if (inventory.activeSelf || skill.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                inventory.SetActive(false);
+                skill.SetActive(false);
+            }
+        }
+        else if (!inventory.activeSelf || !skill.activeSelf || !menu.activeSelf)
+        {
+            Menu_Active();
+        }
+
+        if (!menu.activeSelf)
+        {
+            Inventory_Active();
+            Skill_Active();
+        }
     }
 
     private void Inventory_Active()

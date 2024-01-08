@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
 
-    private float jumpPower = 8.0f;
+    private float jumpPower = 6.5f;
     private float wallJumpPower = 10.0f;
     private float wallFallSpeed = 5.0f;
 
@@ -110,28 +110,24 @@ public class PlayerControl : MonoBehaviour
         if (playerRay.isCanJump)
         {
             isWallJump = true;
+            anim.SetBool("IsJumping", false);
+            anim.SetBool("IsFalling", false);
             anim.ResetTrigger("JumpTop");
+            rigid.gravityScale = gravity;
         }
-
-
-
 
 
         //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
         {
             anim.SetTrigger("JumpTop");
+            jumpTime = -0.1f;
         }
         else if (rigid.velocity.y < 0)
         {
             anim.SetBool("IsJumping", true);
             anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
-        }
-        else if (playerRay.isCanJump)
-        {
-            anim.SetBool("IsJumping", false);
-            anim.SetBool("IsFalling", false);
         }
 
 
@@ -226,7 +222,6 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("JumpTimeCounter = 0");
                 isJumping = false;
                 anim.ResetTrigger("JumpStart");
             }
@@ -234,7 +229,6 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyUp(JumpKey))
         {
-            Debug.Log("점프키 뗌");
             isJumping = false;
             anim.ResetTrigger("JumpStart");
         }
@@ -250,7 +244,6 @@ public class PlayerControl : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log("공격");
         if (playerRay.isWall) return;
         anim.SetFloat("AttackSpeed", stat.AttackSpeed());
         anim.SetTrigger("Attack");
@@ -332,7 +325,7 @@ public class PlayerControl : MonoBehaviour
         }
         else if (!playerRay.isWall)
         {
-            rigid.gravityScale = gravity;
+            //rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
         }
     }
