@@ -34,6 +34,7 @@ public class PlayerControl : MonoBehaviour
     public float criticalProbability = 10.0f;
 
     public float gravity;
+    public float waterGravity;
 
     private Rigidbody2D rigid;
     private Animator anim;
@@ -149,6 +150,16 @@ public class PlayerControl : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, -15.0f);
         }
 
+        if (playerRay.isWater)
+        {
+            rigid.gravityScale = waterGravity;
+            jumpPower = 1.5f;
+        }
+        else
+        {
+            jumpPower = 6.5f;
+        }
+
     }
 
 
@@ -204,7 +215,7 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        if (playerRay.isCanJump == true && Input.GetKeyDown(JumpKey) && !isAttack)
+        if ((playerRay.isCanJump || playerRay.isWater) && Input.GetKeyDown(JumpKey) && !isAttack)
         {
             JumpAnimation();
             isJumping = true;
@@ -327,6 +338,7 @@ public class PlayerControl : MonoBehaviour
         {
             //rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
+            isWallJump = true;
         }
     }
 

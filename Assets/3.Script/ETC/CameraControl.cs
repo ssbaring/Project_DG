@@ -4,9 +4,21 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public GameObject Player;
-    private void FixedUpdate()
+    public GameObject virtualCam;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position = new Vector3(Player.transform.position.x, transform.position.y, -10);
+        if(collision.CompareTag("Player") && !collision.isTrigger)
+        {
+            virtualCam.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && !collision.isTrigger)
+        {
+            virtualCam.SetActive(false);
+        }
     }
 }
