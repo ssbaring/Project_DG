@@ -22,6 +22,12 @@ public class PlayerStatus : PlayerControl
     public bool isBackAttack = false;
     public bool isCriticalAttack = false;
 
+    private PlayerRayCheck check;
+    private void Awake()
+    {
+        check = GetComponent<PlayerRayCheck>();
+    }
+
     public float TrueDamage(float defaultDmg)
     {
         trueDamage = (((1 + strengthLevel) * 1.8f) * defaultDmg);
@@ -36,7 +42,7 @@ public class PlayerStatus : PlayerControl
 
     public float TrueSpeedAnimation()
     {
-        float trueSpeed = (speedLevel * 0.1f) + 1;
+        float trueSpeed = check.isWater ? 0.5f : (speedLevel * 0.1f) + 1;
         return trueSpeed;
     }
 
@@ -85,7 +91,7 @@ public class PlayerStatus : PlayerControl
     public override float Speed()
     {
         float defaultSpeed = base.Speed();
-        float finalSpeed = speedLevel * 0.15f + defaultSpeed;
+        float finalSpeed = check.isWater ? 2.5f : speedLevel * 0.15f + defaultSpeed;
         return finalSpeed;
     }
 

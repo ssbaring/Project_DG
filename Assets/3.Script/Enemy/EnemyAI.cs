@@ -54,12 +54,21 @@ public class EnemyAI : MonoBehaviour
 
     //public GameObject Player;
 
+    private PolygonCollider2D poly;
+
+    private void Start()
+    {
+        poly = FindObjectOfType<PolygonCollider2D>();
+    }
+
     public void SetPosition()       //∏  ªÁ¿Ã¡Ó
     {
         bottom_left = new Vector2Int((int)BottomLeft_obj.transform.position.x, (int)BottomLeft_obj.transform.position.y);
         top_right = new Vector2Int((int)TopRight_obj.transform.position.x, (int)TopRight_obj.transform.position.y);
         start_pos = new Vector2Int((int)StartPos.transform.position.x, (int)StartPos.transform.position.y);
         end_pos = new Vector2Int((int)EndPos.transform.position.x, (int)EndPos.transform.position.y);
+
+        
     }
 
     public void PathFinding()

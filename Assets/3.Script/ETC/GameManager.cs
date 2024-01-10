@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     private PlayerStatus playerStat;
 
+    public GameObject Room;
+    private PolygonCollider2D poly;
+
     [Header("DevMode")]
     [SerializeField] private int exp = 10000;
 
@@ -26,7 +29,9 @@ public class GameManager : MonoBehaviour
         #endregion
 
         playerStat = FindObjectOfType<PlayerStatus>();
+        poly = FindObjectOfType<PolygonCollider2D>();
     }
+
 
     private void Update()
     {
@@ -38,6 +43,12 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha0))
         {
             playerStat.GetPlayerEXP(exp);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log(poly.points[0]);
+            Debug.Log(poly.points[2]);
         }
     }
 }

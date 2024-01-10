@@ -117,6 +117,10 @@ public class PlayerControl : MonoBehaviour
             rigid.gravityScale = gravity;
         }
 
+        if (playerRay.isSloth)
+        {
+            rigid.gravityScale = 0;
+        }
 
         //√µ¿Â
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
@@ -153,6 +157,10 @@ public class PlayerControl : MonoBehaviour
         if (playerRay.isWater)
         {
             rigid.gravityScale = waterGravity;
+            if (rigid.velocity.y < -5.0f)
+            {
+                rigid.velocity = new Vector2(rigid.velocity.x, -5.0f);
+            }
             jumpPower = 1.5f;
         }
         else
@@ -336,7 +344,7 @@ public class PlayerControl : MonoBehaviour
         }
         else if (!playerRay.isWall)
         {
-            //rigid.gravityScale = gravity;
+            rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
             isWallJump = true;
         }

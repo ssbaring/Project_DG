@@ -40,7 +40,7 @@ public class EnemyControl : MonoBehaviour
             playerStat.CriticalHit();
             enemyHealth -= playerStat.Damage();
             enemyStun -= playerStat.StunDamage();
-            sprender.color = Color.red;
+            sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
             HitAnimation();
             Invoke("Hit", 0.3f);
             isDamaged = true;
@@ -53,7 +53,7 @@ public class EnemyControl : MonoBehaviour
     {
         if (collision.CompareTag("Weapon"))
         {
-            sprender.color = Color.white;
+            sprender.color = new Color(1, 1, 1, sprender.color.a);
             playerStat.isCriticalAttack = false;
             ResetAnimationTrigger();
             isDamaged = false;
@@ -126,6 +126,16 @@ public class EnemyControl : MonoBehaviour
     private void ResetAnimationTrigger()
     {
         enemyAnim.ResetTrigger("Hit");
+    }
+
+    public void StunDisableAlpha()
+    {
+        sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
+    }
+
+    public void StunEnableAlpha()
+    {
+        sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
     }
 
 }
