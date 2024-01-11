@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
-    [SerializeField] private PlayerStatus playerStat;
-    [SerializeField] private EnemyList enemyList;
+    
+    [SerializeField] protected EnemyList enemyList;
     [SerializeField] protected float enemyHealth;
     [SerializeField] protected float enemyStun;
+    [SerializeField] protected float alertTimer = 0;
 
 
-
-    private float restorationStartTime = 0;
-    private Rigidbody2D enemyRigid;
-    private SpriteRenderer sprender;
+    protected float restorationStartTime = 0;
+    protected Rigidbody2D enemyRigid;
+    protected SpriteRenderer sprender;
+    protected PlayerStatus playerStat;
     protected Animator enemyAnim;
 
     public bool isDamaged = false;
     public bool isStun = false;
+    public bool isAlert = false;
 
     public int isRightIntEnemy = 1;
     public float backCoefficent = 1.0f;
 
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         playerStat = FindObjectOfType<PlayerStatus>();
         sprender = GetComponent<SpriteRenderer>();
@@ -40,10 +42,14 @@ public class EnemyControl : MonoBehaviour
             playerStat.CriticalHit();
             enemyHealth -= playerStat.Damage();
             enemyStun -= playerStat.StunDamage();
+            
+            enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
             sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
             HitAnimation();
             Invoke("Hit", 0.3f);
             isDamaged = true;
+            isAlert = true;
+            alertTimer = 0;
             Debug.Log("HP : " + enemyHealth);
             Debug.Log("Stun : " + enemyStun);
         }
@@ -65,31 +71,19 @@ public class EnemyControl : MonoBehaviour
         sprender.color = Color.white;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (enemyHealth <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-        else if (enemyStun <= 0)
-        {
-            isStun = true;
-            playerStat.GetPlayerEXP(enemyList.enemyEXP);
-            enemyStun = 0;
-        }
-        else if (enemyStun >= enemyList.enemySP - 0.1f)
-        {
-            enemyStun = enemyList.enemySP;
-            isStun = false;
-        }
+        
 
         if (isStun)
         {
             if (restorationStartTime < enemyList.enemyRestoration)
             {
                 restorationStartTime += Time.deltaTime;
+                //기절하는 동안 적이 HP와 SP 회복
                 enemyStun = Mathf.Lerp(0, enemyList.enemySP, restorationStartTime / enemyList.enemyRestoration);
                 enemyHealth += Mathf.CeilToInt(enemyList.enemyHPRestoration * Time.deltaTime);
+
                 sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
                 enemyRigid.bodyType = RigidbodyType2D.Static;
                 GetComponent<Collider2D>().enabled = false;
@@ -98,16 +92,16 @@ public class EnemyControl : MonoBehaviour
         }
         else
         {
+            restorationStartTime = 0;
             sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
             enemyRigid.bodyType = RigidbodyType2D.Dynamic;
             GetComponent<Collider2D>().enabled = true;
-            restorationStartTime = 0;
             IdleAnimation();
         }
 
     }
 
-
+    #region Animation
     private void HitAnimation()
     {
         enemyAnim.SetTrigger("Hit");
@@ -138,4 +132,5 @@ public class EnemyControl : MonoBehaviour
         sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
     }
 
+    #endregion
 }

@@ -17,8 +17,30 @@ public class PlayerStatus : PlayerControl
 
     public float trueDamage;
     public float trueStunDamage;
+    public float knockback = 0.2f;
 
+    private int CurseStack;
+    public int curseStack
+    {
+        get
+        {
+            return CurseStack;
+        }
+        set
+        {
+            if(value > 4)
+            {
+                anim.SetBool("IsCurseDie", true);
+                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            }
+            else
+            {
+                anim.SetBool("IsCurseDie", false);
+            }
 
+        }
+    }
+    
     public bool isBackAttack = false;
     public bool isCriticalAttack = false;
 

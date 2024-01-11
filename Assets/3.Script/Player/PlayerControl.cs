@@ -5,22 +5,22 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
 
-    private float jumpPower = 6.5f;
-    private float wallJumpPower = 10.0f;
-    private float wallFallSpeed = 5.0f;
+    protected float jumpPower = 6.5f;
+    protected float wallJumpPower = 10.0f;
+    protected float wallFallSpeed = 5.0f;
 
 
-    [SerializeField] private float posX;
-    [SerializeField] private float wallPosX;
-    [SerializeField] private float posY;
+    [SerializeField] protected float posX;
+    [SerializeField] protected float wallPosX;
+    [SerializeField] protected float posY;
 
 
     [Header("Check")]
     public float isRightInt = 1;
-    [SerializeField] private bool isRunning;
-    [SerializeField] private bool isAttack;
-    [SerializeField] private bool isWallJump;
-    [SerializeField] private bool isJumping;
+    [SerializeField] protected bool isRunning;
+    [SerializeField] protected bool isAttack;
+    [SerializeField] protected bool isWallJump;
+    [SerializeField] protected bool isJumping;
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
@@ -36,13 +36,13 @@ public class PlayerControl : MonoBehaviour
     public float gravity;
     public float waterGravity;
 
-    private Rigidbody2D rigid;
-    private Animator anim;
-    private PlayerStatus stat;
+    protected Rigidbody2D rigid;
+    protected Animator anim;
+    protected PlayerStatus stat;
 
-    [SerializeField] private SpriteRenderer wpRender;
-    [SerializeField] private PlayerRayCheck playerRay;
-    [SerializeField] private Transform respawn;
+    [SerializeField] protected SpriteRenderer wpRender;
+    [SerializeField] protected PlayerRayCheck playerRay;
+    [SerializeField] protected Transform respawn;
 
 
     [Header("Key")]
@@ -110,17 +110,17 @@ public class PlayerControl : MonoBehaviour
         //∂•ø° ¥Í¿Ω
         if (playerRay.isCanJump)
         {
-            isWallJump = true;
+            isWallJump = false;
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsFalling", false);
             anim.ResetTrigger("JumpTop");
             rigid.gravityScale = gravity;
         }
 
-        if (playerRay.isSloth)
+        /*if (playerRay.isSloth)
         {
             rigid.gravityScale = 0;
-        }
+        }*/
 
         //√µ¿Â
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
@@ -154,6 +154,7 @@ public class PlayerControl : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, -15.0f);
         }
 
+        //π∞
         if (playerRay.isWater)
         {
             rigid.gravityScale = waterGravity;
@@ -168,6 +169,12 @@ public class PlayerControl : MonoBehaviour
             jumpPower = 6.5f;
         }
 
+        //¿˙¡÷∑Œ ¿Œ«— ¡◊¿Ω
+       /* if (stat.curseStack >= 4)
+        {
+            CursedDie();
+        }*/
+
     }
 
 
@@ -177,7 +184,7 @@ public class PlayerControl : MonoBehaviour
         posX = Input.GetAxis("Horizontal");
         anim.SetFloat("RunSpeed", stat.TrueSpeedAnimation());
         Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
-        if (!isAttack && isWallJump)
+        if (!isAttack && !isWallJump)
         {
             wallPosX = 0;
             rigid.velocity = position;
@@ -263,7 +270,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Attack()
     {
-        if (playerRay.isWall) return;
+        if (playerRay.isWall && isWallJump) return;
         anim.SetFloat("AttackSpeed", stat.AttackSpeed());
         anim.SetTrigger("Attack");
         if (isRunning)
@@ -280,7 +287,7 @@ public class PlayerControl : MonoBehaviour
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.gravityScale = 0;
-            isWallJump = false;
+            isWallJump = true;
             anim.SetBool("IsFalling", false);
             anim.SetBool("IsRunning", false);
             anim.SetBool("IsWall", true);
@@ -313,7 +320,7 @@ public class PlayerControl : MonoBehaviour
 
             if (Input.GetKeyDown(JumpKey))
             {
-                isWallJump = true;
+                isWallJump = false;
                 //Invoke("NotTurn", 0.3f);
                 if (wallPosX < 0)
                 {
@@ -346,14 +353,13 @@ public class PlayerControl : MonoBehaviour
         {
             rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
-            isWallJump = true;
+            isWallJump = false;
         }
     }
 
-
-    private void NotTurn()
+    protected void CursedDie()
     {
-        isWallJump = false;
+        anim.SetBool("IsCurseDie", true);
     }
 
     #region Animation Event
