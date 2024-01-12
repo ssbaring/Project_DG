@@ -36,7 +36,7 @@ public class CheckPoint : MonoBehaviour
     {
         if(isCheckIn)
         {
-            if (Input.GetKeyDown(GameManager.instance.CheckPointKey))
+            if (Input.GetKeyDown(GameManager.instance.InteractionKey))
             {
                 GameManager.instance.respawnPoint.position = transform.position;
                 StartCoroutine(Blink());

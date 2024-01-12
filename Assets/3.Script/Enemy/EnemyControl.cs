@@ -5,10 +5,34 @@ using UnityEngine;
 public class EnemyControl : MonoBehaviour
 {
     
-    [SerializeField] protected EnemyList enemyList;
-    [SerializeField] protected float enemyHealth;
-    [SerializeField] protected float enemyStun;
     [SerializeField] protected float alertTimer = 0;
+    [SerializeField] protected EnemyList enemyList;
+    [SerializeField] protected float enemyStun;
+    [SerializeField] protected float enemyHealth;
+
+    public float EnemyStun
+    {
+        get
+        {
+            return enemyStun;
+        }
+        set
+        {
+            enemyStun = value;
+        }
+    }
+
+    public float EnemyHealth
+    {
+        get
+        {
+            return enemyHealth;
+        }
+        set
+        {
+            enemyHealth = value;
+        }
+    }
 
 
     protected float restorationStartTime = 0;

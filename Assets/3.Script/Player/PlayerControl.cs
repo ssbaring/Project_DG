@@ -143,14 +143,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsIdle", true);
         }
 
-        //리스폰
-        if (Input.GetKeyDown(GameManager.instance.respawnKey))
-        {
-            transform.position = GameManager.instance.respawnPoint.position;
-            rigid.velocity = Vector2.zero;
-            stat.CurseStack = 0;
-            isDead = false;
-        }
+        
 
         //낙하속도 조절
         if (rigid.velocity.y < -15.0f)

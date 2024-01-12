@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public KeyCode respawnKey;
     public KeyCode AttackKey;
     public KeyCode JumpKey;
-    public KeyCode CheckPointKey;
+    public KeyCode InteractionKey;
 
 
     public Transform respawnPoint;

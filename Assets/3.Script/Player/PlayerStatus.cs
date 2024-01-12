@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStatus : PlayerControl
 {
-    
+
     [Header("Status Level")]
     public int strengthLevel = 0;
     public int agilityLevel = 0;
@@ -18,10 +18,14 @@ public class PlayerStatus : PlayerControl
     public float playerCurrentEXP = 0;
     [Space(10f)]
     [SerializeField] private int curseStack = 0;
+    [SerializeField] private int MaxCurseStack = 4;
 
+    public bool isRevive = false;
     public float trueDamage;
     public float trueStunDamage;
     public float knockback = 0.2f;
+
+    public List<GameObject> DeadEnemyList;
 
     public int CurseStack
     {
@@ -32,7 +36,7 @@ public class PlayerStatus : PlayerControl
         set
         {
             curseStack = value;
-            if(curseStack >= 4)
+            if (curseStack >= MaxCurseStack)
             {
                 isDead = true;
                 anim.SetBool("IsCurseDie", true);
@@ -47,7 +51,7 @@ public class PlayerStatus : PlayerControl
 
         }
     }
-    
+
     public bool isBackAttack = false;
     public bool isCriticalAttack = false;
 
@@ -82,7 +86,7 @@ public class PlayerStatus : PlayerControl
 
     private void PlayerLevelUP()
     {
-        if(playerCurrentEXP >= playerMaxEXP)
+        if (playerCurrentEXP >= playerMaxEXP)
         {
             playerLevel++;
             skillPoint++;
@@ -95,10 +99,32 @@ public class PlayerStatus : PlayerControl
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
         PlayerLevelUP();
+
+        //리스폰
+        if (Input.GetKeyDown(GameManager.instance.respawnKey))
+        {
+            transform.position = GameManager.instance.respawnPoint.position;
+            rigid.velocity = Vector2.zero;
+            for (int i = 0; i < DeadEnemyList.Count; i++)
+            {
+                //todo... 100숫자 수정하기
+                DeadEnemyList[i].GetComponent<EnemyStatus>().EnemyStun = 100;
+                DeadEnemyList[i].GetComponent<EnemyStatus>().EnemyHealth = 100;
+                DeadEnemyList[i].SetActive(true);
+            }
+            DeadEnemyList.Clear();
+            CurseStack = 0;
+            isDead = false;
+        }
     }
 
     #region Overriding
@@ -143,7 +169,7 @@ public class PlayerStatus : PlayerControl
     public void CriticalHit()
     {
         isCriticalAttack = Random.Range(0, 100.0f) < CriticalProbability();
-        if(isCriticalAttack)
+        if (isCriticalAttack)
         {
             Debug.LogWarning("Critical");
         }

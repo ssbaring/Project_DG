@@ -9,6 +9,7 @@ public class EnemyStatus : EnemyControl
     [SerializeField] private GameObject UIBar;
     [SerializeField] private Slider SPBar;
     [SerializeField] private Slider HPBar;
+    [SerializeField] private bool isEnemyDead;
 
     [SerializeField] private GameObject UICanvas;
     protected override void Start()
@@ -29,11 +30,16 @@ public class EnemyStatus : EnemyControl
 
         UIBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.8f, 0));
 
+        //적 체력이나 기절수치에 따른 상태변화
         if (enemyHealth <= 0)
         {
             isAlert = false;
+            isEnemyDead = true;
+
+
             UIBar.SetActive(false);
-            playerStat.CurseStack = playerStat.CurseStack + 1;
+            playerStat.DeadEnemyList.Add(gameObject);
+            playerStat.CurseStack++;
             gameObject.SetActive(false);
         }
         else if (enemyStun <= 0)
@@ -49,6 +55,10 @@ public class EnemyStatus : EnemyControl
             isStun = false;
         }
 
+        
+
+
+        //10초동안 적 체력바 표시
         if (isAlert)
         {
             alertTimer += Time.deltaTime;
