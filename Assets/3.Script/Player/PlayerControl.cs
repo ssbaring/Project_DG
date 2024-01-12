@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-
     protected float jumpPower = 6.5f;
     protected float wallJumpPower = 10.0f;
     protected float wallFallSpeed = 5.0f;
@@ -44,13 +43,9 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] protected SpriteRenderer wpRender;
     [SerializeField] protected PlayerRayCheck playerRay;
-    [SerializeField] protected Transform respawn;
 
 
-    [Header("Key")]
-    public KeyCode respawnKey;
-    public KeyCode AttackKey;
-    public KeyCode JumpKey;
+
 
 
     #region PlayerStatus
@@ -97,13 +92,13 @@ public class PlayerControl : MonoBehaviour
             Wall();
 
             //공격
-            if (Input.GetKeyDown(AttackKey))
+            if (Input.GetKeyDown(GameManager.instance.AttackKey))
             {
                 Attack();
             }
 
             //점프공격
-            if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
+            if (!playerRay.isCanJump && Input.GetKeyDown(GameManager.instance.AttackKey))
             {
                 Attack();
             }
@@ -149,9 +144,10 @@ public class PlayerControl : MonoBehaviour
         }
 
         //리스폰
-        if (Input.GetKeyDown(respawnKey))
+        if (Input.GetKeyDown(GameManager.instance.respawnKey))
         {
-            transform.position = respawn.position;
+            transform.position = GameManager.instance.respawnPoint.position;
+            rigid.velocity = Vector2.zero;
             stat.CurseStack = 0;
             isDead = false;
         }
@@ -233,7 +229,7 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        if ((playerRay.isCanJump || playerRay.isWater) && Input.GetKeyDown(JumpKey) && !isAttack)
+        if ((playerRay.isCanJump || playerRay.isWater) && Input.GetKeyDown(GameManager.instance.JumpKey) && !isAttack)
         {
             JumpAnimation();
             isJumping = true;
@@ -241,7 +237,7 @@ public class PlayerControl : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
         }
 
-        if (Input.GetKey(JumpKey) && isJumping == true)
+        if (Input.GetKey(GameManager.instance.JumpKey) && isJumping == true)
         {
             if (jumpTime > 0)
             {
@@ -256,7 +252,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(JumpKey))
+        if (Input.GetKeyUp(GameManager.instance.JumpKey))
         {
             isJumping = false;
             anim.ResetTrigger("JumpStart");
@@ -321,7 +317,7 @@ public class PlayerControl : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(JumpKey))
+            if (Input.GetKeyDown(GameManager.instance.JumpKey))
             {
                 isWallJump = false;
                 //Invoke("NotTurn", 0.3f);

@@ -11,6 +11,16 @@ public class GameManager : MonoBehaviour
     public GameObject Room;
     private PolygonCollider2D poly;
 
+    [Header("Key")]
+    public KeyCode respawnKey;
+    public KeyCode AttackKey;
+    public KeyCode JumpKey;
+    public KeyCode CheckPointKey;
+
+
+    public Transform respawnPoint;
+    
+
     [Header("DevMode")]
     [SerializeField] private int exp = 10000;
 
@@ -30,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         playerStat = FindObjectOfType<PlayerStatus>();
         poly = FindObjectOfType<PolygonCollider2D>();
+        
     }
 
 
