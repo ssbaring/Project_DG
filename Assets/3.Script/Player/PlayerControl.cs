@@ -21,12 +21,14 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected bool isAttack;
     [SerializeField] protected bool isWallJump;
     [SerializeField] protected bool isJumping;
+    [SerializeField] protected bool isDead;
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
     public float defalutAttackSpeed = 1.0f;
-    public float jumpStartTime;
-    public float jumpTime;
+
+    [HideInInspector] public float jumpStartTime;
+    [HideInInspector] public float jumpTime;
 
     [Header("Damage")]
     public float defalutDamage = 5.0f;
@@ -49,6 +51,7 @@ public class PlayerControl : MonoBehaviour
     public KeyCode respawnKey;
     public KeyCode AttackKey;
     public KeyCode JumpKey;
+
 
     #region PlayerStatus
     public virtual float Damage()
@@ -86,25 +89,28 @@ public class PlayerControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        //이동
-        MoveCharacter();
-        //벽점프
-        Wall();
-
-        //공격
-        if (Input.GetKeyDown(AttackKey))
+        if (!isDead)
         {
-            Attack();
-        }
+            //이동
+            MoveCharacter();
+            //벽점프
+            Wall();
 
-        //점프공격
-        if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
-        {
-            Attack();
-        }
+            //공격
+            if (Input.GetKeyDown(AttackKey))
+            {
+                Attack();
+            }
 
-        //점프
-        JumpCharacter();
+            //점프공격
+            if (!playerRay.isCanJump && Input.GetKeyDown(AttackKey))
+            {
+                Attack();
+            }
+
+            //점프
+            JumpCharacter();
+        }
 
 
         //땅에 닿음
@@ -146,6 +152,8 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(respawnKey))
         {
             transform.position = respawn.position;
+            stat.CurseStack = 0;
+            isDead = false;
         }
 
         //낙하속도 조절
@@ -169,11 +177,6 @@ public class PlayerControl : MonoBehaviour
             jumpPower = 6.5f;
         }
 
-        //저주로 인한 죽음
-       /* if (stat.curseStack >= 4)
-        {
-            CursedDie();
-        }*/
 
     }
 

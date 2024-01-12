@@ -10,11 +10,13 @@ public class EnemyStatus : EnemyControl
     [SerializeField] private Slider SPBar;
     [SerializeField] private Slider HPBar;
 
-    
-
+    [SerializeField] private GameObject UICanvas;
     protected override void Start()
     {
         base.Start();
+        UIBar = Instantiate(UIBar, UICanvas.transform);
+        SPBar = UIBar.transform.GetChild(0).GetComponent<Slider>();
+        HPBar = UIBar.transform.GetChild(1).GetComponent<Slider>();
         SPBar.maxValue = enemyList.enemySP;
         HPBar.maxValue = enemyList.enemyHP;
     }
@@ -31,7 +33,7 @@ public class EnemyStatus : EnemyControl
         {
             isAlert = false;
             UIBar.SetActive(false);
-            playerStat.curseStack++;
+            playerStat.CurseStack = playerStat.CurseStack + 1;
             gameObject.SetActive(false);
         }
         else if (enemyStun <= 0)

@@ -5,37 +5,44 @@ using UnityEngine;
 
 public class PlayerStatus : PlayerControl
 {
+    
     [Header("Status Level")]
     public int strengthLevel = 0;
     public int agilityLevel = 0;
     public int speedLevel = 0;
     public int criticalLevel = 0;
     public int playerLevel = 1;
+    public int skillPoint = 1;
+    [Space(10f)]
     public float playerMaxEXP = 100;
     public float playerCurrentEXP = 0;
-    public int skillPoint = 1;
+    [Space(10f)]
+    [SerializeField] private int curseStack = 0;
 
     public float trueDamage;
     public float trueStunDamage;
     public float knockback = 0.2f;
 
-    private int CurseStack;
-    public int curseStack
+    public int CurseStack
     {
         get
         {
-            return CurseStack;
+            return curseStack;
         }
         set
         {
-            if(value > 4)
+            curseStack = value;
+            if(curseStack >= 4)
             {
+                isDead = true;
                 anim.SetBool("IsCurseDie", true);
-                rigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+                rigid.constraints = RigidbodyConstraints2D.FreezeAll;
             }
             else
             {
                 anim.SetBool("IsCurseDie", false);
+                rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+                Debug.Log(curseStack);
             }
 
         }
