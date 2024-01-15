@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
+    private ItemList item;
     private Image image;
     private RectTransform rect;
 

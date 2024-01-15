@@ -34,20 +34,29 @@ public class GetItem : MonoBehaviour
         if (isAbleGet && Input.GetKeyDown(GameManager.instance.InteractionKey))
         {
             isAbleGet = false;
-            for (int i = 0; i < inventory.itemInventoryPosition.Length; i++)
+            for (int i = 0; i < inventory.itemInventoryPosition.Length;)
             {
-                Instantiate(itemPrefab, inventory.itemInventoryPosition[i].transform);
-                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().item = itemList;
-                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.color = new Color(1, 1, 1, 1);
-                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.sprite = itemList.itemSprite;
-                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn = true;
-                if (inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn == false)
+                if (inventory.itemInventoryPosition[i].transform.childCount == 0)
                 {
+                    GetInventory(i);
                     break;
+                }
+                else
+                {
+                    i++;
                 }
             }
             Debug.Log(itemList);
             gameObject.SetActive(false);
         }
+    }
+
+    private void GetInventory(int i)
+    {
+        Instantiate(itemPrefab, inventory.itemInventoryPosition[i].transform);
+        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().item = itemList;
+        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.color = new Color(1, 1, 1, 1);
+        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.sprite = itemList.itemSprite;
+        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn = true;
     }
 }
