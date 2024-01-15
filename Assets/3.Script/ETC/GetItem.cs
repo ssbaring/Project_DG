@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GetItem : MonoBehaviour
 {
-    [SerializeField] private ItemList itemList;
-
-    private ItemSlot slot;
+    public ItemList itemList;
+    [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private InventoryUI inventory;
     private bool isAbleGet = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,18 +19,35 @@ public class GetItem : MonoBehaviour
         isAbleGet = false;
     }
 
+    private void Awake()
+    {
+        inventory = FindObjectOfType<UIManager>().transform.GetChild(0).GetComponent<InventoryUI>();
+    }
+
     private void Start()
     {
-        slot = FindObjectOfType<ItemSlot>();
         itemList = transform.parent.GetComponent<OpenChest>().item;
     }
 
     private void Update()
     {
-        if(isAbleGet && Input.GetKeyDown(GameManager.instance.InteractionKey))
+        if (isAbleGet && Input.GetKeyDown(GameManager.instance.InteractionKey))
         {
-            slot.ItemLists.Add(itemList);
+            isAbleGet = false;
+            for (int i = 0; i < inventory.itemInventoryPosition.Length; i++)
+            {
+                Instantiate(itemPrefab, inventory.itemInventoryPosition[i].transform);
+                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().item = itemList;
+                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.color = new Color(1, 1, 1, 1);
+                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.sprite = itemList.itemSprite;
+                inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn = true;
+                if (inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn == false)
+                {
+                    break;
+                }
+            }
             Debug.Log(itemList);
+            gameObject.SetActive(false);
         }
     }
 }

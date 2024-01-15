@@ -6,10 +6,10 @@ public class OpenChest : MonoBehaviour
 {
     [SerializeField] private bool isCanOpen;
     [SerializeField] private bool isOpened = false;
+    [SerializeField] private BoxCollider2D itemGet;
     public ItemList item;
     public SpriteRenderer ItemSprite;
     private Animator chestAnim;
-
     private void Start()
     {
         chestAnim = GetComponent<Animator>();
@@ -64,5 +64,6 @@ public class OpenChest : MonoBehaviour
             alpha += 0.01f;
             yield return null;
         }
+        itemGet.enabled = true;
     }
 }

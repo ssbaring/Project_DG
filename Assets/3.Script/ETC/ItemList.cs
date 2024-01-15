@@ -33,6 +33,11 @@ public class ItemList : ScriptableObject
     public float restoreMP;
     public float attackUp;
 
+    [Header("Infomation")]
+    public string itemName;
+    [TextArea]
+    public string itemExplain;
+
     [Header("Sprite")]
     public Sprite itemSprite;
 }
