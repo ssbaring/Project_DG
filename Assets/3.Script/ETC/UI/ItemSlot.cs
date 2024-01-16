@@ -7,7 +7,7 @@ public class ItemSlot : MonoBehaviour
 {
     public Image itemImage;
     public bool isItemIn = false;
-
+    public bool isEquipped = false;
     public ItemList item;
 
 

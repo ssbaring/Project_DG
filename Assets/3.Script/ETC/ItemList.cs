@@ -7,12 +7,13 @@ public class ItemList : ScriptableObject
 {
     public enum ItemType
     {
-        equipment_Head = 0,
-        equipment_Body,
-        equipment_Shoes,
-        equipment_Weapon,
-        consumable,
-        material 
+        equipment_Head = 2,
+        equipment_Armor = 4,
+        equipment_Shoes = 8,
+        equipment_Weapon = 16,
+        consumable = 32,
+        material = 64,
+        all = equipment_Head | equipment_Armor | equipment_Shoes | equipment_Weapon | consumable | material
     }
     public ItemType itemType;           //아이템 타입
     public int itemId;                  //아이템 ID

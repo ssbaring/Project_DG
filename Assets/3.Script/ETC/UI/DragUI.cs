@@ -18,13 +18,14 @@ public class DragUI : MonoBehaviour, IPointerDownHandler, IDragHandler
         }
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("UIÅ¬¸¯");
         beginPoint = UIWindow.position;
         moveBegin = eventData.position;
     }
 
-    void IDragHandler.OnDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
         UIWindow.position = beginPoint + (eventData.position - moveBegin);
     }

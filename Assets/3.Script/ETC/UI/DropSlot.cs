@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
-    private ItemList item;
+
     private Image image;
     private RectTransform rect;
+    private PointerEventData ped;
     [SerializeField] private DragSlot drag;
+
+    public bool isInventory = false;
+    public ItemList.ItemType itemSlotType;
+
 
     private void Awake()
     {
@@ -41,17 +46,29 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
             //eventData.pointerCurrentRaycast : 드리그중인 마우스 앞에 놓여진 아무 오브젝트
             if (!eventData.pointerCurrentRaycast.gameObject.CompareTag("Item"))
             {
-                eventData.pointerDrag.transform.SetParent(transform);
-                eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+                if ((itemSlotType & eventData.pointerDrag.GetComponent<ItemSlot>().item.itemType) != 0)
+                {
+                    eventData.pointerDrag.transform.SetParent(transform);
+                    eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+                    if (!isInventory)
+                    {
+                        eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped = true;
+                    }
+                    else
+                    {
+                        eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped = false;
+                    }
+                }
             }
             else
             {
-                //Debug.Log("Swap");
-                //Debug.Log("Drag : " + eventData.pointerDrag.GetComponent<ItemSlot>().item);
-                //Debug.Log("CurrentRay : " + eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().item);
-                Swap(eventData.pointerDrag.GetComponent<ItemSlot>(), eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>());
-                //Debug.Log("SwapDrag : " + eventData.pointerDrag.GetComponent<ItemSlot>().item);
-                //Debug.Log("SwapCurrentRay : " + eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().item);
+                if ((!eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped &&
+                    !eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().isEquipped) ||
+                    (eventData.pointerDrag.GetComponent<ItemSlot>().item.itemType &
+                    eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                {
+                    Swap(eventData.pointerDrag.GetComponent<ItemSlot>(), eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>());
+                }
             }
         }
     }

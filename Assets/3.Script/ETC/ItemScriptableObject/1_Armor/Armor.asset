@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe71673937bb7d549b58b55b84fe8fe2, type: 3}
-  m_Name: MPPotion
+  m_Name: Armor
   m_EditorClassIdentifier: 
   itemType: 4
-  itemId: 1
-  armor: 0
+  itemId: 10
+  armor: 10
   agility: 0
   attack_speed: 0
   attack_dmg: 0
@@ -22,9 +22,8 @@ MonoBehaviour:
   move_speed: 0
   critical_rate: 0
   restoreHP: 0
-  restoreMP: 100
+  restoreMP: 0
   attackUp: 0
-  itemName: "MP\uD3EC\uC158"
-  itemExplain: "\uD50C\uB808\uC774\uC5B4\uC758 \uB9C8\uB098\uB97C 100\uB9CC\uD07C
-    \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
-  itemSprite: {fileID: 21300000, guid: b986633859427c442af7e1b909153361, type: 3}
+  itemName: "\uBA74\uC637"
+  itemExplain: "\uD3C9\uBC94\uD55C \uC637\uC785\uB2C8\uB2E4."
+  itemSprite: {fileID: 21300000, guid: 68f7db448c5ee9c499126d0f0ce97f79, type: 3}

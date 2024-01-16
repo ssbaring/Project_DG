@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -8,6 +9,7 @@ public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [Header("Drag")]
     public Transform canvas;
     public Transform previousParent;
+    public bool isDragging = false;
     [SerializeField] private RectTransform rect;
     [SerializeField] private CanvasGroup canvasGroup;
 
@@ -31,7 +33,7 @@ public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
-
+        isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -49,5 +51,8 @@ public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         canvasGroup.alpha = 1.0f;
         canvasGroup.blocksRaycasts = true;
+        isDragging = false;
     }
+
+
 }
