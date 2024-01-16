@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
+public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     private Image image;
     private RectTransform rect;
     private PointerEventData ped;
-    [SerializeField] private DragSlot drag;
-
+    //[SerializeField] private DragSlot drag;
+    [SerializeField] private RectTransform equipment;
     public bool isInventory = false;
     public ItemList.ItemType itemSlotType;
 
@@ -24,7 +24,7 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
 
     private void Start()
     {
-        drag = GetComponentInChildren<DragSlot>();
+        equipment = transform.root.GetChild(0).GetChild(1).GetComponent<RectTransform>();
     }
 
 
@@ -36,6 +36,24 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     public void OnPointerExit(PointerEventData eventData)
     {
         image.color = Color.white;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+/*
+        if(eventData.button == PointerEventData.InputButton.Right)
+        {
+            foreach(RectTransform child in equipment.GetComponentsInChildren<RectTransform>())
+            {
+                if(child.childCount == 0 && (child.GetComponent<DropSlot>().itemSlotType & eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                {
+                    Debug.Log(child.name + "아이템 없음");
+                    eventData.pointerDrag.transform.SetParent(child);
+                    eventData.pointerDrag.GetComponent<RectTransform>().position = child.rect.position;
+                }
+            }
+        }
+*/
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -50,6 +68,8 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
                 {
                     eventData.pointerDrag.transform.SetParent(transform);
                     eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
+
+                    //장비 인벤토리가 아닐 시 예외처리
                     if (!isInventory)
                     {
                         eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped = true;
@@ -62,6 +82,7 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
             }
             else
             {
+                //둘 다 장착상태가 아님 또는 두 아이템의 타입이 같으면
                 if ((!eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped &&
                     !eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().isEquipped) ||
                     (eventData.pointerDrag.GetComponent<ItemSlot>().item.itemType &
@@ -79,4 +100,6 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         target.item = current.item;
         current.item = tempItem;
     }
+
+
 }
