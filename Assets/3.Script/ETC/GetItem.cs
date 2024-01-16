@@ -55,8 +55,6 @@ public class GetItem : MonoBehaviour
     {
         Instantiate(itemPrefab, inventory.itemInventoryPosition[i].transform);
         inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().item = itemList;
-        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.color = new Color(1, 1, 1, 1);
-        inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().itemImage.sprite = itemList.itemSprite;
         inventory.itemInventoryPosition[i].GetComponentInChildren<ItemSlot>().isItemIn = true;
     }
 }

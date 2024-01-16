@@ -10,4 +10,19 @@ public class ItemSlot : MonoBehaviour
 
     public ItemList item;
 
+
+    private void Update()
+    {
+        if (isItemIn)
+        {
+            itemImage.color = new Color(1, 1, 1, 1);
+            itemImage.sprite = item.itemSprite;
+        }
+        else
+        {
+            itemImage.color = new Color(1, 1, 1, 0);
+            item = null;
+            itemImage = null;
+        }
+    }
 }

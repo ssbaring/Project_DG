@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Drag")]
-    [SerializeField] private Transform canvas;
-    [SerializeField] private Transform previousParent;
+    public Transform canvas;
+    public Transform previousParent;
     [SerializeField] private RectTransform rect;
     [SerializeField] private CanvasGroup canvasGroup;
 
@@ -16,6 +16,11 @@ public class DragSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvas = transform.root.GetComponent<Canvas>().transform;
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Start()
+    {
+        previousParent = transform.parent;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
