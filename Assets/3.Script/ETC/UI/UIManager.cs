@@ -1,10 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance = null;
+
+    private void Awake()
+    {
+        #region SingleTon
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        #endregion
+    }
+
     [SerializeField] private GameObject inventory;
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject skill;
@@ -15,23 +33,27 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (inventory.activeSelf || skill.activeSelf)
+        if (SceneManager.GetActiveScene().name.Equals("TitleScene")) return;
+        else
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (inventory.activeSelf || skill.activeSelf)
             {
-                inventory.SetActive(false);
-                skill.SetActive(false);
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    inventory.SetActive(false);
+                    skill.SetActive(false);
+                }
             }
-        }
-        else if (!inventory.activeSelf || !skill.activeSelf || !menu.activeSelf)
-        {
-            Menu_Active();
-        }
+            else if (!inventory.activeSelf || !skill.activeSelf || !menu.activeSelf)
+            {
+                Menu_Active();
+            }
 
-        if (!menu.activeSelf)
-        {
-            Inventory_Active();
-            Skill_Active();
+            if (!menu.activeSelf)
+            {
+                Inventory_Active();
+                Skill_Active();
+            }
         }
     }
 
