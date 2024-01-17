@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
@@ -39,10 +40,29 @@ public class AudioManager : MonoBehaviour
     public TextMeshProUGUI BGMValue;
     public TextMeshProUGUI SFXValue;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().name.Equals("TitleScene"))
+        {
+            //masterSlider = FindObjectOfType<Title>().gameObject.transform;
+        }
+        else return;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public void MasterAudioControl()
     {
         int sound = Mathf.RoundToInt(masterSlider.value);
-        int absValue = Mathf.RoundToInt(SFXSlider.maxValue - SFXSlider.minValue);
+        int absValue = Mathf.RoundToInt(masterSlider.maxValue - masterSlider.minValue);
         int MasterText;
         masterSlider.value = sound;
         if (sound == -40.0f)
@@ -61,7 +81,7 @@ public class AudioManager : MonoBehaviour
     public void BGMAudioControl()
     {
         int sound = Mathf.RoundToInt(BGMSlider.value);
-        int absValue = Mathf.RoundToInt(SFXSlider.maxValue - SFXSlider.minValue);
+        int absValue = Mathf.RoundToInt(BGMSlider.maxValue - BGMSlider.minValue);
         int BGMText;
         BGMSlider.value = sound;
         if (sound == -40.0f)
