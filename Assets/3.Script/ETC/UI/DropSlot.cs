@@ -61,7 +61,7 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         if (eventData.pointerDrag != null)
         {
             //eventData.pointerDrag : 현재 드래그 중인 오브젝트
-            //eventData.pointerCurrentRaycast : 드리그중인 마우스 앞에 놓여진 아무 오브젝트
+            //eventData.pointerCurrentRaycast : 드래그중인 마우스 앞에 놓여진 아무 오브젝트
             if (!eventData.pointerCurrentRaycast.gameObject.CompareTag("Item"))
             {
                 if ((itemSlotType & eventData.pointerDrag.GetComponent<ItemSlot>().item.itemType) != 0)

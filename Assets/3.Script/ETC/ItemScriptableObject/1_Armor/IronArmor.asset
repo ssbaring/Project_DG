@@ -17,8 +17,8 @@ MonoBehaviour:
   armor: 15
   agility: 0
   attack_speed: 0
-  attack_dmg: 0
-  stun_dmg: 0
+  attack_dmg: 4
+  stun_dmg: 4
   move_speed: 0
   critical_rate: 0
   restoreHP: 0

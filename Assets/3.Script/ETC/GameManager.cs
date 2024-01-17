@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
 
 
     public Transform respawnPoint;
-    
+
 
     [Header("DevMode")]
     [SerializeField] private int exp = 10000;
@@ -40,7 +41,21 @@ public class GameManager : MonoBehaviour
 
         playerStat = FindObjectOfType<PlayerStatus>();
         poly = FindObjectOfType<PolygonCollider2D>();
-        
+
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!SceneManager.GetActiveScene().name.Equals("TitleScene") && !SceneManager.GetActiveScene().name.Equals("EndScene"))
+        {
+            respawnPoint = FindObjectOfType<Respawn>().GetComponent<Transform>();
+        }
+        else return;
     }
 
 
@@ -49,9 +64,14 @@ public class GameManager : MonoBehaviour
         DevMode();
     }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void DevMode()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             playerStat.GetPlayerEXP(exp);
         }

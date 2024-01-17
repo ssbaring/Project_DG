@@ -20,6 +20,95 @@ public class PlayerStatus : PlayerControl
     [SerializeField] private int curseStack = 0;
     [SerializeField] private int MaxCurseStack = 4;
 
+    [Header("Item")]
+    public Transform Helmet;
+    public Transform Armor;
+    public Transform Shoes;
+    public Transform Weapon;
+    /*    public float HelmetDMG
+    {
+        get
+        {
+            return Weapon.GetComponentInChildren<ItemSlot>() != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0;
+        }
+    }*/
+    #region Get Equipments Value
+
+
+    public float EquipmentDamage
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_dmg  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_dmg  : 0)
+                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0);
+        }
+    }
+
+
+    public float EquipmentStun
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.stun_dmg  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.stun_dmg  : 0)
+                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0);
+        }
+    }
+
+    public float EquipmentArmor
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.armor : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.armor  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.armor  : 0);
+        }
+    }
+
+    public float EquipmentAgility
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.agility : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.agility  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.agility  : 0);
+        }
+    }
+
+    public float EquipmentAttackSpeed
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_speed : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_speed  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_speed  : 0)
+                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_speed : 0);
+        }
+    }
+
+    public float EquipmentMoveSpeed
+    {
+        get
+        {
+            return Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_speed : 0;
+        }
+    }
+
+    public float EquipmentCriticalRate
+    {
+        get
+        {
+            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.critical_rate : 0)
+                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.critical_rate  : 0)
+                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.critical_rate  : 0)
+                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.critical_rate : 0);
+        }
+    }
+    #endregion
+
     public bool isRevive = false;
     public float trueDamage;
     public float trueStunDamage;
@@ -63,13 +152,13 @@ public class PlayerStatus : PlayerControl
 
     public float TrueDamage(float defaultDmg)
     {
-        trueDamage = (((1 + strengthLevel) * 1.8f) * defaultDmg);
+        trueDamage = (((1 + strengthLevel) * 1.8f) * defaultDmg + EquipmentDamage);
         return trueDamage;
     }
 
     public float TrueStunDamage(float defaultSDmg)
     {
-        trueStunDamage = (((1 + strengthLevel) * 1.8f) * defaultSDmg);
+        trueStunDamage = (((1 + strengthLevel) * 1.8f) * defaultSDmg + EquipmentStun);
         return trueStunDamage;
     }
 

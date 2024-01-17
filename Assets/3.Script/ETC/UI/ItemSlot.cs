@@ -24,5 +24,10 @@ public class ItemSlot : MonoBehaviour
             item = null;
             itemImage = null;
         }
+
+        if(transform.parent.CompareTag("EquipmentSlot"))
+        {
+            GetComponentInParent<Equip>().isEquip = true;
+        }
     }
 }

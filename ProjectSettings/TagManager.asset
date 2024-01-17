@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Weapon
   - Item
+  - InventorySlot
+  - EquipmentSlot
+  - PassiveSlot
   layers:
   - Default
   - TransparentFX

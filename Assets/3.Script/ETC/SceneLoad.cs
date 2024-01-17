@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoad : MonoBehaviour
 {
-    //[SerializeField] private string nextSceneName;
+    [SerializeField] private string nextSceneName;
     private bool isGoal;
 
     public GameObject loadingScreen;
@@ -40,7 +40,7 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
         //Debug.Log("¾À ÀüÈ¯");
         StartCoroutine(LoadAsyncScene());
@@ -48,19 +48,20 @@ public class SceneLoad : MonoBehaviour
 
     private IEnumerator LoadAsyncScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Stage2");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
         asyncLoad.allowSceneActivation = false;
         loadingScreen.SetActive(true);
         float loadingProgress = asyncLoad.progress;
-        int loadingPercentage = 0;
+        int loadingPercentage;
         int count = 0;
 
         while(!asyncLoad.isDone)
         {
-            Debug.Log(loadingProgress);
+            //Debug.Log(loadingProgress);
             loadingPercentage = Mathf.RoundToInt(loadingProgress * 100);
             loadingPercentageText.text = string.Format("{0} %", loadingPercentage);
-            switch(count)
+            #region Loading Text
+            switch (count)
             {
                 case 0:
                 case 1:
@@ -95,7 +96,9 @@ public class SceneLoad : MonoBehaviour
                     break;
             }
             count++;
-            if(asyncLoad.progress >= 0.9f)
+            #endregion
+            
+            if (asyncLoad.progress >= 0.9f)
             {
                 asyncLoad.allowSceneActivation = true;
             }
