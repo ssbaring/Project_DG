@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoad : MonoBehaviour
 {
-    private string nextSceneName;
+    //[SerializeField] private string nextSceneName;
     private bool isGoal;
 
     public GameObject loadingScreen;
@@ -43,13 +43,12 @@ public class SceneLoad : MonoBehaviour
     private void LoadNextScene()
     {
         //Debug.Log("¾À ÀüÈ¯");
-        nextSceneName = "Stage2";
         StartCoroutine(LoadAsyncScene());
     }
 
     private IEnumerator LoadAsyncScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Stage2");
         asyncLoad.allowSceneActivation = false;
         loadingScreen.SetActive(true);
         float loadingProgress = asyncLoad.progress;
@@ -64,15 +63,31 @@ public class SceneLoad : MonoBehaviour
             switch(count)
             {
                 case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
                     loadingText.text = "Loading";
                     break;
-                case 1:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
                     loadingText.text = "Loading.";
                     break;
-                case 2:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
                     loadingText.text = "Loading..";
                     break;
-                case 3:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
                     loadingText.text = "Loading...";
                     count = 0;
                     break;
@@ -80,6 +95,10 @@ public class SceneLoad : MonoBehaviour
                     break;
             }
             count++;
+            if(asyncLoad.progress >= 0.9f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
             yield return null;
         }
         loadingScreen.SetActive(false);
