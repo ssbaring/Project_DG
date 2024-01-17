@@ -40,20 +40,29 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
 
     public void OnPointerClick(PointerEventData eventData)
     {
-/*
+
         if(eventData.button == PointerEventData.InputButton.Right)
         {
-            foreach(RectTransform child in equipment.GetComponentsInChildren<RectTransform>())
+            foreach(Equip child in equipment.GetComponentsInChildren<Equip>())
             {
-                if(child.childCount == 0 && (child.GetComponent<DropSlot>().itemSlotType & eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                //장비가 비어있음 && 장비 슬롯의 타입과 우클릭 한 아이템의 타입이 같음
+                if(!child.isEquip && (child.GetComponent<DropSlot>().itemSlotType & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
                 {
-                    Debug.Log(child.name + "아이템 없음");
-                    eventData.pointerDrag.transform.SetParent(child);
-                    eventData.pointerDrag.GetComponent<RectTransform>().position = child.rect.position;
+                    eventData.pointerPressRaycast.gameObject.transform.SetParent(child.gameObject.transform);
+                    eventData.pointerPressRaycast.gameObject.GetComponent<RectTransform>().position = child.GetComponent<RectTransform>().position;
                 }
+                //장비가 장착되어있음 && 장착한 장비의 타입과 우클릭 한 아이템의 타입이 같음
+                else if (child.isEquip && 
+                    (child.gameObject.transform.GetChild(0).GetComponent<ItemSlot>().item.itemType & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                {
+                    Swap(eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>(), child.gameObject.transform.GetChild(0).GetComponent<ItemSlot>());
+                }
+                //Debug.Log(child.GetComponent<DropSlot>().itemSlotType);
+                Debug.Log(eventData.pointerPressRaycast);
+
             }
         }
-*/
+
     }
 
     public void OnDrop(PointerEventData eventData)
