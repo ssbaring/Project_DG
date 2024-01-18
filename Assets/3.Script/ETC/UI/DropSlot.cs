@@ -12,7 +12,12 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     private PointerEventData ped;
     //[SerializeField] private DragSlot drag;
     [SerializeField] private RectTransform equipment;
+    [SerializeField] private RectTransform slot;
     public bool isInventory = false;
+    public bool isSlotUse = false;
+
+
+    [Header("Slot Type")]
     public ItemList.ItemType itemSlotType;
 
 
@@ -25,6 +30,7 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     private void Start()
     {
         equipment = transform.root.GetChild(0).GetChild(1).GetComponent<RectTransform>();
+        slot = transform.root.GetChild(0).GetChild(2).GetComponent<RectTransform>();
     }
 
 
@@ -41,26 +47,55 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
     public void OnPointerClick(PointerEventData eventData)
     {
 
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            foreach(Equip child in equipment.GetComponentsInChildren<Equip>())
+            if (eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>() != null)
             {
-                //장비가 비어있음 && 장비 슬롯의 타입과 우클릭 한 아이템의 타입이 같음
-                if(!child.isEquip && (child.GetComponent<DropSlot>().itemSlotType & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                foreach (Equip equipmentChild in equipment.GetComponentsInChildren<Equip>())
                 {
-                    eventData.pointerPressRaycast.gameObject.transform.SetParent(child.gameObject.transform);
-                    eventData.pointerPressRaycast.gameObject.GetComponent<RectTransform>().position = child.GetComponent<RectTransform>().position;
-                }
-                //장비가 장착되어있음 && 장착한 장비의 타입과 우클릭 한 아이템의 타입이 같음
-                else if (child.isEquip && 
-                    (child.gameObject.transform.GetChild(0).GetComponent<ItemSlot>().item.itemType & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
-                {
-                    Swap(eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>(), child.gameObject.transform.GetChild(0).GetComponent<ItemSlot>());
-                }
-                //Debug.Log(child.GetComponent<DropSlot>().itemSlotType);
-                Debug.Log(eventData.pointerPressRaycast);
+                    //장비가 비어있음 && 장비 슬롯의 타입과 우클릭 한 아이템의 타입이 같음
+                    if (!equipmentChild.isEquip && (equipmentChild.GetComponent<DropSlot>().itemSlotType & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0)
+                    {
+                        Debug.Log("바로 장착");
+                        eventData.pointerPressRaycast.gameObject.transform.SetParent(equipmentChild.gameObject.transform);
+                        eventData.pointerPressRaycast.gameObject.GetComponent<RectTransform>().position = equipmentChild.GetComponent<RectTransform>().position;
+                        break;
+                    }
+                    //장비가 장착되어있음
+                    else if (equipmentChild.isEquip)
+                    {
+                        //장비의 자식오브젝트가 있을 때
+                        if (equipmentChild.gameObject.GetComponentInChildren<ItemSlot>() != null)
+                        {
+                            //장비 슬롯 자식컴포넌트의 아이템 타입과 버튼 누른 오브젝트의 컴포넌트 아이템 타입이 같을 시
+                            if ((equipmentChild.gameObject.transform.GetComponentInChildren<ItemSlot>().item.itemType
+                                & eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().item.itemType) != 0 &&
+                                isInventory)
+                            {
+                                Debug.Log("장비 교체");
+                                Swap(eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>(), equipmentChild.gameObject.transform.GetComponentInChildren<ItemSlot>());
+                                break;
+                            }
+                            else if (eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().isEquipped)
+                            {
+                                Debug.Log("장착 해제");
+                                foreach (DropSlot item in slot.GetComponentsInChildren<DropSlot>())
+                                {
+                                    if (!item.isSlotUse)
+                                    {
+                                        eventData.pointerPressRaycast.gameObject.transform.SetParent(item.gameObject.transform);
+                                        eventData.pointerPressRaycast.gameObject.GetComponent<RectTransform>().position = item.GetComponent<RectTransform>().position;
+                                        eventData.pointerPressRaycast.gameObject.GetComponent<ItemSlot>().isEquipped = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
+                }
             }
+            else if (eventData.pointerPressRaycast.gameObject.transform.childCount == 0) return;
         }
 
     }
@@ -79,11 +114,7 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
                     eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
 
                     //장비 인벤토리가 아닐 시 예외처리
-                    if (!isInventory)
-                    {
-                        eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped = true;
-                    }
-                    else
+                    if (isInventory)
                     {
                         eventData.pointerDrag.GetComponent<ItemSlot>().isEquipped = false;
                     }
@@ -110,5 +141,15 @@ public class DropSlot : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPoin
         current.item = tempItem;
     }
 
-
+    private void Update()
+    {
+        if (transform.childCount != 0)
+        {
+            isSlotUse = true;
+        }
+        else
+        {
+            isSlotUse = false;
+        }
+    }
 }

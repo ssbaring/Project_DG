@@ -14,5 +14,10 @@ public class Equip : MonoBehaviour
         {
             isEquip = false;
         }
+
+        if(isEquip)
+        {
+            transform.GetComponentInChildren<ItemSlot>().isEquipped = true;
+        }
     }
 }

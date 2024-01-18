@@ -34,20 +34,25 @@ public class GetItem : MonoBehaviour
         if (isAbleGet && Input.GetKeyDown(GameManager.instance.InteractionKey))
         {
             isAbleGet = false;
-            for (int i = 0; i < inventory.itemInventoryPosition.Length;)
-            {
-                if (inventory.itemInventoryPosition[i].transform.childCount == 0)
-                {
-                    GetInventory(i);
-                    break;
-                }
-                else
-                {
-                    i++;
-                }
-            }
+            CheckInventory();
             Debug.Log(itemList);
             gameObject.SetActive(false);
+        }
+    }
+
+    public void CheckInventory()
+    {
+        for (int i = 0; i < inventory.itemInventoryPosition.Length;)
+        {
+            if (inventory.itemInventoryPosition[i].transform.childCount == 0)
+            {
+                GetInventory(i);
+                break;
+            }
+            else
+            {
+                i++;
+            }
         }
     }
 
