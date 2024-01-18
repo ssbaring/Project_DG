@@ -1752,7 +1752,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 8
 --- !u!114 &199117203
 MonoBehaviour:
@@ -2297,7 +2299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262011050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.615, y: -0.005, z: 0}
+  m_LocalPosition: {x: -1.615, y: -3.1620002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 647389554}
@@ -2526,7 +2528,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311393531}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.157, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1091303031}
@@ -3743,7 +3745,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 16
 --- !u!114 &466577552
 MonoBehaviour:
@@ -4408,7 +4412,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &519420028
 GameObject:
@@ -4423,6 +4429,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420035}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4438,6 +4445,102 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!82 &519420030
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -9155443087075699358, guid: d26d4d8cce6f351448b947acc9d63cb5, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -26543,7 +26646,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 2
 --- !u!114 &759574268
 MonoBehaviour:
@@ -29903,7 +30008,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &1197280807
 GameObject:
@@ -32379,7 +32486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536814604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.32, y: -0.005, z: 0}
+  m_LocalPosition: {x: 1.32, y: -3.1620002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 243359589}
@@ -32955,7 +33062,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &1604885446
 GameObject:
@@ -36322,7 +36431,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 0
+  isSlotUse: 0
   itemSlotType: 4
 --- !u!114 &1823252678
 MonoBehaviour:
@@ -44144,7 +44255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314591383140794
 RectTransform:
@@ -44276,7 +44389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314591493242475
 CanvasRenderer:
@@ -44307,7 +44422,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314591511157378
 RectTransform:
@@ -44447,7 +44564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314591514603663
 GameObject:
@@ -44500,7 +44619,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314591624407037
 CanvasRenderer:
@@ -44640,7 +44761,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314591687584891
 CanvasRenderer:
@@ -44682,7 +44805,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314591904764617
 CanvasRenderer:
@@ -44781,7 +44906,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592007711406
 RectTransform:
@@ -44902,7 +45029,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314592020806639
 GameObject:
@@ -45004,7 +45133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314592097542155
 CanvasRenderer:
@@ -45027,7 +45158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314592184542641
 CanvasRenderer:
@@ -45137,7 +45270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314592190796973
 CanvasRenderer:
@@ -45266,7 +45401,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314592297680351
 GameObject:
@@ -45308,7 +45445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592370293938
 RectTransform:
@@ -45448,7 +45587,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314592594651663
 GameObject:
@@ -45482,7 +45623,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314592614132517
 CanvasRenderer:
@@ -45630,7 +45773,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314592691877759
 GameObject:
@@ -45672,7 +45817,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592819065426
 RectTransform:
@@ -45782,7 +45929,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592846735914
 RectTransform:
@@ -45865,7 +46014,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314592869222541
 CanvasRenderer:
@@ -45945,7 +46096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592916429554
 RectTransform:
@@ -46055,7 +46208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!224 &8256314592920070206
 RectTransform:
@@ -46195,7 +46350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!114 &8256314593058912048
 MonoBehaviour:
@@ -46259,7 +46416,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314593058912051
 CanvasRenderer:
@@ -46358,7 +46517,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!1 &8256314593217778555
 GameObject:
@@ -46460,7 +46621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314593248602063
 CanvasRenderer:
@@ -46532,7 +46695,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314593384508359
 CanvasRenderer:
@@ -46642,7 +46807,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipment: {fileID: 0}
+  slot: {fileID: 0}
   isInventory: 1
+  isSlotUse: 0
   itemSlotType: 126
 --- !u!222 &8256314593440001595
 CanvasRenderer:

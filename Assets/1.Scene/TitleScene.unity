@@ -747,7 +747,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 0}
+  m_BackGroundColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1716,7 +1716,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Project SBR
+  m_text: Bacurins
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c52252bb1f59a87429f56af5aef1908c, type: 2}
   m_sharedMaterial: {fileID: 5433516327533270171, guid: c52252bb1f59a87429f56af5aef1908c, type: 2}
