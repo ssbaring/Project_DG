@@ -8,23 +8,6 @@ using TMPro;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance = null;
-
-    private void Awake()
-    {
-        #region Singleton
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        #endregion
-    }
-
     [Header("Mixer")]
     public AudioMixer masterMixer;
     public AudioMixer BGMMixer;
@@ -40,6 +23,8 @@ public class AudioManager : MonoBehaviour
     public TextMeshProUGUI BGMValue;
     public TextMeshProUGUI SFXValue;
 
+    public Image background;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -49,9 +34,12 @@ public class AudioManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name.Equals("TitleScene"))
         {
-            //masterSlider = FindObjectOfType<Title>().gameObject.transform;
+            background.color = Color.black;
         }
-        else return;
+        else
+        {
+            background.color = new Color(0, 0, 0, 0.5f);
+        }
     }
 
     private void OnDisable()

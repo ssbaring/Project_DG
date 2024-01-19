@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 
 public class PlayerSkillStatus : MonoBehaviour
@@ -21,12 +22,15 @@ public class PlayerSkillStatus : MonoBehaviour
 
     [SerializeField] private int maxLevel = 20;
 
-    private PlayerStatus level;
+    [SerializeField] private PlayerStatus level;
 
-    private void Start()
+
+    private void OnEnable()
     {
         level = FindObjectOfType<PlayerStatus>();
     }
+
+
 
     protected void Update()
     {

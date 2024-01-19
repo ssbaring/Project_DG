@@ -61,21 +61,9 @@ public class EnemyControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Weapon") && !isDamaged)
+        if (collision.CompareTag("Weapon"))
         {
-            playerStat.CriticalHit();
-            enemyHealth -= playerStat.Damage();
-            enemyStun -= playerStat.StunDamage();
-            
-            enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
-            sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
-            HitAnimation();
-            Invoke("Hit", 0.3f);
             isDamaged = true;
-            isAlert = true;
-            alertTimer = 0;
-            Debug.Log("HP : " + enemyHealth);
-            Debug.Log("Stun : " + enemyStun);
         }
     }
 
@@ -83,75 +71,113 @@ public class EnemyControl : MonoBehaviour
     {
         if (collision.CompareTag("Weapon"))
         {
-            sprender.color = new Color(1, 1, 1, sprender.color.a);
-            playerStat.isCriticalAttack = false;
-            ResetAnimationTrigger();
             isDamaged = false;
         }
     }
 
-    private void Hit()
-    {
-        sprender.color = Color.white;
-    }
+
+
+
 
     protected virtual void Update()
     {
         
-
-        if (isStun)
+        if(isDamaged)
         {
-            if (restorationStartTime < enemyList.enemyRestoration)
-            {
-                restorationStartTime += Time.deltaTime;
-                //기절하는 동안 적이 HP와 SP 회복
-                enemyStun = Mathf.Lerp(0, enemyList.enemySP, restorationStartTime / enemyList.enemyRestoration);
-                enemyHealth += Mathf.CeilToInt(enemyList.enemyHPRestoration * Time.deltaTime);
-
-                sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
-                enemyRigid.bodyType = RigidbodyType2D.Static;
-                GetComponent<Collider2D>().enabled = false;
-                StunAnimation();
-            }
+            Hit();
         }
         else
         {
-            restorationStartTime = 0;
-            sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
-            enemyRigid.bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<Collider2D>().enabled = true;
-            IdleAnimation();
+            sprender.color = new Color(1, 1, 1, sprender.color.a);
+            playerStat.isCriticalAttack = false;
+            ResetAnimationTrigger();
+        }
+
+
+
+        if (isStun)
+        {
+            Restore();
+        }
+        else
+        {
+            RestoreEnd();
         }
 
     }
 
+    private void Hit()
+    {
+        playerStat.CriticalHit();
+        enemyHealth -= playerStat.Damage();
+        enemyStun -= playerStat.StunDamage();
+
+        enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
+        sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
+        HitAnimation();
+        Invoke("Hit", 0.3f);
+        isDamaged = true;
+        isAlert = true;
+        alertTimer = 0;
+        Debug.Log("HP : " + enemyHealth);
+        Debug.Log("Stun : " + enemyStun);
+    }
+
+
+    protected void Restore()
+    {
+        if (restorationStartTime < enemyList.enemyRestoration)
+        {
+            restorationStartTime += Time.deltaTime;
+            //기절하는 동안 적이 HP와 SP 회복
+            enemyStun = Mathf.Lerp(0, enemyList.enemySP, restorationStartTime / enemyList.enemyRestoration);
+            enemyHealth += Mathf.CeilToInt(enemyList.enemyHPRestoration * Time.deltaTime);
+
+            sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
+            enemyRigid.bodyType = RigidbodyType2D.Static;
+            GetComponent<Collider2D>().enabled = false;
+            StunAnimation();
+        }
+    }
+
+    protected void RestoreEnd()
+    {
+        restorationStartTime = 0;
+        sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
+        enemyRigid.bodyType = RigidbodyType2D.Dynamic;
+        GetComponent<Collider2D>().enabled = true;
+        IdleAnimation();
+    }
+
+
+
     #region Animation
-    private void HitAnimation()
+    protected void HitAnimation()
     {
         enemyAnim.SetTrigger("Hit");
     }
 
-    private void StunAnimation()
+    protected void StunAnimation()
     {
         enemyAnim.SetBool("IsStun", true);
     }
 
-    private void IdleAnimation()
+    protected void IdleAnimation()
     {
         enemyAnim.SetBool("IsStun", false);
     }
 
-    private void ResetAnimationTrigger()
+    protected void ResetAnimationTrigger()
     {
         enemyAnim.ResetTrigger("Hit");
     }
 
-    public void StunDisableAlpha()
+    protected void StunDisableAlpha()
     {
         sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 0.2f);
     }
 
-    public void StunEnableAlpha()
+    protected void StunEnableAlpha()
     {
         sprender.color = new Color(sprender.color.r, sprender.color.g, sprender.color.b, 1);
     }

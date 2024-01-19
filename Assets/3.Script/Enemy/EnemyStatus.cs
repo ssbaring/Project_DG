@@ -9,7 +9,7 @@ public class EnemyStatus : EnemyControl
     [SerializeField] private GameObject UIBar;
     [SerializeField] private Slider SPBar;
     [SerializeField] private Slider HPBar;
-    [SerializeField] private bool isEnemyDead;
+    public bool isEnemyDead;
 
     [SerializeField] private GameObject UICanvas;
     protected override void Start()
@@ -75,6 +75,8 @@ public class EnemyStatus : EnemyControl
         }
     }
 
+
+
     private void CurrentHPBar(float HP)
     {
         HPBar.value = HP;
@@ -84,4 +86,7 @@ public class EnemyStatus : EnemyControl
     {
         SPBar.value = SP;
     }
+
+
+   
 }

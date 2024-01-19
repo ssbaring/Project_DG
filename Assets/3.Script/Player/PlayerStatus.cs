@@ -39,10 +39,10 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_dmg  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_dmg  : 0)
-                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0)
+                + (Weapon.GetComponentInChildren<ItemSlot>() != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_dmg : 0);
         }
     }
 
@@ -51,10 +51,10 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.stun_dmg  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.stun_dmg  : 0)
-                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0)
+                + (Weapon.GetComponentInChildren<ItemSlot>() != null ? Weapon.GetComponentInChildren<ItemSlot>().item.stun_dmg : 0);
         }
     }
 
@@ -62,9 +62,9 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.armor : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.armor  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.armor  : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.armor : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.armor : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.armor : 0);
         }
     }
 
@@ -72,9 +72,9 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.agility : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.agility  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.agility  : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.agility : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.agility : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.agility : 0);
         }
     }
 
@@ -82,10 +82,10 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_speed : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_speed  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_speed  : 0)
-                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_speed : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.attack_speed : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.attack_speed : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.attack_speed : 0)
+                + (Weapon.GetComponentInChildren<ItemSlot>() != null ? Weapon.GetComponentInChildren<ItemSlot>().item.attack_speed : 0);
         }
     }
 
@@ -101,10 +101,10 @@ public class PlayerStatus : PlayerControl
     {
         get
         {
-            return  (Helmet.GetComponentInChildren<ItemSlot>()  != null ? Helmet.GetComponentInChildren<ItemSlot>().item.critical_rate : 0)
-                +   (Armor.GetComponentInChildren<ItemSlot>()   != null ? Armor.GetComponentInChildren<ItemSlot>().item.critical_rate  : 0)
-                +   (Shoes.GetComponentInChildren<ItemSlot>()   != null ? Shoes.GetComponentInChildren<ItemSlot>().item.critical_rate  : 0)
-                +   (Weapon.GetComponentInChildren<ItemSlot>()  != null ? Weapon.GetComponentInChildren<ItemSlot>().item.critical_rate : 0);
+            return (Helmet.GetComponentInChildren<ItemSlot>() != null ? Helmet.GetComponentInChildren<ItemSlot>().item.critical_rate : 0)
+                + (Armor.GetComponentInChildren<ItemSlot>() != null ? Armor.GetComponentInChildren<ItemSlot>().item.critical_rate : 0)
+                + (Shoes.GetComponentInChildren<ItemSlot>() != null ? Shoes.GetComponentInChildren<ItemSlot>().item.critical_rate : 0)
+                + (Weapon.GetComponentInChildren<ItemSlot>() != null ? Weapon.GetComponentInChildren<ItemSlot>().item.critical_rate : 0);
         }
     }
     #endregion
@@ -150,6 +150,7 @@ public class PlayerStatus : PlayerControl
         check = GetComponent<PlayerRayCheck>();
     }
 
+
     public float TrueDamage(float defaultDmg)
     {
         trueDamage = (((1 + strengthLevel) * 1.8f) * defaultDmg + EquipmentDamage);
@@ -191,6 +192,15 @@ public class PlayerStatus : PlayerControl
     protected override void Start()
     {
         base.Start();
+        Helmet = FindObjectOfType<UIManager>().transform.GetChild(0).GetChild(1).Find("Head");
+
+        Armor = FindObjectOfType<UIManager>().transform.GetChild(0).GetChild(1).Find("Armor");
+
+        Shoes = FindObjectOfType<UIManager>().transform.GetChild(0).GetChild(1).Find("Shoes");
+
+        Weapon = FindObjectOfType<UIManager>().transform.GetChild(0).GetChild(1).Find("Weapon");
+
+
     }
 
     protected override void Update()
@@ -208,6 +218,7 @@ public class PlayerStatus : PlayerControl
                 //todo... 100숫자 수정하기
                 DeadEnemyList[i].GetComponent<EnemyStatus>().EnemyStun = 100;
                 DeadEnemyList[i].GetComponent<EnemyStatus>().EnemyHealth = 100;
+                DeadEnemyList[i].GetComponent<EnemyStatus>().isEnemyDead = false;
                 DeadEnemyList[i].SetActive(true);
             }
             DeadEnemyList.Clear();

@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inventory;
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject skill;
+    [SerializeField] private GameObject option;
 
     public KeyCode inventoryKey = KeyCode.I;
     public KeyCode menuKey = KeyCode.Escape;
@@ -36,12 +37,13 @@ public class UIManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Equals("TitleScene")) return;
         else
         {
-            if (inventory.activeSelf || skill.activeSelf)
+            if (inventory.activeSelf || skill.activeSelf || option.activeSelf)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     inventory.SetActive(false);
                     skill.SetActive(false);
+                    option.SetActive(false);
                 }
             }
             else if (!inventory.activeSelf || !skill.activeSelf || !menu.activeSelf)
