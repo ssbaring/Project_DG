@@ -216,7 +216,6 @@ public class PlayerSkillStatus : MonoBehaviour
             level.strengthLevel = 0;
         }
     }
-
     public void AgilityLevelDown()
     {
         if (level.agilityLevel > 0)
@@ -238,7 +237,6 @@ public class PlayerSkillStatus : MonoBehaviour
         }
 
     }
-
     public void SpeedLevelDown()
     {
         if (level.speedLevel > 0)
@@ -259,7 +257,6 @@ public class PlayerSkillStatus : MonoBehaviour
             level.speedLevel = 0;
         }
     }
-
     public void CriticalLevelDown()
     {
         if (level.criticalLevel > 0)

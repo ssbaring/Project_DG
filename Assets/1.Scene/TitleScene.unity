@@ -4309,6 +4309,7 @@ GameObject:
   - component: {fileID: 218943088008368481}
   - component: {fileID: 218943088008368509}
   - component: {fileID: 5570368325505675766}
+  - component: {fileID: 218943088008368483}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -4316,6 +4317,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &218943088008368483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218943088008368482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f7ccac9f1a0ff4fbf89151d432546e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &218943088008368509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6981,6 +6994,7 @@ MonoBehaviour:
   CriticalValueText: {fileID: 218943089623650396}
   SkillPointCount: {fileID: 218943089339331692}
   maxLevel: 20
+  level: {fileID: 0}
 --- !u!1 &218943088707570241
 GameObject:
   m_ObjectHideFlags: 0
