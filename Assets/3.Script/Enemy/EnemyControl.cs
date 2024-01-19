@@ -61,9 +61,21 @@ public class EnemyControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Weapon"))
+        if (collision.CompareTag("Weapon") && !isDamaged)
         {
+            playerStat.CriticalHit();
+            enemyHealth -= playerStat.Damage();
+            enemyStun -= playerStat.StunDamage();
+
+            enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
+            sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
+            HitAnimation();
+            Invoke("Hit", 0.3f);
+            isAlert = true;
+            alertTimer = 0;
             isDamaged = true;
+            Debug.Log("HP : " + enemyHealth);
+            Debug.Log("Stun : " + enemyStun);
         }
     }
 
@@ -71,6 +83,9 @@ public class EnemyControl : MonoBehaviour
     {
         if (collision.CompareTag("Weapon"))
         {
+            sprender.color = new Color(1, 1, 1, sprender.color.a);
+            playerStat.isCriticalAttack = false;
+            ResetAnimationTrigger();
             isDamaged = false;
         }
     }
@@ -81,20 +96,6 @@ public class EnemyControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        
-        if(isDamaged)
-        {
-            Hit();
-        }
-        else
-        {
-            sprender.color = new Color(1, 1, 1, sprender.color.a);
-            playerStat.isCriticalAttack = false;
-            ResetAnimationTrigger();
-        }
-
-
-
         if (isStun)
         {
             Restore();
@@ -105,24 +106,6 @@ public class EnemyControl : MonoBehaviour
         }
 
     }
-
-    private void Hit()
-    {
-        playerStat.CriticalHit();
-        enemyHealth -= playerStat.Damage();
-        enemyStun -= playerStat.StunDamage();
-
-        enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
-        sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
-        HitAnimation();
-        Invoke("Hit", 0.3f);
-        isDamaged = true;
-        isAlert = true;
-        alertTimer = 0;
-        Debug.Log("HP : " + enemyHealth);
-        Debug.Log("Stun : " + enemyStun);
-    }
-
 
     protected void Restore()
     {
