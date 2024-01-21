@@ -7,19 +7,39 @@ public class EnemyStatus : EnemyControl
 {
     [Header("EnemyStatus")]
     [SerializeField] private GameObject UIBar;
+    [SerializeField] private GameObject damageTextObject;
+    [SerializeField] private GameObject damageText;
+    [SerializeField] private GameObject stunDamageTextObject;
+    [SerializeField] private GameObject stunDamageText;
+
     [SerializeField] private Slider SPBar;
     [SerializeField] private Slider HPBar;
     public bool isEnemyDead;
 
-    [SerializeField] private GameObject UICanvas;
+    [SerializeField] private GameObject _HUDCanvas;
     protected override void Start()
     {
         base.Start();
-        UIBar = Instantiate(UIBar, UICanvas.transform);
+        _HUDCanvas = FindObjectOfType<HUDCanvas>().gameObject;
+        UIBar = Instantiate(UIBar, _HUDCanvas.transform);
+        damageTextObject = Instantiate(damageTextObject, _HUDCanvas.transform);
+        stunDamageTextObject = Instantiate(stunDamageTextObject, _HUDCanvas.transform);
         SPBar = UIBar.transform.GetChild(0).GetComponent<Slider>();
         HPBar = UIBar.transform.GetChild(1).GetComponent<Slider>();
         SPBar.maxValue = enemyList.enemySP;
         HPBar.maxValue = enemyList.enemyHP;
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        if (damageTextObject.transform.childCount > 1 && stunDamageTextObject.transform.childCount > 1)
+        {
+            Destroy(damageTextObject.transform.GetChild(0).gameObject);
+            Destroy(stunDamageTextObject.transform.GetChild(0).gameObject);
+        }
+            Instantiate(damageText, damageTextObject.transform);
+            Instantiate(stunDamageText, stunDamageTextObject.transform);
     }
 
     protected override void Update()
@@ -29,6 +49,12 @@ public class EnemyStatus : EnemyControl
         CurrentSPBar(enemyStun);
 
         UIBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.8f, 0));
+
+        if (damageTextObject != null)
+        {
+            stunDamageTextObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1.2f, 0));
+            damageTextObject.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0.5f, 0.3f, 0));
+        }
 
         //적 체력이나 기절수치에 따른 상태변화
         if (enemyHealth <= 0)
@@ -55,7 +81,7 @@ public class EnemyStatus : EnemyControl
             isStun = false;
         }
 
-        
+
 
 
         //10초동안 적 체력바 표시
@@ -69,7 +95,7 @@ public class EnemyStatus : EnemyControl
                 alertTimer = 0;
             }
         }
-        else if(!isAlert && !isStun)
+        else if (!isAlert && !isStun)
         {
             UIBar.SetActive(false);
         }
@@ -88,5 +114,5 @@ public class EnemyStatus : EnemyControl
     }
 
 
-   
+
 }

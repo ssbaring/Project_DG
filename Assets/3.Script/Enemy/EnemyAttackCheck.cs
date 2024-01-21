@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class EnemyAttackCheck : MonoBehaviour
 {
-    public LayerMask PlayerLayer;
-
-    [SerializeField] private GameObject backAttack;
-    [SerializeField] private float backAttackrayLength = 0.5f;
-
     private PlayerStatus attackCheck;
     private EnemyControl eCon;
     private void Start()
@@ -19,7 +14,13 @@ public class EnemyAttackCheck : MonoBehaviour
 
     private void Update()
     {
-        attackCheck.isBackAttack = Physics2D.Raycast(backAttack.transform.position, Vector2.left * eCon.isRightIntEnemy, backAttackrayLength, PlayerLayer);
-        Debug.DrawRay(backAttack.transform.position, Vector2.left * eCon.isRightIntEnemy * backAttackrayLength, Color.white);
+        if(eCon.IsRightIntEnemy * attackCheck.isRightInt == 1)
+        {
+            eCon.isBackAttack = true;
+        }
+        else
+        {
+            eCon.isBackAttack = false;
+        }
     }
 }

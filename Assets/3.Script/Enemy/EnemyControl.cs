@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
-    
+
     [SerializeField] protected float alertTimer = 0;
     [SerializeField] protected EnemyList enemyList;
     [SerializeField] protected float enemyStun;
@@ -45,9 +45,14 @@ public class EnemyControl : MonoBehaviour
     public bool isStun = false;
     public bool isAlert = false;
 
-    public int isRightIntEnemy = 1;
-    public float backCoefficent = 1.0f;
-
+    public int IsRightIntEnemy
+    {
+        get
+        {
+            return transform.rotation == Quaternion.Euler(0, -180, 0) ? -1 : 1;
+        }
+    }
+    public bool isBackAttack = false;
 
     protected virtual void Start()
     {
@@ -59,10 +64,19 @@ public class EnemyControl : MonoBehaviour
         enemyStun = enemyList.enemySP;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Weapon") && !isDamaged)
         {
+            if (isBackAttack)
+            {
+                playerStat.isBackAttack = true;
+                Debug.Log("╧И╬Нец");
+            }
+            else
+            {
+                playerStat.isBackAttack = false;
+            }
             playerStat.CriticalHit();
             enemyHealth -= playerStat.Damage();
             enemyStun -= playerStat.StunDamage();
@@ -70,12 +84,12 @@ public class EnemyControl : MonoBehaviour
             enemyRigid.AddForce(new Vector2(playerStat.knockback * playerStat.isRightInt, 0), ForceMode2D.Impulse);
             sprender.color = sprender.color = new Color(1, 0, 0, sprender.color.a);
             HitAnimation();
-            Invoke("Hit", 0.3f);
             isAlert = true;
             alertTimer = 0;
             isDamaged = true;
             Debug.Log("HP : " + enemyHealth);
             Debug.Log("Stun : " + enemyStun);
+            Debug.Log("isRightInt : " + IsRightIntEnemy);
         }
     }
 

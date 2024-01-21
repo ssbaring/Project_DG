@@ -227,7 +227,7 @@ public class PlayerStatus : PlayerControl
         }
     }
 
-    #region Overriding
+    #region Overriding Damage Coefficient
 
     public override float Damage()
     {

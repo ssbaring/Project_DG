@@ -189,7 +189,7 @@ public class PlayerControl : MonoBehaviour
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
                 isRightInt = -1;
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                transform.rotation = Quaternion.Euler(0, 180, 0);   //실제로는 -180으로 바뀜
             }
             else if (posX > 0)
             {

@@ -2158,13 +2158,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!251 &262011052
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -3394,11 +3397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 450801595}
-  backAttackrayLength: 3
 --- !u!1 &454462584
 GameObject:
   m_ObjectHideFlags: 0
@@ -3983,13 +3981,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!251 &493185527
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -4174,13 +4175,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!251 &501238141
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -26521,11 +26525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 727597603}
-  backAttackrayLength: 3
 --- !u!1 &744248601
 GameObject:
   m_ObjectHideFlags: 0
@@ -28061,11 +28060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 951290156}
-  backAttackrayLength: 3
 --- !u!1 &976902222
 GameObject:
   m_ObjectHideFlags: 0
@@ -29004,13 +28998,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!251 &1098263451
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -30054,13 +30051,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!251 &1197280809
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -30574,11 +30574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 1258045178}
-  backAttackrayLength: 3
 --- !u!1 &1259733005
 GameObject:
   m_ObjectHideFlags: 0
@@ -30769,6 +30764,41 @@ MonoBehaviour:
   inventoryKey: 105
   menuKey: 27
   skillKey: 107
+--- !u!1 &1291134895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1291134896}
+  m_Layer: 5
+  m_Name: DamageRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1291134896
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291134895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1604885450}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1294347427
 GameObject:
   m_ObjectHideFlags: 0
@@ -31214,11 +31244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 1399117488}
-  backAttackrayLength: 3
 --- !u!1 &1399374004
 GameObject:
   m_ObjectHideFlags: 0
@@ -32443,13 +32468,16 @@ MonoBehaviour:
   isDamaged: 0
   isStun: 0
   isAlert: 0
-  isRightIntEnemy: 1
-  backCoefficent: 2
+  isBackAttack: 0
   UIBar: {fileID: 6438327001895634925, guid: 25babfd1b1e92694abb9fda0226948ee, type: 3}
+  damageTextObject: {fileID: 3892721027931859057, guid: c9c22e5ada212864f930361310fab735, type: 3}
+  damageText: {fileID: 4505453598437658314, guid: f9a4c927e26e1ec4187470699588c215, type: 3}
+  stunDamageTextObject: {fileID: 3892721027931859057, guid: 6e68ddec69e10e547b6caf09481f26c1, type: 3}
+  stunDamageText: {fileID: 4505453598437658314, guid: b038fdc74dc8cfb4dbef1e7bc3349e0c, type: 3}
   SPBar: {fileID: 0}
   HPBar: {fileID: 0}
   isEnemyDead: 0
-  UICanvas: {fileID: 1604885446}
+  _HUDCanvas: {fileID: 0}
 --- !u!50 &1536814606
 Rigidbody2D:
   serializedVersion: 4
@@ -32564,7 +32592,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536814604}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 1.32, y: -3.1620002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -32573,7 +32601,7 @@ Transform:
   - {fileID: 1797447147}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!251 &1536814612
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -33156,13 +33184,26 @@ GameObject:
   - component: {fileID: 1604885450}
   - component: {fileID: 1604885449}
   - component: {fileID: 1604885448}
+  - component: {fileID: 1604885447}
   m_Layer: 5
-  m_Name: CharacterUICanvas
+  m_Name: HUDCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1604885447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604885446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73dd75001a1631e4b99f73edc7481509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1604885448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33219,6 +33260,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1150233833}
+  - {fileID: 1291134896}
+  - {fileID: 4062664288426102587}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -34258,11 +34301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c423c491ac78e5f479e0b52eec93f3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  backAttack: {fileID: 1796765741}
-  backAttackrayLength: 3
 --- !u!1 &1797389863
 GameObject:
   m_ObjectHideFlags: 0
@@ -38401,6 +38439,152 @@ Transform:
   m_Father: {fileID: 744248602}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1426532879850739653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4062664288426102587}
+  - component: {fileID: 4877404284761628395}
+  - component: {fileID: 4747568030946094485}
+  - component: {fileID: 2707154221551148297}
+  m_Layer: 5
+  m_Name: DamageText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2707154221551148297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426532879850739653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95865ed188834d142bf700cf164735b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageText: {fileID: 4747568030946094485}
+  textObject: {fileID: 1426532879850739653}
+  isStun: 0
+  textMoveSpeed: 0.5
+  textAlphaSpeed: 0.2
+  destroyTime: 1
+  gameTime: 0
+--- !u!224 &4062664288426102587
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426532879850739653}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1604885450}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 152.94373, y: 11.446035}
+  m_SizeDelta: {x: 100, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4747568030946094485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426532879850739653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 9
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 04765629a7418d845b31f5ab823b460d, type: 2}
+  m_sharedMaterial: {fileID: 5433516327533270171, guid: 04765629a7418d845b31f5ab823b460d, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 1
+  m_colorMode: 2
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 20
+  m_fontSizeBase: 20
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: -5
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &4821921139255954456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44242,6 +44426,14 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &4877404284761628395
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426532879850739653}
+  m_CullTransparentMesh: 1
 --- !u!114 &5639698530200223289
 MonoBehaviour:
   m_ObjectHideFlags: 0
