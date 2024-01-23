@@ -14,8 +14,14 @@ public class Title : MonoBehaviour
 #endif
     }
 
+    public void GameStart()
+    {
+        SceneLoad.instance.LoadNextScene();
+    }
+
     public void GoTitle()
     {
         SceneManager.LoadScene("TitleScene");
+        SceneLoad.instance.sceneIndex = 0;
     }
 }

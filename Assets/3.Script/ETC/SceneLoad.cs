@@ -8,32 +8,36 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoad : MonoBehaviour
 {
-    [SerializeField] private string nextSceneName;
-    private bool isGoal;
+    public static SceneLoad instance = null;
+
+    private void Awake()
+    {
+        #region Singleton
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        #endregion
+    }
+
+    public string nextSceneName;
+    public int sceneIndex = 0;
+
+    public bool isGoal;
 
     public GameObject loadingScreen;
     public TextMeshProUGUI loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            isGoal = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            isGoal = false;
-        }
-    }
 
     private void Update()
     {
-        if(isGoal)
+        if (isGoal)
         {
             isGoal = false;
             LoadNextScene();
@@ -48,18 +52,28 @@ public class SceneLoad : MonoBehaviour
 
     private IEnumerator LoadAsyncScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+        AsyncOperation asyncLoad;
+        if (SceneManager.GetActiveScene().buildIndex == sceneIndex)
+        {
+            sceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
+        }
+        else
+        {
+            asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
+        }
         asyncLoad.allowSceneActivation = false;
         loadingScreen.SetActive(true);
-        float loadingProgress = asyncLoad.progress;
-        int loadingPercentage;
+        float gameTime = 0;
+        float loadingPercentage = 0;
         int count = 0;
 
-        while(!asyncLoad.isDone)
+        while (!asyncLoad.isDone)
         {
-            //Debug.Log(loadingProgress);
-            loadingPercentage = Mathf.RoundToInt(loadingProgress * 100);
-            loadingPercentageText.text = string.Format("{0} %", loadingPercentage);
+            yield return null;
+            gameTime += Time.deltaTime;
+            //loadingPercentage = Mathf.RoundToInt(asyncLoad.progress * 100);
+
             #region Loading Text
             switch (count)
             {
@@ -97,12 +111,22 @@ public class SceneLoad : MonoBehaviour
             }
             count++;
             #endregion
-            
-            if (asyncLoad.progress >= 0.9f)
+
+            if (loadingPercentage >= 90)
             {
-                asyncLoad.allowSceneActivation = true;
+                loadingPercentage = Mathf.Lerp(loadingPercentage, 100, gameTime);
+                if (loadingPercentage == 100)
+                {
+                    asyncLoad.allowSceneActivation = true;
+                }
             }
-            yield return null;
+            else
+            {
+                loadingPercentage = Mathf.Lerp(loadingPercentage, asyncLoad.progress * 100, gameTime);
+                if (loadingPercentage >= 90) gameTime = 0;
+            }
+            loadingPercentageText.text = string.Format("{0} %", Mathf.RoundToInt(loadingPercentage));
+
         }
         loadingScreen.SetActive(false);
     }
