@@ -41,9 +41,11 @@ public class PlayerControl : MonoBehaviour
     protected Animator anim;
     protected PlayerStatus stat;
 
+    public GameObject playerRayPivot;
+    public GameObject meleePivot;
     [SerializeField] protected SpriteRenderer wpRender;
+    [SerializeField] protected SpriteRenderer spRender;
     [SerializeField] protected PlayerRayCheck playerRay;
-
 
 
 
@@ -78,6 +80,7 @@ public class PlayerControl : MonoBehaviour
     protected virtual void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        spRender = GetComponent<SpriteRenderer>();
         stat = GetComponent<PlayerStatus>();
         anim = GetComponent<Animator>();
     }
@@ -166,7 +169,6 @@ public class PlayerControl : MonoBehaviour
             jumpPower = 6.5f;
         }
 
-
     }
 
 
@@ -185,20 +187,24 @@ public class PlayerControl : MonoBehaviour
             if (posX < 0)
             {
                 isRunning = true;
+                spRender.flipX = true;
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
                 isRightInt = -1;
-                transform.rotation = Quaternion.Euler(0, 180, 0);   //실제로는 -180으로 바뀜
+                playerRayPivot.transform.rotation = Quaternion.Euler(0, 180, 0);   //실제로는 -180으로 바뀜
+                meleePivot.transform.rotation = Quaternion.Euler(0, 180, 0);   //실제로는 -180으로 바뀜
             }
             else if (posX > 0)
             {
                 isRunning = true;
+                spRender.flipX = false;
                 anim.SetTrigger("RunStart");
                 anim.SetBool("IsIdle", false);
                 anim.SetBool("IsRunning", true);
                 isRightInt = 1;
-                transform.rotation = Quaternion.identity;
+                playerRayPivot.transform.rotation = Quaternion.identity;
+                meleePivot.transform.rotation = Quaternion.identity;
             }
             else if (posX == 0)
             {
@@ -275,7 +281,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Wall()
     {
-        if (playerRay.isWall && anim.GetBool("IsJumping"))
+        if (playerRay.isWall && anim.GetBool("IsJumping") && (posX != 0 || wallPosX != 0))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.gravityScale = 0;
@@ -319,14 +325,14 @@ public class PlayerControl : MonoBehaviour
                     Debug.Log("벽점프");
                     anim.SetTrigger("JumpStart");
                     isRightInt = -1;
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    playerRayPivot.transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
                 else if (wallPosX > 0)
                 {
                     Debug.Log("벽점프");
                     anim.SetTrigger("JumpStart");
                     isRightInt = 1;
-                    transform.rotation = Quaternion.identity;
+                    playerRayPivot.transform.rotation = Quaternion.identity;
                 }
                 else return;
 

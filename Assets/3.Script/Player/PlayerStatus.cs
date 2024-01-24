@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 public class PlayerStatus : PlayerControl
@@ -114,6 +115,10 @@ public class PlayerStatus : PlayerControl
     public float trueStunDamage;
     public float knockback = 0.2f;
 
+    [Header("Gameover")]
+    public GameObject deadBG;
+    public PlayableDirector deadscene;
+
     public List<GameObject> DeadEnemyList;
 
     public int CurseStack
@@ -129,11 +134,15 @@ public class PlayerStatus : PlayerControl
             {
                 isDead = true;
                 anim.SetBool("IsCurseDie", true);
+                deadscene.gameObject.SetActive(true);
+                deadscene.Play();
                 rigid.constraints = RigidbodyConstraints2D.FreezeAll;
             }
             else
             {
                 anim.SetBool("IsCurseDie", false);
+                deadscene.gameObject.SetActive(false);
+                deadBG.SetActive(false);
                 rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
                 Debug.Log(curseStack);
             }
