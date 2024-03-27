@@ -141,7 +141,7 @@ TextureImporter:
       213: -4511352106216926553
     second: CharacterSprite_45
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -158,10 +158,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -200,6 +202,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -211,6 +215,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -223,6 +228,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -235,6 +241,33 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1216,9 +1249,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      CharacterSprite_0: -824388629846048450
+      CharacterSprite_1: -1066395846101754898
+      CharacterSprite_10: -9081081509354009107
+      CharacterSprite_11: 2802773002147348453
+      CharacterSprite_12: 4861731663643459767
+      CharacterSprite_13: -5102260503498529994
+      CharacterSprite_14: -7849175828634479628
+      CharacterSprite_15: 5666456901310549643
+      CharacterSprite_16: -4665954962943442278
+      CharacterSprite_17: -4261267365870633754
+      CharacterSprite_18: -6246668782494901204
+      CharacterSprite_19: 2191362484290970689
+      CharacterSprite_2: 535231489507642049
+      CharacterSprite_20: 91853211363269135
+      CharacterSprite_21: 6646810347536794677
+      CharacterSprite_22: -3742119469028954642
+      CharacterSprite_23: -935720380287478153
+      CharacterSprite_24: 4105311133029966246
+      CharacterSprite_25: 3772132328127228040
+      CharacterSprite_26: -943789249768828621
+      CharacterSprite_27: 7688196926396783541
+      CharacterSprite_28: -1829161820111909777
+      CharacterSprite_29: 1902827859452512938
+      CharacterSprite_3: 2808628755634435493
+      CharacterSprite_30: 4737316036764196152
+      CharacterSprite_31: 1891234362698454954
+      CharacterSprite_32: 3725337285351711789
+      CharacterSprite_33: 3566446081648308268
+      CharacterSprite_34: 8595636043712628950
+      CharacterSprite_35: 4011346793298952293
+      CharacterSprite_36: 2864106135668306379
+      CharacterSprite_37: -4143996434130908388
+      CharacterSprite_38: -4509836129799921402
+      CharacterSprite_39: -442634634324960615
+      CharacterSprite_4: -8946866693762309086
+      CharacterSprite_40: -700444161359672789
+      CharacterSprite_41: 6480562188906215890
+      CharacterSprite_42: 902919115927571473
+      CharacterSprite_43: -651768457366758086
+      CharacterSprite_44: -3096290888106250112
+      CharacterSprite_45: -4511352106216926553
+      CharacterSprite_5: -2075795144123099768
+      CharacterSprite_6: 9061816670901246425
+      CharacterSprite_7: -4548619905874123893
+      CharacterSprite_8: -7199848430087737516
+      CharacterSprite_9: -133272097437164584
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

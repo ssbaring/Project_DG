@@ -276,7 +276,7 @@ TextureImporter:
       213: 5312520784656981931
     second: Character_Ver3_90
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -293,10 +293,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -335,6 +337,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -346,6 +350,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -358,6 +363,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -370,6 +376,33 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -2296,9 +2329,100 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Character_Ver3_0: 1459037015748224667
+      Character_Ver3_1: 4014762219033946410
+      Character_Ver3_10: -8962522687255585144
+      Character_Ver3_11: -898631196316336432
+      Character_Ver3_12: -3757297453817619069
+      Character_Ver3_13: -6441986882406549536
+      Character_Ver3_14: 3397357847588183024
+      Character_Ver3_15: -6415867342534591712
+      Character_Ver3_16: -2804227506804331440
+      Character_Ver3_17: -8556484282595377323
+      Character_Ver3_18: -451171714048058039
+      Character_Ver3_19: 3604224645056878795
+      Character_Ver3_2: -1840371030362231466
+      Character_Ver3_20: -3253581841998023709
+      Character_Ver3_21: -3584400401843717139
+      Character_Ver3_22: -9035234272049319430
+      Character_Ver3_23: -1522299660469029983
+      Character_Ver3_24: 169089447164633193
+      Character_Ver3_25: -7210275186116874415
+      Character_Ver3_26: -4560955059793277189
+      Character_Ver3_27: -5162653403861428216
+      Character_Ver3_28: -7318713594199903043
+      Character_Ver3_29: 2238508175216107414
+      Character_Ver3_3: 9194300209089272556
+      Character_Ver3_30: -8128131440095181726
+      Character_Ver3_31: 1542944208651245268
+      Character_Ver3_32: 5377124031036339136
+      Character_Ver3_33: 2096089334778791799
+      Character_Ver3_34: -3511509757882541921
+      Character_Ver3_35: -2745759494079915460
+      Character_Ver3_36: -1763350363776065252
+      Character_Ver3_37: 7439043536461098708
+      Character_Ver3_38: 1999559751903761453
+      Character_Ver3_39: 4963448036041030439
+      Character_Ver3_4: -3212729655859781436
+      Character_Ver3_40: -7452447796774333802
+      Character_Ver3_41: 7374537491965644955
+      Character_Ver3_42: -3573373248595177974
+      Character_Ver3_43: -5893114676858929279
+      Character_Ver3_44: 8297041811285880753
+      Character_Ver3_45: 5615968121952576366
+      Character_Ver3_46: -5552573182442006750
+      Character_Ver3_47: -509558948054630742
+      Character_Ver3_48: 1273130639425136766
+      Character_Ver3_49: 8169673830853995320
+      Character_Ver3_5: -9018190988167599202
+      Character_Ver3_50: 8216976587977269362
+      Character_Ver3_51: -4531344091111427644
+      Character_Ver3_52: -5693184591324874542
+      Character_Ver3_53: -206677630670566263
+      Character_Ver3_54: 3313497835918831202
+      Character_Ver3_55: -4420172065963436190
+      Character_Ver3_56: -6449194464657912340
+      Character_Ver3_57: -7609078612097628428
+      Character_Ver3_58: 558998230524230421
+      Character_Ver3_59: -7051118412492571018
+      Character_Ver3_6: -1180648454404442385
+      Character_Ver3_60: -5677080938263405964
+      Character_Ver3_61: -4458062127092734801
+      Character_Ver3_62: -2051605240404221028
+      Character_Ver3_63: 737650633645552664
+      Character_Ver3_64: 288000013960257348
+      Character_Ver3_65: -9081244901759189195
+      Character_Ver3_66: -4441289473921632868
+      Character_Ver3_67: 6402425451440201128
+      Character_Ver3_68: -767499386064714049
+      Character_Ver3_69: 2396550883763189806
+      Character_Ver3_7: -1326545416951683954
+      Character_Ver3_70: 567031077400569196
+      Character_Ver3_71: -962294993351443079
+      Character_Ver3_72: -7968334016489161769
+      Character_Ver3_73: 6054886419210843245
+      Character_Ver3_74: 7086273758750300549
+      Character_Ver3_75: -9001014471901144345
+      Character_Ver3_76: 3657886063610189465
+      Character_Ver3_77: -7544427638702439230
+      Character_Ver3_78: -4143037492143585296
+      Character_Ver3_79: -5509199962460333310
+      Character_Ver3_8: 255377489002105752
+      Character_Ver3_80: 5417751698571428986
+      Character_Ver3_81: 8968040870499190413
+      Character_Ver3_82: 8984863894381122033
+      Character_Ver3_83: 2893670377172481066
+      Character_Ver3_84: 2658066413966024824
+      Character_Ver3_85: -6154954168593385457
+      Character_Ver3_86: 7108954606090861349
+      Character_Ver3_87: 8346442042762056411
+      Character_Ver3_88: -2750057451891939650
+      Character_Ver3_89: -351011360675694356
+      Character_Ver3_9: 7332306211614648190
+      Character_Ver3_90: 5312520784656981931
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
