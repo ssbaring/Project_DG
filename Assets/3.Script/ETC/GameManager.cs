@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("DevMode")]
+    [SerializeField] private PlayerSkillStatus playerSkill;
     [SerializeField] private int exp = 10000;
 
     private void Awake()

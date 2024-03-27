@@ -30,22 +30,20 @@ public class PlayerSkillStatus : MonoBehaviour
         level = FindObjectOfType<PlayerStatus>();
     }
 
-
-
-    protected void Update()
+    private void Start()
     {
-        StrengthLevelText.text = string.Format("+{0}", level.strengthLevel);
-        AgilityLevelText.text = string.Format("+{0}", level.agilityLevel);
-        SpeedLevelText.text = string.Format("+{0}", level.speedLevel);
-        CriticalLevelText.text = string.Format("+{0}", level.criticalLevel);
-
         StrengthValueText.text = string.Format("{0}", level.TrueDamage(level.defalutDamage));
         StunValueText.text = string.Format("{0}", level.TrueStunDamage(level.defaultStunDamage));
         SpeedValueText.text = string.Format("{0}", level.Speed());
         CriticalValueText.text = string.Format("{0}%", level.CriticalProbability());
+    }
 
+    private void Update()
+    {
         SkillPointCount.text = string.Format("{0}", level.skillPoint);
     }
+
+    //Button
 
     public void StrengthLevelUp()
     {
@@ -82,7 +80,10 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             return;
         }
-
+        StrengthLevelText.text = string.Format("+{0}", level.strengthLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        StrengthValueText.text = string.Format("{0}", level.TrueDamage(level.defalutDamage));
+        StunValueText.text = string.Format("{0}", level.TrueStunDamage(level.defaultStunDamage));
     }
     public void AgilityLevelUp()
     {
@@ -119,6 +120,8 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             return;
         }
+        AgilityLevelText.text = string.Format("+{0}", level.agilityLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
     }
     public void SpeedLevelUp()
     {
@@ -155,6 +158,9 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             return;
         }
+        SpeedLevelText.text = string.Format("+{0}", level.speedLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        SpeedValueText.text = string.Format("{0}", level.Speed());
     }
     public void CriticalLevelUp()
     {
@@ -191,6 +197,9 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             return;
         }
+        CriticalLevelText.text = string.Format("+{0}", level.criticalLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        CriticalValueText.text = string.Format("{0}%", level.CriticalProbability());
     }
 
     //UP
@@ -215,6 +224,10 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             level.strengthLevel = 0;
         }
+        StrengthLevelText.text = string.Format("+{0}", level.strengthLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        StrengthValueText.text = string.Format("{0}", level.TrueDamage(level.defalutDamage));
+        StunValueText.text = string.Format("{0}", level.TrueStunDamage(level.defaultStunDamage));
     }
     public void AgilityLevelDown()
     {
@@ -235,7 +248,8 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             level.agilityLevel = 0;
         }
-
+        AgilityLevelText.text = string.Format("+{0}", level.agilityLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
     }
     public void SpeedLevelDown()
     {
@@ -256,6 +270,9 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             level.speedLevel = 0;
         }
+        SpeedLevelText.text = string.Format("+{0}", level.speedLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        SpeedValueText.text = string.Format("{0}", level.Speed());
     }
     public void CriticalLevelDown()
     {
@@ -276,5 +293,8 @@ public class PlayerSkillStatus : MonoBehaviour
         {
             level.criticalLevel = 0;
         }
+        CriticalLevelText.text = string.Format("+{0}", level.criticalLevel);
+        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        CriticalValueText.text = string.Format("{0}%", level.CriticalProbability());
     }
 }

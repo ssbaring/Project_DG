@@ -16,11 +16,11 @@ public class PlayerControl : MonoBehaviour
 
     [Header("Check")]
     public float isRightInt = 1;
-    [SerializeField] protected bool isRunning;
-    [SerializeField] protected bool isAttack;
-    [SerializeField] protected bool isWallJump;
-    [SerializeField] protected bool isJumping;
-    [SerializeField] protected bool isDead;
+    public bool isRunning;
+    public bool isAttack;
+    public bool isWallJump;
+    public bool isJumping;
+    public bool isDead;
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
