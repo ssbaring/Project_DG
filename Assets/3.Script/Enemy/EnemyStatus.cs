@@ -39,15 +39,18 @@ public class EnemyStatus : EnemyControl
             Destroy(damageTextObject.transform.GetChild(0).gameObject);
             Destroy(stunDamageTextObject.transform.GetChild(0).gameObject);
         }
-            Instantiate(damageText, damageTextObject.transform);
-            Instantiate(stunDamageText, stunDamageTextObject.transform);
+        Instantiate(damageText, damageTextObject.transform);
+        Instantiate(stunDamageText, stunDamageTextObject.transform);
     }
 
     protected override void Update()
     {
         base.Update();
-        CurrentHPBar(enemyHealth);
-        CurrentSPBar(enemyStun);
+        if (isDamaged)
+        {
+            CurrentHPBar(enemyHealth);
+            CurrentSPBar(enemyStun);
+        }
 
         UIBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.8f, 0));
 

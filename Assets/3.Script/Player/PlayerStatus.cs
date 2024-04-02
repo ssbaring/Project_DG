@@ -174,7 +174,7 @@ public class PlayerStatus : PlayerControl
 
     public float TrueSpeedAnimation()
     {
-        float trueSpeed = check.isWater ? 0.5f : (speedLevel * 0.1f) + 1;
+        float trueSpeed = isWater ? 0.5f : (speedLevel * 0.1f) + 1;
         return trueSpeed;
     }
 
@@ -255,7 +255,7 @@ public class PlayerStatus : PlayerControl
     public override float Speed()
     {
         float defaultSpeed = base.Speed();
-        float finalSpeed = check.isWater ? 2.5f : speedLevel * 0.15f + defaultSpeed;
+        float finalSpeed = isWater ? 2.5f : speedLevel * 0.15f + defaultSpeed;
         return finalSpeed;
     }
 

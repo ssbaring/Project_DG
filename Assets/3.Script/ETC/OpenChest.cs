@@ -49,6 +49,7 @@ public class OpenChest : MonoBehaviour
         {
             StartCoroutine(ItemSpawn());
             isOpened = false;
+            StopCoroutine(ItemSpawn());
         }
     
     

@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        Idle = 1,
+        Move = 2,
+        Attack = 4,
+        DashAttack = 8,
+        Jump = 16,
+        JumpAttack = 32,
+        WallJump = 64,
+        Die = 128
+    }
+    [SerializeField] protected PlayerState currentState = PlayerState.Idle;
+
     protected float jumpPower = 6.5f;
     protected float wallJumpPower = 10.0f;
     protected float wallFallSpeed = 5.0f;
@@ -13,6 +26,24 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected float wallPosX;
     [SerializeField] protected float posY;
 
+    [Header("Ray Status")]
+    [SerializeField] private float wallRayLength;
+    [SerializeField] private float rayCeilLength;
+    [SerializeField] private float rayGroundLength;
+    [SerializeField] private Vector2 boxSize = new Vector2(0.1f, 0.1f);
+    [SerializeField] private int Ground_and_Wall;
+
+    [Header("State Check")]
+    public bool isCanJump;
+    public bool isGround;
+    public bool isCeiling;
+    public bool isWall;
+    public bool isWater;
+    public bool isSloth;
+
+    public LayerMask groundLayer;
+    public LayerMask wallLayer;
+    public LayerMask waterLayer;
 
     [Header("Check")]
     public float isRightInt = 1;
@@ -21,6 +52,13 @@ public class PlayerControl : MonoBehaviour
     public bool isWallJump;
     public bool isJumping;
     public bool isDead;
+
+    [Header("Collider")]
+    public Transform meleeAttack;
+    public Transform wallCheck;
+    public Transform groundCheck;
+    public Transform frontSlothCheck;
+    public Transform backSlothCheck;
 
     [Header("PlayerStat")]
     public float defalutSpeed = 5.0f;
@@ -41,6 +79,8 @@ public class PlayerControl : MonoBehaviour
     protected Animator anim;
     protected PlayerStatus stat;
 
+
+
     public GameObject playerRayPivot;
     public GameObject meleePivot;
     [SerializeField] protected SpriteRenderer wpRender;
@@ -48,7 +88,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected PlayerRayCheck playerRay;
 
 
-
+    
 
     #region PlayerStatus
     public virtual float Damage()
@@ -83,36 +123,110 @@ public class PlayerControl : MonoBehaviour
         spRender = GetComponent<SpriteRenderer>();
         stat = GetComponent<PlayerStatus>();
         anim = GetComponent<Animator>();
+        Ground_and_Wall = groundLayer | wallLayer | waterLayer;
     }
 
     protected virtual void Update()
     {
+        RaycastHit2D lineHit = Physics2D.Raycast(transform.position, Vector2.down, rayGroundLength, Ground_and_Wall);
+        isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayCeilLength, groundLayer);
+        isWall = Physics2D.Raycast(wallCheck.position, Vector2.right * isRightInt, wallRayLength, wallLayer);
+        isCanJump = lineHit;
+
+
         if (!isDead)
         {
-            //이동
-            MoveCharacter();
-            //벽점프
-            Wall();
-
-            //공격
-            if (Input.GetKeyDown(GameManager.instance.AttackKey))
+            switch (currentState)
             {
-                Attack();
+                case PlayerState.Idle:
+                    IdlePlayer();
+                    if (Input.GetAxis("Horizontal") != 0)
+                    {
+                        ChangeState(PlayerState.Move);
+                    }
+                    else if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.Attack);
+                    }
+                    else if (Input.GetKeyDown(GameManager.instance.JumpKey))
+                    {
+                        ChangeState(PlayerState.Jump);
+                    }
+                    break;
+                case PlayerState.Move:
+                    MoveCharacter();
+                    if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.DashAttack);
+                    }
+                    else if (Input.GetKeyDown(GameManager.instance.JumpKey))
+                    {
+                        ChangeState(PlayerState.Jump);
+                    }
+                    else if (Input.GetAxis("Horizontal") == 0)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    break;
+                case PlayerState.Attack:
+                    Attack();
+                    if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.Attack);
+                    }
+                    break;
+                case PlayerState.DashAttack:
+                    DashAttack();
+                    if (Input.GetAxis("Horizontal") == 0)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    else if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.DashAttack);
+                    }
+                    else if (Input.GetKeyDown(GameManager.instance.JumpKey))
+                    {
+                        ChangeState(PlayerState.Jump);
+                    }
+                    break;
+                case PlayerState.Jump:
+                    JumpCharacter();
+                    if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.JumpAttack);
+                    }
+                    break;
+                case PlayerState.JumpAttack:
+                    if (Input.GetKeyDown(GameManager.instance.AttackKey))
+                    {
+                        ChangeState(PlayerState.JumpAttack);
+                    }
+                    break;
+                case PlayerState.WallJump:
+                    Wall();
+                    if (Input.GetKeyDown(GameManager.instance.JumpKey))
+                    {
+                        ChangeState(PlayerState.Jump);
+                    }
+                    break;
+                case PlayerState.Die:
+                    isDead = true;
+                    break;
             }
+
 
             //점프공격
-            if (!playerRay.isCanJump && Input.GetKeyDown(GameManager.instance.AttackKey))
+            if (!isCanJump && Input.GetKeyDown(GameManager.instance.AttackKey))
             {
                 Attack();
             }
 
-            //점프
-            JumpCharacter();
         }
 
 
         //땅에 닿음
-        if (playerRay.isCanJump)
+        if (isCanJump)
         {
             isWallJump = false;
             anim.SetBool("IsJumping", false);
@@ -121,13 +235,9 @@ public class PlayerControl : MonoBehaviour
             rigid.gravityScale = gravity;
         }
 
-        /*if (playerRay.isSloth)
-        {
-            rigid.gravityScale = 0;
-        }*/
 
         //천장
-        if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || playerRay.isCeiling)
+        if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
         {
             anim.SetTrigger("JumpTop");
             jumpTime = -0.1f;
@@ -146,7 +256,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsIdle", true);
         }
 
-        
+
 
         //낙하속도 조절
         if (rigid.velocity.y < -15.0f)
@@ -155,7 +265,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         //물
-        if (playerRay.isWater)
+        if (isWater)
         {
             rigid.gravityScale = waterGravity;
             if (rigid.velocity.y < -5.0f)
@@ -172,6 +282,20 @@ public class PlayerControl : MonoBehaviour
     }
 
 
+    private void ChangeState(PlayerState state)
+    {
+        currentState = state;
+        Debug.Log($"Current State = {state}");
+    }
+
+    private void IdlePlayer()
+    {
+        isRunning = false;
+        anim.SetBool("IsRunning", false);
+        anim.SetBool("IsIdle", true);
+        anim.ResetTrigger("RunStart");
+    }
+
 
     private void MoveCharacter()
     {
@@ -182,7 +306,6 @@ public class PlayerControl : MonoBehaviour
         {
             wallPosX = 0;
             rigid.velocity = position;
-
 
             if (posX < 0)
             {
@@ -206,7 +329,7 @@ public class PlayerControl : MonoBehaviour
                 playerRayPivot.transform.rotation = Quaternion.identity;
                 meleePivot.transform.rotation = Quaternion.identity;
             }
-            else if (posX == 0)
+            else
             {
                 isRunning = false;
                 anim.SetBool("IsRunning", false);
@@ -228,7 +351,7 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        if ((playerRay.isCanJump || playerRay.isWater) && Input.GetKeyDown(GameManager.instance.JumpKey) && !isAttack)
+        if ((isCanJump || isWater) && !isAttack)
         {
             JumpAnimation();
             isJumping = true;
@@ -268,7 +391,14 @@ public class PlayerControl : MonoBehaviour
 
     private void Attack()
     {
-        if (playerRay.isWall && isWallJump) return;
+        if (isWall && isWallJump) return;
+        anim.SetFloat("AttackSpeed", stat.AttackSpeed());
+        anim.SetTrigger("Attack");
+    }
+
+    private void DashAttack()
+    {
+        if (isWall && isWallJump) return;
         anim.SetFloat("AttackSpeed", stat.AttackSpeed());
         anim.SetTrigger("Attack");
         if (isRunning)
@@ -276,12 +406,11 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsRunning", false);
             anim.SetBool("IsIdle", true);
         }
-
     }
 
     private void Wall()
     {
-        if (playerRay.isWall && anim.GetBool("IsJumping") && (posX != 0 || wallPosX != 0))
+        if (isWall && anim.GetBool("IsJumping") && (posX != 0 || wallPosX != 0))
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.gravityScale = 0;
@@ -347,7 +476,7 @@ public class PlayerControl : MonoBehaviour
                 rigid.velocity = new Vector2(0, posY * wallFallSpeed);
             }
         }
-        else if (!playerRay.isWall)
+        else if (!isWall)
         {
             rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);

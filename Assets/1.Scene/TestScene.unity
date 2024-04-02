@@ -2045,7 +2045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &245535321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2850,33 +2850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b51e23ce75e9344b817f30a6be554c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCanJump: 0
-  isGround: 0
-  isCeiling: 0
-  isWall: 0
-  isWater: 0
-  isSloth: 0
-  meleeAttack: {fileID: 15438783}
-  wallCheck: {fileID: 2123143739}
-  groundCheck: {fileID: 1494918817}
-  frontSlothCheck: {fileID: 706035234}
-  backSlothCheck: {fileID: 97942695}
-  pCon: {fileID: 0}
-  wallRayLength: 0.1
-  rayCeilLength: 0.6
-  rayGroundLength: 0.6
-  boxSize: {x: 0.8, y: 0.1}
-  Ground_and_Wall: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  waterLayer:
-    serializedVersion: 2
-    m_Bits: 16
-  box: {fileID: 0}
 --- !u!114 &311393540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2889,15 +2862,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24108623e1943974bbcae51deb8f7171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 1
   posX: 0
   wallPosX: 0
   posY: 0
+  wallRayLength: 0
+  rayCeilLength: 0
+  rayGroundLength: 0
+  boxSize: {x: 0.1, y: 0.1}
+  Ground_and_Wall: 0
+  isCanJump: 0
+  isGround: 0
+  isCeiling: 0
+  isWall: 0
+  isWater: 0
+  isSloth: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
   isRightInt: 1
   isRunning: 0
   isAttack: 0
   isWallJump: 0
   isJumping: 0
   isDead: 0
+  meleeAttack: {fileID: 15438783}
+  wallCheck: {fileID: 2123143739}
+  groundCheck: {fileID: 1494918817}
+  frontSlothCheck: {fileID: 706035234}
+  backSlothCheck: {fileID: 97942695}
   defalutSpeed: 5
   defalutAttackSpeed: 1
   jumpStartTime: 0.3
@@ -3491,7 +3490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &409003059
 Transform:
   m_ObjectHideFlags: 0
@@ -5375,7 +5374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &548782901
 Transform:
   m_ObjectHideFlags: 0
@@ -26408,6 +26407,14 @@ CompositeCollider2D:
         Y: 20000000
       - X: -20000000
         Y: 20000000
+    - - X: 520000000
+        Y: 20000000
+      - X: 500000000
+        Y: 20000000
+      - X: 500000000
+        Y: -10000000
+      - X: 520000000
+        Y: -10000000
     - - X: 30000000
         Y: 20000000
       - X: 0
@@ -26424,14 +26431,6 @@ CompositeCollider2D:
         Y: 10000000
       - X: 240000000
         Y: 10000000
-    - - X: 520000000
-        Y: 20000000
-      - X: 500000000
-        Y: 20000000
-      - X: 500000000
-        Y: -10000000
-      - X: 520000000
-        Y: -10000000
     - - X: 290000000
         Y: 10000000
       - X: 260000000
@@ -26440,6 +26439,14 @@ CompositeCollider2D:
         Y: 0
       - X: 290000000
         Y: 0
+    - - X: 60000000
+        Y: -10000000
+      - X: 30000000
+        Y: -10000000
+      - X: 30000000
+        Y: -20000000
+      - X: 60000000
+        Y: -20000000
     - - X: 750000000
         Y: -10000000
       - X: 660000000
@@ -26460,14 +26467,6 @@ CompositeCollider2D:
         Y: -60000000
       - X: 750000000
         Y: -60000000
-    - - X: 60000000
-        Y: -10000000
-      - X: 30000000
-        Y: -10000000
-      - X: 30000000
-        Y: -20000000
-      - X: 60000000
-        Y: -20000000
     - - X: 260000000
         Y: -20000000
       - X: 210000000
@@ -26484,14 +26483,6 @@ CompositeCollider2D:
         Y: -130000000
       - X: 260000000
         Y: -130000000
-    - - X: 380000000
-        Y: -30000000
-      - X: 350000000
-        Y: -30000000
-      - X: 350000000
-        Y: -40000000
-      - X: 380000000
-        Y: -40000000
     - - X: 330000000
         Y: -30000000
       - X: 300000000
@@ -26499,6 +26490,14 @@ CompositeCollider2D:
       - X: 300000000
         Y: -40000000
       - X: 330000000
+        Y: -40000000
+    - - X: 380000000
+        Y: -30000000
+      - X: 350000000
+        Y: -30000000
+      - X: 350000000
+        Y: -40000000
+      - X: 380000000
         Y: -40000000
     - - X: 430000000
         Y: -40000000
@@ -26574,6 +26573,10 @@ CompositeCollider2D:
       - {x: -5, y: 3}
       - {x: -5, y: 2}
       - {x: -2, y: 2}
+    - - {x: 52, y: 2}
+      - {x: 50, y: 2}
+      - {x: 50, y: -1}
+      - {x: 52, y: -1}
     - - {x: 3, y: 2}
       - {x: 0, y: 2}
       - {x: 0, y: 1}
@@ -26582,14 +26585,14 @@ CompositeCollider2D:
       - {x: 21, y: 2}
       - {x: 21, y: 1}
       - {x: 24, y: 1}
-    - - {x: 52, y: 2}
-      - {x: 50, y: 2}
-      - {x: 50, y: -1}
-      - {x: 52, y: -1}
     - - {x: 29, y: 1}
       - {x: 26, y: 1}
       - {x: 26, y: 0}
       - {x: 29, y: 0}
+    - - {x: 6, y: -1}
+      - {x: 3, y: -1}
+      - {x: 3, y: -2}
+      - {x: 6, y: -2}
     - - {x: 75, y: -1}
       - {x: 66, y: -1}
       - {x: 66, y: -2}
@@ -26600,10 +26603,6 @@ CompositeCollider2D:
       - {x: 46, y: -4}
       - {x: 46, y: -6}
       - {x: 75, y: -6}
-    - - {x: 6, y: -1}
-      - {x: 3, y: -1}
-      - {x: 3, y: -2}
-      - {x: 6, y: -2}
     - - {x: 26, y: -2}
       - {x: 21, y: -2}
       - {x: 21, y: -3}
@@ -26612,14 +26611,14 @@ CompositeCollider2D:
       - {x: 17, y: -4}
       - {x: 17, y: -13}
       - {x: 26, y: -13}
-    - - {x: 38, y: -3}
-      - {x: 35, y: -3}
-      - {x: 35, y: -4}
-      - {x: 38, y: -4}
     - - {x: 33, y: -3}
       - {x: 30, y: -3}
       - {x: 30, y: -4}
       - {x: 33, y: -4}
+    - - {x: 38, y: -3}
+      - {x: 35, y: -3}
+      - {x: 35, y: -4}
+      - {x: 38, y: -4}
     - - {x: 43, y: -4}
       - {x: 40, y: -4}
       - {x: 40, y: -5}
@@ -32840,6 +32839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1af71cc54395f4b9e912cbcd6d24b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  check: {fileID: 0}
 --- !u!212 &1428412575
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -37428,14 +37428,6 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1806982831}
     m_ColliderPaths:
-    - - X: 860000000
-        Y: 390000000
-      - X: 850000000
-        Y: 390000000
-      - X: 850000000
-        Y: 380000000
-      - X: 860000000
-        Y: 380000000
     - - X: 970000000
         Y: 390000000
       - X: 960000000
@@ -37443,6 +37435,14 @@ CompositeCollider2D:
       - X: 960000000
         Y: 380000000
       - X: 970000000
+        Y: 380000000
+    - - X: 860000000
+        Y: 390000000
+      - X: 850000000
+        Y: 390000000
+      - X: 850000000
+        Y: 380000000
+      - X: 860000000
         Y: 380000000
     - - X: 920000000
         Y: 370000000
@@ -37616,14 +37616,6 @@ CompositeCollider2D:
         Y: -130000000
       - X: 260000000
         Y: -130000000
-    - - X: 470000000
-        Y: -40000000
-      - X: 460000000
-        Y: -40000000
-      - X: 460000000
-        Y: -60000000
-      - X: 470000000
-        Y: -60000000
     - - X: 180000000
         Y: -40000000
       - X: 170000000
@@ -37640,6 +37632,14 @@ CompositeCollider2D:
         Y: -100000000
       - X: 150000000
         Y: -100000000
+    - - X: 470000000
+        Y: -40000000
+      - X: 460000000
+        Y: -40000000
+      - X: 460000000
+        Y: -60000000
+      - X: 470000000
+        Y: -60000000
     - - X: 580000000
         Y: -100000000
       - X: 570000000
@@ -37658,14 +37658,14 @@ CompositeCollider2D:
         Y: -190000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 86, y: 39}
-      - {x: 85, y: 39}
-      - {x: 85, y: 38}
-      - {x: 86, y: 38}
     - - {x: 97, y: 39}
       - {x: 96, y: 39}
       - {x: 96, y: 38}
       - {x: 97, y: 38}
+    - - {x: 86, y: 39}
+      - {x: 85, y: 39}
+      - {x: 85, y: 38}
+      - {x: 86, y: 38}
     - - {x: 92, y: 37}
       - {x: 91, y: 37}
       - {x: 91, y: 36}
@@ -37752,10 +37752,6 @@ CompositeCollider2D:
       - {x: 25, y: -2}
       - {x: 25, y: -13}
       - {x: 26, y: -13}
-    - - {x: 47, y: -4}
-      - {x: 46, y: -4}
-      - {x: 46, y: -6}
-      - {x: 47, y: -6}
     - - {x: 18, y: -4}
       - {x: 17, y: -4}
       - {x: 17, y: -13}
@@ -37764,6 +37760,10 @@ CompositeCollider2D:
       - {x: 14, y: -4}
       - {x: 14, y: -10}
       - {x: 15, y: -10}
+    - - {x: 47, y: -4}
+      - {x: 46, y: -4}
+      - {x: 46, y: -6}
+      - {x: 47, y: -6}
     - - {x: 58, y: -10}
       - {x: 57, y: -10}
       - {x: 57, y: -18}
@@ -39728,7 +39728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2063268824
 Transform:
   m_ObjectHideFlags: 0
@@ -39759,7 +39759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2082661912
 Transform:
   m_ObjectHideFlags: 0

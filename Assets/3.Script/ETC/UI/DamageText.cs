@@ -38,20 +38,6 @@ public class DamageText : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        /*gameTime += Time.deltaTime;
-        if(gameTime < destroyTime)
-        {
-            textAlpha.a = Mathf.Lerp(textAlpha.a, 0, textAlphaSpeed * Time.deltaTime);
-            damageText.color = textAlpha;
-        }
-        else
-        {
-            gameTime = 0;
-        }*/
-    }
-
     private void Damage()
     {
         float randomX = Random.Range(-rangeDamageText * 0.5f, rangeDamageText * 0.5f);

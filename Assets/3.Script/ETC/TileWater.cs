@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TileWater : MonoBehaviour
 {
-    private PlayerRayCheck check;
-    private void Awake()
+    [SerializeField] private PlayerControl check;
+    private void Start()
     {
-        check = FindObjectOfType<PlayerRayCheck>();
+        check = FindObjectOfType<PlayerControl>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
