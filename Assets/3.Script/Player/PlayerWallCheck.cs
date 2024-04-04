@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRayCheck : MonoBehaviour
+public class PlayerWallCheck : MonoBehaviour
 {
     [SerializeField] private PlayerControl playerCon;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            playerCon.isGround = true;
+            playerCon.isWall = true;
         }
-        else return;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            playerCon.isGround = false;
+            playerCon.isWall = false;
         }
         else return;
     }
-
 }

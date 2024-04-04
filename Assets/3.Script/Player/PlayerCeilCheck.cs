@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRayCheck : MonoBehaviour
+public class PlayerCeilCheck : MonoBehaviour
 {
     [SerializeField] private PlayerControl playerCon;
 
@@ -10,18 +10,16 @@ public class PlayerRayCheck : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            playerCon.isGround = true;
+            playerCon.isCeiling = true;
         }
-        else return;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            playerCon.isGround = false;
+            playerCon.isCeiling = false;
         }
         else return;
     }
-
 }
