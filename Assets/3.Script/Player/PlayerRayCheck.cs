@@ -6,13 +6,17 @@ public class PlayerRayCheck : MonoBehaviour
 {
     [SerializeField] private PlayerControl playerCon;
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             playerCon.isGround = true;
         }
-        else return;
+        else if(collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            playerCon.isGround = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -21,7 +25,10 @@ public class PlayerRayCheck : MonoBehaviour
         {
             playerCon.isGround = false;
         }
-        else return;
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        {
+            playerCon.isGround = true;
+        }
     }
 
 }

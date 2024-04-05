@@ -40,7 +40,10 @@ public class PlayerSkillStatus : MonoBehaviour
 
     private void Update()
     {
-        SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        if (level.playerCurrentEXP >= level.playerMaxEXP)
+        {
+            SkillPointCount.text = string.Format("{0}", level.skillPoint);
+        }
     }
 
     //Button
@@ -52,9 +55,9 @@ public class PlayerSkillStatus : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 if (level.strengthLevel >= maxLevel) return;
-                else if(level.strengthLevel < maxLevel)
+                else if (level.strengthLevel < maxLevel)
                 {
-                    if(level.strengthLevel + level.skillPoint <= maxLevel)
+                    if (level.strengthLevel + level.skillPoint <= maxLevel)
                     {
                         level.strengthLevel += level.skillPoint;
                         level.skillPoint -= level.skillPoint;

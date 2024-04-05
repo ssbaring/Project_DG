@@ -123,11 +123,6 @@ public class PlayerControl : MonoBehaviour
 
     protected virtual void Update()
     {
-        //RaycastHit2D lineHit = Physics2D.Raycast(transform.position, Vector2.down, rayGroundLength, Ground_and_Wall);
-        //isCeiling = Physics2D.Raycast(transform.position, Vector2.up, rayCeilLength, groundLayer);
-        //isWall = Physics2D.Raycast(wallCheck.position, Vector2.right * isRightInt, wallRayLength, wallLayer);
-        //isGround = lineHit;
-
         if (!isDead)
         {
             //이동
@@ -265,6 +260,7 @@ public class PlayerControl : MonoBehaviour
         {
             JumpAnimation();
             isJumping = true;
+            isGround = false;
             jumpTime = jumpStartTime;
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
         }
@@ -313,7 +309,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void Wall()
     {
-        if (isWall && anim.GetBool("IsJumping") && (posX != 0 || wallPosX != 0))
+        if (isWall)
         {
             if (Input.GetKeyDown(GameManager.instance.JumpKey))
             {
@@ -321,13 +317,24 @@ public class PlayerControl : MonoBehaviour
                 rigid.velocity = new Vector2(rigid.velocity.x, 0);
                 rigid.gravityScale = 0;
                 isWallGrap = true;
+                isGround = false;
                 anim.SetBool("IsFalling", false);
                 anim.SetBool("IsRunning", false);
                 anim.SetBool("IsWall", true);
                 anim.SetBool("IsIdle", false);
+            }
 
+            if (isWallGrap)
+            {
+                Debug.Log("벽테스트");
                 wallPosX = Input.GetAxis("Horizontal");
                 posX = 0;
+                rigid.velocity = new Vector2(posX, 0);
+            }
+
+            if (Input.GetKeyDown(GameManager.instance.JumpKey) && isWallGrap)
+            {
+                Debug.Log("여기 들어갔나");
                 if (isRightInt == -1)
                 {
                     if (wallPosX < 0)
@@ -351,23 +358,25 @@ public class PlayerControl : MonoBehaviour
                     }
                 }
 
-
-                isWallGrap = false;
+                
                 if (wallPosX < 0)
                 {
                     Debug.Log("벽점프");
-                    Invoke("DelayGroundCollider", 0.5f);
+                    Invoke("DelayGroundCollider", 2f);
+                    //rigid.AddForce()
                     anim.SetTrigger("JumpStart");
                     isRightInt = -1;
                     playerRayPivot.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    isWallGrap = false;
                 }
                 else if (wallPosX > 0)
                 {
                     Debug.Log("벽점프");
-                    Invoke("DelayGroundCollider", 0.5f);
+                    Invoke("DelayGroundCollider", 2f);
                     anim.SetTrigger("JumpStart");
                     isRightInt = 1;
                     playerRayPivot.transform.rotation = Quaternion.identity;
+                    isWallGrap = false;
                 }
                 else return;
 
