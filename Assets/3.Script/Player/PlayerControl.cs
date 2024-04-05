@@ -26,14 +26,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] protected float wallPosX;
     [SerializeField] protected float posY;
 
-    [Header("Ray Status")]
-    [SerializeField] private float wallRayLength;
-    [SerializeField] private float rayCeilLength;
-    [SerializeField] private float rayGroundLength;
-
     [Header("State Check")]
     public bool isGround;
     public bool isJumping;
+    public bool isCanJump;
     public bool isRunning;
     public bool isCeiling;
     public bool isWall;
@@ -70,18 +66,18 @@ public class PlayerControl : MonoBehaviour
     public float gravity;
     public float waterGravity;
 
-    protected Rigidbody2D rigid;
-    protected Animator anim;
+    public Rigidbody2D rigid;
+    public Animator anim;
     protected PlayerStatus stat;
 
 
 
     public GameObject playerRayPivot;
     public GameObject meleePivot;
+    public BoxCollider2D groundCollider;
     [SerializeField] protected SpriteRenderer wpRender;
     [SerializeField] protected SpriteRenderer spRender;
     [SerializeField] protected PlayerRayCheck playerRay;
-    [SerializeField] protected BoxCollider2D groundCollider;
 
 
 
@@ -146,24 +142,12 @@ public class PlayerControl : MonoBehaviour
             JumpCharacter();
         }
 
-
-        //땅에 닿음
-        if (isGround)
-        {
-            isWallGrap = false;
-            anim.SetBool("IsJumping", false);
-            anim.SetBool("IsFalling", false);
-            anim.ResetTrigger("JumpTop");
-            rigid.gravityScale = gravity;
-        }
-
         //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
         {
             anim.SetTrigger("JumpTop");
             jumpTime = -0.1f;
         }
-
         else if (rigid.velocity.y < 0)
         {
             anim.SetBool("IsJumping", true);
@@ -171,6 +155,12 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("IsIdle", false);
         }
 
+        if(isGround)
+        {
+            anim.SetBool("IsJumping", false);
+            anim.SetBool("IsFalling", false);
+            anim.ResetTrigger("JumpTop");
+        }
 
         //애니메이션
         if (posX == 0 && rigid.velocity.y == 0)
@@ -256,11 +246,13 @@ public class PlayerControl : MonoBehaviour
 
     private void JumpCharacter()
     {
-        if ((isGround || isWater) && Input.GetKeyDown(GameManager.instance.JumpKey) && !isAttack)
+        if ((isGround || isWater || isCanJump) && Input.GetKeyDown(GameManager.instance.JumpKey) && !isAttack)
         {
             JumpAnimation();
             isJumping = true;
             isGround = false;
+            isCanJump = false;
+            groundCollider.enabled = false;
             jumpTime = jumpStartTime;
             rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
         }
@@ -291,6 +283,7 @@ public class PlayerControl : MonoBehaviour
     {
         anim.SetTrigger("JumpStart");
         anim.SetBool("IsJumping", true);
+        anim.SetBool("IsFalling", false);
         anim.SetBool("IsIdle", false);
     }
 
@@ -309,7 +302,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void Wall()
     {
-        if (isWall)
+        if (isWall && !isGround)
         {
             if (Input.GetKeyDown(GameManager.instance.JumpKey))
             {
@@ -326,15 +319,12 @@ public class PlayerControl : MonoBehaviour
 
             if (isWallGrap)
             {
-                Debug.Log("벽테스트");
                 wallPosX = Input.GetAxis("Horizontal");
                 posX = 0;
-                rigid.velocity = new Vector2(posX, 0);
             }
 
             if (Input.GetKeyDown(GameManager.instance.JumpKey) && isWallGrap)
             {
-                Debug.Log("여기 들어갔나");
                 if (isRightInt == -1)
                 {
                     if (wallPosX < 0)
@@ -362,7 +352,7 @@ public class PlayerControl : MonoBehaviour
                 if (wallPosX < 0)
                 {
                     Debug.Log("벽점프");
-                    Invoke("DelayGroundCollider", 2f);
+                    //Invoke("DelayGroundCollider", 0.5f);
                     //rigid.AddForce()
                     anim.SetTrigger("JumpStart");
                     isRightInt = -1;
@@ -372,7 +362,7 @@ public class PlayerControl : MonoBehaviour
                 else if (wallPosX > 0)
                 {
                     Debug.Log("벽점프");
-                    Invoke("DelayGroundCollider", 2f);
+                    //Invoke("DelayGroundCollider", 0.5f);
                     anim.SetTrigger("JumpStart");
                     isRightInt = 1;
                     playerRayPivot.transform.rotation = Quaternion.identity;
@@ -390,9 +380,9 @@ public class PlayerControl : MonoBehaviour
                 rigid.velocity = new Vector2(0, posY * wallFallSpeed);
             }
         }
-        else if (!isWall)
+        else
         {
-            groundCollider.enabled = true;
+            //groundCollider.enabled = true;
             rigid.gravityScale = gravity;
             anim.SetBool("IsWall", false);
             isWallGrap = false;

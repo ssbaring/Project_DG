@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRayCheck : MonoBehaviour
+public class PlayerFallBeforeJump : MonoBehaviour
 {
     [SerializeField] private PlayerControl playerCon;
 
@@ -11,11 +11,7 @@ public class PlayerRayCheck : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            playerCon.isGround = true;
-            playerCon.isWallGrap = false;
             playerCon.isCanJump = true;
-            playerCon.rigid.gravityScale = playerCon.gravity;
-            playerCon.groundCollider.enabled = true;
         }
     }
 
@@ -23,8 +19,7 @@ public class PlayerRayCheck : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            playerCon.isGround = false;
+            playerCon.isCanJump = false;
         }
     }
-
 }
