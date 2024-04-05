@@ -145,12 +145,13 @@ public class PlayerControl : MonoBehaviour
         //√µ¿Â
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
         {
+            Debug.Log(rigid.velocity.y);
+            //anim.SetBool("IsJumping", true);
             anim.SetTrigger("JumpTop");
             jumpTime = -0.1f;
         }
         else if (rigid.velocity.y < 0)
         {
-            anim.SetBool("IsJumping", true);
             anim.SetBool("IsFalling", true);
             anim.SetBool("IsIdle", false);
         }
