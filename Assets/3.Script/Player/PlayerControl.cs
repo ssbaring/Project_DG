@@ -121,6 +121,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!isDead)
         {
+            posY = rigid.velocity.y;
             //이동
             MoveCharacter();
             //벽점프
@@ -145,8 +146,6 @@ public class PlayerControl : MonoBehaviour
         //천장
         if ((rigid.velocity.y < 0.198f && rigid.velocity.y > 0) || isCeiling)
         {
-            Debug.Log(rigid.velocity.y);
-            //anim.SetBool("IsJumping", true);
             anim.SetTrigger("JumpTop");
             jumpTime = -0.1f;
         }
@@ -197,7 +196,7 @@ public class PlayerControl : MonoBehaviour
     private void MoveCharacter()
     {
         posX = Input.GetAxis("Horizontal");
-        anim.SetFloat("RunSpeed", stat.TrueSpeedAnimation());
+        anim.SetFloat("RunSpeed", stat.TrueSpeedAnimation());                   //이동속도에 비례하여 애니메이션 스피드 증가
         Vector2 position = new Vector2(posX * stat.Speed(), rigid.velocity.y);
         if (!isAttack && !isWallGrap)
         {

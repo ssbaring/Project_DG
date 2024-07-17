@@ -27239,7 +27239,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &744750548
 Transform:
   m_ObjectHideFlags: 0
@@ -33561,7 +33561,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.2}
+  m_Size: {x: 0.05, y: 0.2}
   m_EdgeRadius: 0
 --- !u!50 &1494918820
 Rigidbody2D:
@@ -35048,8 +35048,8 @@ Transform:
   m_Children:
   - {fileID: 1494918817}
   - {fileID: 744750548}
-  - {fileID: 744248602}
   - {fileID: 1735210849}
+  - {fileID: 744248602}
   - {fileID: 1894136704}
   m_Father: {fileID: 311393532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

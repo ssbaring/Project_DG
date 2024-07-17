@@ -11,11 +11,12 @@ public class PlayerRayCheck : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
+            Debug.Log("Ground");
             playerCon.isGround = true;
             playerCon.isWallGrap = false;
             playerCon.isCanJump = true;
             playerCon.rigid.gravityScale = playerCon.gravity;
-            playerCon.groundCollider.enabled = true;
+            //playerCon.groundCollider.enabled = true;
         }
     }
 
